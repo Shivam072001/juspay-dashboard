@@ -5,7 +5,7 @@ import ProductsTable from './ProductsTable'
 export default function DashboardContainer() {
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+      <h1 className="text-2xl font-bold text-gray-900 text-left">Dashboard</h1>
       <StatsCards />
       <ChartsSection />
       <ProductsTable />
