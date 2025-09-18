@@ -10,7 +10,7 @@ function NotificationItem({ notification }: NotificationItemProps) {
     <div className="flex gap-2 p-1 rounded-lg">
       {/* Icon */}
       <div 
-        className="flex items-center justify-center w-4 h-4 rounded-lg p-1"
+        className="flex items-center justify-center rounded-lg p-1 w-6 h-6 flex-shrink-0"
         style={{ backgroundColor: notification.iconBg }}
       >
         <img 
@@ -21,11 +21,11 @@ function NotificationItem({ notification }: NotificationItemProps) {
       </div>
       
       {/* Content */}
-      <div className="flex flex-col justify-center flex-1">
-        <p className="text-sm font-normal text-[#1C1C1C] leading-tight">
+      <div className="flex flex-col flex-1 min-w-0">
+        <p className="text-sm font-normal text-[#1C1C1C] leading-[1.4285714285714286] truncate">
           {notification.title}
         </p>
-        <p className="text-xs font-normal text-[rgba(28,28,28,0.4)] leading-tight">
+        <p className="text-xs font-normal text-[rgba(28,28,28,0.4)] leading-[1.5] truncate">
           {notification.time}
         </p>
       </div>
@@ -36,10 +36,10 @@ function NotificationItem({ notification }: NotificationItemProps) {
 export default function NotificationsList() {
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 self-stretch">
       {/* Title */}
-      <div className="px-1 py-2">
-        <h3 className="text-sm font-semibold text-[#1C1C1C]">Notifications</h3>
+      <div className="px-2 py-1 self-stretch">
+        <h3 className="text-sm font-semibold text-[#1C1C1C] leading-[1.4285714285714286]">Notifications</h3>
       </div>
       
       {/* Notification Items */}
