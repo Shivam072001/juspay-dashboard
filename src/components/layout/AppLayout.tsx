@@ -22,7 +22,7 @@ export default function AppLayout() {
       </div>
       
       {/* Right Panel */}
-      <div className="border-l border-gray-200 p-4">
+      <div>
         <RightPanel />
       </div>
     </div>
