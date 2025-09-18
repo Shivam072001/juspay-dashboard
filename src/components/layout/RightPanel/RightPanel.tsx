@@ -1,7 +1,13 @@
+import NotificationsList from './NotificationsList'
+import ActivitiesList from './ActivitiesList'
+import ContactsList from './ContactsList'
+
 export default function RightPanel() {
   return (
-    <div>
-      <h1>RightPanel</h1>
+    <div className="h-full space-y-6">
+      <NotificationsList />
+      <ActivitiesList />
+      <ContactsList />
     </div>
   );
 }
