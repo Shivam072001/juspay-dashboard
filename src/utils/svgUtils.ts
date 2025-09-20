@@ -54,7 +54,7 @@ export const createDonutSegmentPath = (
   startPercent: number,
   endPercent: number
 ): string => {
-  const { centerX, centerY, innerRadius, outerRadius } = config;
+  const { centerX, centerY, outerRadius } = config;
   
   // Start from -90 degrees (12 o'clock position) and go clockwise
   const startAngle = percentToRadians(startPercent) - Math.PI / 2;
@@ -62,7 +62,6 @@ export const createDonutSegmentPath = (
   
   // Calculate points for outer arc
   const outerStart = calculateArcPoints(centerX, centerY, outerRadius, startAngle, endAngle);
-  const innerStart = calculateArcPoints(centerX, centerY, innerRadius, startAngle, endAngle);
   
   // Determine if arc is large (> 180 degrees)
   const largeArcFlag = (endPercent - startPercent) > 50 ? 1 : 0;

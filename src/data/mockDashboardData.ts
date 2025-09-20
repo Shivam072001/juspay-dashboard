@@ -1,4 +1,5 @@
 // Mock data based on exact Figma design values
+import { worldMapData } from './worldMapLocations';
 
 export interface KPIData {
   title: string;
@@ -94,13 +95,24 @@ export const revenueChartData: RevenueData[] = [
   { month: "Jun", currentWeek: 28, previousWeek: 27 }
 ];
 
-// Location Stats from Figma
-export const locationData: LocationData[] = [
-  { name: "New York", value: "72K", progress: 85 },
-  { name: "San Francisco", value: "39K", progress: 45 },
-  { name: "Sydney", value: "25K", progress: 30 },
-  { name: "Singapore", value: "61K", progress: 70 }
-];
+// Helper function to convert WorldMapLocation to LocationData format
+const formatValueForLocationData = (value: string): string => {
+  // Convert "$72,490" to "72K" format
+  const numericValue = parseInt(value.replace(/[$,]/g, ''));
+  if (numericValue >= 1000) {
+    return `${Math.round(numericValue / 1000)}K`;
+  }
+  return value;
+};
+
+// Location Stats - derived from worldMapData (single source of truth)
+export const locationData: LocationData[] = worldMapData.locations
+  .filter(location => location.isActive)
+  .map(location => ({
+    name: location.name,
+    value: formatValueForLocationData(location.value),
+    progress: location.progress
+  }));
 
 // Top Selling Products from Figma
 export const productsData: ProductData[] = [
@@ -118,11 +130,3 @@ export const salesData: SalesData[] = [
   { name: "Sponsored", value: 30.8, amount: "$154.02", color: "#95A4FC" },
   { name: "E-mail", value: 8.1, amount: "$48.96", color: "#B1E3FF" }
 ];
-
-// World Map coordinates for major cities (approximate)
-export const cityCoordinates = {
-  "New York": [-74.006, 40.7128],
-  "San Francisco": [-122.4194, 37.7749],  
-  "Sydney": [151.2093, -33.8688],
-  "Singapore": [103.8198, 1.3521]
-} as const;

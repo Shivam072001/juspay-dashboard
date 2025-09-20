@@ -12,8 +12,10 @@ interface LocationMarkerProps {
 function LocationMarker({ location, onClick, onHover }: LocationMarkerProps) {
   return (
     <div 
-      className="absolute w-2 h-2 bg-[#1C1C1C] rounded-full border border-white cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
+      className="absolute bg-[#1C1C1C] rounded-full border border-white cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
       style={{ 
+        width: '8px',
+        height: '8px',
         left: `${location.coordinates.x}px`, 
         top: `${location.coordinates.y}px`,
         filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1))',

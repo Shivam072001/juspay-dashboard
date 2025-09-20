@@ -92,3 +92,38 @@ export const getLocationById = (id: string): WorldMapLocation | undefined => {
 export const getActiveLocations = (): WorldMapLocation[] => {
   return worldMapData.locations.filter(location => location.isActive);
 };
+
+// Helper function to get location by name (case-insensitive)
+export const getLocationByName = (name: string): WorldMapLocation | undefined => {
+  return worldMapData.locations.find(
+    location => location.name.toLowerCase() === name.toLowerCase()
+  );
+};
+
+// Helper function to get city coordinates for external use
+export const getCityCoordinates = (): Record<string, { x: number; y: number }> => {
+  return worldMapData.locations.reduce((acc, location) => {
+    acc[location.name] = location.coordinates;
+    return acc;
+  }, {} as Record<string, { x: number; y: number }>);
+};
+
+// Helper function to get total revenue from all locations
+export const getTotalRevenue = (): number => {
+  return worldMapData.locations.reduce((total, location) => {
+    return total + (location.revenue || 0);
+  }, 0);
+};
+
+// Type guard to check if a location is a WorldMapLocation
+export const isWorldMapLocation = (obj: unknown): obj is WorldMapLocation => {
+  return (
+    typeof obj === 'object' &&
+    obj !== null &&
+    typeof (obj as WorldMapLocation).id === 'string' &&
+    typeof (obj as WorldMapLocation).name === 'string' &&
+    typeof (obj as WorldMapLocation).coordinates === 'object' &&
+    typeof (obj as WorldMapLocation).coordinates.x === 'number' &&
+    typeof (obj as WorldMapLocation).coordinates.y === 'number'
+  );
+};
