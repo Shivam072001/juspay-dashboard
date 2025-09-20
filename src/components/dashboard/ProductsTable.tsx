@@ -1,44 +1,42 @@
+import { productsData } from '../../data/mockDashboardData';
+
 export default function ProductsTable() {
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900">Top Products</h3>
+    <div className="bg-[#F7F9FB] p-6 rounded-2xl">
+      <div className="mb-4">
+        <h3 className="text-sm font-semibold text-gray-900">Top Selling Products</h3>
       </div>
+      
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sales</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+        <table className="w-full">
+          <thead>
+            <tr className="border-b border-gray-200">
+              <th className="text-left text-xs text-gray-400 font-normal pb-2 pr-3">Name</th>
+              <th className="text-left text-xs text-gray-400 font-normal pb-2 px-3">Price</th>
+              <th className="text-left text-xs text-gray-400 font-normal pb-2 px-3">Quantity</th>
+              <th className="text-left text-xs text-gray-400 font-normal pb-2 pl-3">Amount</th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            <tr>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Product A</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$29.99</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">124</td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-              </td>
-            </tr>
-            <tr>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Product B</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$49.99</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">89</td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
-              </td>
-            </tr>
-            <tr>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Product C</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$19.99</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">203</td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-              </td>
-            </tr>
+          <tbody className="space-y-2">
+            {productsData.map((product, index) => (
+              <tr 
+                key={index} 
+                className={`${index === 1 ? 'bg-white' : ''} hover:bg-white hover:bg-opacity-60 transition-colors duration-200`}
+              >
+                <td className="py-2 pr-3">
+                  <span className="text-xs text-gray-900">{product.name}</span>
+                </td>
+                <td className="py-2 px-3">
+                  <span className="text-xs text-gray-900">{product.price}</span>
+                </td>
+                <td className="py-2 px-3">
+                  <span className="text-xs text-gray-900">{product.quantity}</span>
+                </td>
+                <td className="py-2 pl-3">
+                  <span className="text-xs text-gray-900">{product.amount}</span>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

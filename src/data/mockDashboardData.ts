@@ -1,0 +1,126 @@
+// Mock data based on exact Figma design values
+
+export interface KPIData {
+  title: string;
+  value: string;
+  change: string;
+  isPositive: boolean;
+  bgColor: string;
+}
+
+export interface ProjectionData {
+  month: string;
+  actual: number;
+  projected: number;
+}
+
+export interface RevenueData {
+  month: string;
+  currentWeek: number;
+  previousWeek: number;
+}
+
+export interface LocationData {
+  name: string;
+  value: string;
+  progress: number; // 0-100 for progress bar
+}
+
+export interface ProductData {
+  name: string;
+  price: string;
+  quantity: number;
+  amount: string;
+}
+
+export interface SalesData {
+  name: string;
+  value: number;
+  amount: string;
+  color: string;
+}
+
+// KPI Cards data from Figma
+export const kpiData: KPIData[] = [
+  {
+    title: "Customers",
+    value: "3,781",
+    change: "+11.01%",
+    isPositive: true,
+    bgColor: "#E3F5FF"
+  },
+  {
+    title: "Orders", 
+    value: "1,219",
+    change: "-0.03%",
+    isPositive: false,
+    bgColor: "#F7F9FB"
+  },
+  {
+    title: "Revenue",
+    value: "$695",
+    change: "+15.03%", 
+    isPositive: true,
+    bgColor: "#F7F9FB"
+  },
+  {
+    title: "Growth",
+    value: "30.1%",
+    change: "+6.08%",
+    isPositive: true,
+    bgColor: "#E5ECF6"
+  }
+];
+
+// Projections vs Actuals Chart Data (6 months)
+export const projectionsData: ProjectionData[] = [
+  { month: "Jan", actual: 15, projected: 25 },
+  { month: "Feb", actual: 22, projected: 20 },
+  { month: "Mar", actual: 18, projected: 28 },
+  { month: "Apr", actual: 30, projected: 25 },
+  { month: "May", actual: 12, projected: 20 },
+  { month: "Jun", actual: 22, projected: 20 }
+];
+
+// Revenue Chart Data (Line chart with two series)
+export const revenueChartData: RevenueData[] = [
+  { month: "Jan", currentWeek: 20, previousWeek: 25 },
+  { month: "Feb", currentWeek: 25, previousWeek: 22 },
+  { month: "Mar", currentWeek: 15, previousWeek: 28 },
+  { month: "Apr", currentWeek: 32, previousWeek: 20 },
+  { month: "May", currentWeek: 18, previousWeek: 25 },
+  { month: "Jun", currentWeek: 28, previousWeek: 24 }
+];
+
+// Location Stats from Figma
+export const locationData: LocationData[] = [
+  { name: "New York", value: "72K", progress: 85 },
+  { name: "San Francisco", value: "39K", progress: 45 },
+  { name: "Sydney", value: "25K", progress: 30 },
+  { name: "Singapore", value: "61K", progress: 70 }
+];
+
+// Top Selling Products from Figma
+export const productsData: ProductData[] = [
+  { name: "ASOS Ridley High Waist", price: "$79.49", quantity: 82, amount: "$6,518.18" },
+  { name: "Marco Lightweight Shirt", price: "$128.50", quantity: 37, amount: "$4,754.50" },
+  { name: "Half Sleeve Shirt", price: "$39.99", quantity: 64, amount: "$2,559.36" },
+  { name: "Lightweight Jacket", price: "$20.00", quantity: 184, amount: "$3,680.00" },
+  { name: "Marco Shoes", price: "$79.49", quantity: 64, amount: "$1,965.81" }
+];
+
+// Total Sales Chart Data (Pie chart)
+export const salesData: SalesData[] = [
+  { name: "Direct", value: 38.6, amount: "$300.56", color: "#1C1C1C" },
+  { name: "Affiliate", value: 22.5, amount: "$135.18", color: "#BAEDBD" },
+  { name: "Sponsored", value: 30.8, amount: "$154.02", color: "#95A4FC" },
+  { name: "E-mail", value: 8.1, amount: "$48.96", color: "#B1E3FF" }
+];
+
+// World Map coordinates for major cities (approximate)
+export const cityCoordinates = {
+  "New York": [-74.006, 40.7128],
+  "San Francisco": [-122.4194, 37.7749],  
+  "Sydney": [151.2093, -33.8688],
+  "Singapore": [103.8198, 1.3521]
+} as const;
