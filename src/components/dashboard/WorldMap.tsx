@@ -47,8 +47,8 @@ export default function WorldMap() {
 
   return (
     <div className="bg-[#F7F9FB] p-6 rounded-2xl">
-      <div className="mb-4">
-        <h3 className="text-sm font-semibold text-gray-900">Revenue by Location</h3>
+      <div className="mb-4 text-center">
+        <h3 className="text-sm font-semibold text-[#1C1C1C]">Revenue by Location</h3>
       </div>
       
       <div className="space-y-4">
@@ -126,7 +126,7 @@ export default function WorldMap() {
               </div>
               
               {/* Progress bar */}
-              <div className="h-2 bg-white bg-opacity-20 rounded-full overflow-hidden">
+              <div className="h-1 bg-white bg-opacity-20 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-[#A8C5DA] rounded-full transition-all duration-300 ease-out"
                   style={{ width: `${location.progress}%` }}
