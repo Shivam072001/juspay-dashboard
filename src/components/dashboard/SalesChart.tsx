@@ -4,9 +4,9 @@ import RoundedDonutChart from '../ui/RoundedDonutChart';
 export default function SalesChart() {
 
   return (
-    <div className="bg-[#F7F9FB] p-6 rounded-2xl flex flex-col items-center">
+    <div className="bg-[#F7F9FB] p-6 rounded-2xl w-full flex flex-col items-center">
       <div className="w-full mb-4">
-        <h3 className="text-sm font-semibold text-gray-900 text-center">Total Sales</h3>
+        <h3 className="text-sm font-semibold text-gray-900">Total Sales</h3>
       </div>
       
       {/* Custom Rounded Donut Chart */}

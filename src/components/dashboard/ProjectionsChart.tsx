@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { projectionsData } from '../../data/mockDashboardData';
 
 export default function ProjectionsChart() {
@@ -35,15 +35,15 @@ export default function ProjectionsChart() {
         </h3>
       </div>
       
-      <div style={{ height: '200px', flex: 1 }}>
+      <div style={{ height: '196px', flex: 1 }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={transformedData}
             margin={{
               top: 16,
               right: 0,
-              left: 16,
-              bottom: 28,
+              left: 0,
+              bottom: 0,
             }}
             barCategoryGap={8}
           >
@@ -52,6 +52,11 @@ export default function ProjectionsChart() {
               stroke="rgba(28, 28, 28, 0.05)" 
               horizontal={true}
               vertical={false}
+            />
+            <ReferenceLine 
+              y={0} 
+              stroke="rgba(28, 28, 28, 0.2)" 
+              strokeWidth={1} 
             />
             <XAxis 
               dataKey="month" 
@@ -72,27 +77,30 @@ export default function ProjectionsChart() {
                 fontSize: 12, 
                 fill: 'rgba(28, 28, 28, 0.4)',
                 fontFamily: 'Inter, sans-serif',
-                textAnchor: 'middle'
+                textAnchor: 'end',
+                dominantBaseline: 'text-after-edge'
               }}
-              domain={[0, 35]}
-              ticks={[0, 10, 20, 30]}
+              domain={[0, 30]}
+              type="number"
+              tickCount={4}
               tickFormatter={(value) => value === 0 ? '0' : `${value}M`}
-              dx={-10}
+              dx={-12}
+              width={44}
             />
             <Bar 
               dataKey="actual" 
               stackId="a"
               fill="#A8C5DA" 
-              radius={[0, 0, 0, 0]}
-              maxBarSize={20}
+              radius={[0, 0, 4, 4]}
+              barSize={20}
             />
             <Bar 
               dataKey="projectedGap" 
               stackId="a"
               fill="#A8C5DA" 
-              opacity={0.5}
+              fillOpacity={0.5}
               radius={[4, 4, 0, 0]}
-              maxBarSize={20}
+              barSize={20}
             />
           </BarChart>
         </ResponsiveContainer>

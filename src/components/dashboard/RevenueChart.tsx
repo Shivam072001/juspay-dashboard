@@ -4,7 +4,7 @@ import { revenueChartData } from '../../data/mockDashboardData';
 export default function RevenueChart() {
   return (
     <div 
-      className="rounded-2xl h-full"
+      className="rounded-2xl w-full h-full"
       style={{
         backgroundColor: '#F7F9FB',
         padding: '24px',

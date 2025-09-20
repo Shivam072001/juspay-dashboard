@@ -2,7 +2,7 @@ import { productsData } from '../../data/mockDashboardData';
 
 export default function ProductsTable() {
   return (
-    <div className="bg-[#F7F9FB] p-6 rounded-2xl">
+    <div className="bg-[#F7F9FB] p-6 rounded-2xl w-full flex flex-col">
       <div className="mb-4">
         <h3 className="text-sm font-semibold text-gray-900">Top Selling Products</h3>
       </div>
@@ -21,7 +21,7 @@ export default function ProductsTable() {
             {productsData.map((product, index) => (
               <tr 
                 key={index} 
-                className={`${index === 1 ? 'bg-white' : ''} hover:bg-white hover:bg-opacity-60 transition-colors duration-200`}
+                className="hover:bg-white hover:bg-opacity-60 transition-colors duration-200"
               >
                 <td className="py-2 pr-3">
                   <span className="text-xs text-gray-900">{product.name}</span>

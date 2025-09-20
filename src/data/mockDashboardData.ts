@@ -76,12 +76,12 @@ export const kpiData: KPIData[] = [
 // Projections vs Actuals Chart Data (6 months)
 // Based on Figma design: 3 full bars (Feb, Apr, May) and 3 stacked bars (Jan, Mar, Jun)
 export const projectionsData: ProjectionData[] = [
-  { month: "Jan", actual: 15, projected: 25 },  // Stacked: 15 + 10 gap
-  { month: "Feb", actual: 20, projected: 22 },  // Full bar: no gap
-  { month: "Mar", actual: 18, projected: 28 },  // Stacked: 18 + 10 gap  
-  { month: "Apr", actual: 28, projected: 30 },  // Full bar: no gap
-  { month: "May", actual: 17, projected: 20 },  // Full bar: no gap
-  { month: "Jun", actual: 22, projected: 24 }   // Stacked: 22 + 2 gap
+  { month: "Jan", actual: 15.4, projected: 19.3 },  // Jan: 72px actual, 18px gap = ~15.4M actual, ~3.9M gap
+  { month: "Feb", actual: 18.8, projected: 23.7 },  // Feb: 88px actual, 22px gap = ~18.8M actual, ~4.9M gap
+  { month: "Mar", actual: 16.3, projected: 20.4 },  // Mar: 76px actual, 19px gap = ~16.3M actual, ~4.1M gap  
+  { month: "Apr", actual: 20.6, projected: 25.7 },  // Apr: 96px actual, 24px gap = ~20.6M actual, ~5.1M gap
+  { month: "May", actual: 13.7, projected: 17.1 },  // May: 64px actual, 16px gap = ~13.7M actual, ~3.4M gap
+  { month: "Jun", actual: 18.8, projected: 23.7 }   // Jun: 88px actual, 22px gap = ~18.8M actual, ~4.9M gap
 ];
 
 // Revenue Chart Data (Line chart with two series)

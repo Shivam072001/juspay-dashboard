@@ -46,7 +46,7 @@ export default function WorldMap() {
   };
 
   return (
-    <div className="bg-[#F7F9FB] p-6 rounded-2xl">
+    <div className="bg-[#F7F9FB] p-6 rounded-2xl w-full flex flex-col">
       <div className="mb-4 text-center">
         <h3 className="text-sm font-semibold text-[#1C1C1C]">Revenue by Location</h3>
       </div>
