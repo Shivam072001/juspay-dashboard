@@ -6,9 +6,8 @@ export interface WorldMapLocation {
     y: number; // SVG coordinate (0-82)
   };
   country: string;
-  value: string;
   progress: number; // 0-100 for progress bar
-  revenue?: number;
+  revenue: number;
   color?: string;
   isActive?: boolean;
 }
@@ -29,35 +28,22 @@ export const worldMapData: WorldMapConfig = {
   },
   locations: [
     {
-      id: "san-francisco",
-      name: "San Francisco",
-      coordinates: { x: 16.21, y: 26 },
-      country: "USA",
-      value: "$72,490",
-      progress: 95,
-      revenue: 72490,
-      color: "#1C1C1C",
-      isActive: true
-    },
-    {
       id: "new-york",
       name: "New York",
       coordinates: { x: 37.49, y: 31 },
       country: "USA", 
-      value: "$64,382",
-      progress: 80,
-      revenue: 64382,
+      progress: 95,
+      revenue: 72345,
       color: "#1C1C1C",
       isActive: true
     },
     {
-      id: "singapore",
-      name: "Singapore",
-      coordinates: { x: 110.43, y: 48 },
-      country: "Singapore",
-      value: "$58,472",
-      progress: 70,
-      revenue: 58472,
+      id: "san-francisco",
+      name: "San Francisco",
+      coordinates: { x: 16.21, y: 26 },
+      country: "USA",
+      progress: 51,
+      revenue: 39234,
       color: "#1C1C1C",
       isActive: true
     },
@@ -66,9 +52,18 @@ export const worldMapData: WorldMapConfig = {
       name: "Sydney", 
       coordinates: { x: 127.66, y: 62 },
       country: "Australia",
-      value: "$49,325",
-      progress: 60,
-      revenue: 49325,
+      progress: 33,
+      revenue: 25123,
+      color: "#1C1C1C",
+      isActive: true
+    },
+    {
+      id: "singapore",
+      name: "Singapore",
+      coordinates: { x: 110.43, y: 48 },
+      country: "Singapore",
+      progress: 80,
+      revenue: 61456,
       color: "#1C1C1C",
       isActive: true
     }
@@ -111,8 +106,22 @@ export const getCityCoordinates = (): Record<string, { x: number; y: number }> =
 // Helper function to get total revenue from all locations
 export const getTotalRevenue = (): number => {
   return worldMapData.locations.reduce((total, location) => {
-    return total + (location.revenue || 0);
+    return total + location.revenue;
   }, 0);
+};
+
+// Helper function to format revenue numbers to K format
+export const formatRevenue = (revenue: number): string => {
+  if (revenue >= 1000) {
+    const kValue = Math.round(revenue / 1000);
+    return `${kValue}K`;
+  }
+  return revenue.toString();
+};
+
+// Helper function to get formatted value for a location
+export const getLocationValue = (location: WorldMapLocation): string => {
+  return formatRevenue(location.revenue);
 };
 
 // Type guard to check if a location is a WorldMapLocation

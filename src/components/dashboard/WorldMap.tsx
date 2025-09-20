@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { worldMapData } from '../../data/worldMapLocations';
+import { worldMapData, getLocationValue } from '../../data/worldMapLocations';
 import type { WorldMapLocation } from '../../data/worldMapLocations';
 import CoordinateFinder from '../ui/CoordinateFinder';
 
@@ -25,7 +25,7 @@ function LocationMarker({ location, onClick, onHover }: LocationMarkerProps) {
       onClick={() => onClick?.(location)}
       onMouseEnter={() => onHover?.(location)}
       onMouseLeave={() => onHover?.(null)}
-      title={`${location.name}: ${location.value}`}
+      title={`${location.name}: ${getLocationValue(location)}`}
     />
   );
 }
@@ -51,9 +51,9 @@ export default function WorldMap() {
         <h3 className="text-sm font-semibold text-gray-900">Revenue by Location</h3>
       </div>
       
-      <div className="flex items-start gap-6">
+      <div className="space-y-4">
         {/* World Map Visualization - Programmatic */}
-        <div className="flex-shrink-0 relative">
+        <div className="flex justify-center">
           <div 
             className="relative"
             style={{ 
@@ -81,18 +81,17 @@ export default function WorldMap() {
               ))}
             </div>
             
-            {/* Hover tooltip */}
+            {/* Hover tooltip - positioned smartly below marker */}
             {hoveredLocation && (
               <div 
                 className="absolute bg-gray-900 text-white px-2 py-1 rounded text-xs pointer-events-none z-10 whitespace-nowrap"
                 style={{
-                  left: `${hoveredLocation.coordinates.x + 10}px`,
-                  top: `${hoveredLocation.coordinates.y - 30}px`,
+                  left: `${hoveredLocation.coordinates.x}px`,
+                  top: `${hoveredLocation.coordinates.y + 15}px`,
                   transform: 'translate(-50%, 0)'
                 }}
               >
                 <div className="font-medium">{hoveredLocation.name}</div>
-                <div className="text-gray-300">{hoveredLocation.value}</div>
               </div>
             )}
             
@@ -106,24 +105,24 @@ export default function WorldMap() {
           </div>
         </div>
         
-        {/* Location Stats - Data-driven */}
-        <div className="flex-1 space-y-4">
+        {/* Location Stats - Data-driven - Vertical Layout */}
+        <div className="space-y-4">
           {activeLocations.map((location) => (
             <div 
               key={location.id} 
-              className={`space-y-1 p-2 rounded cursor-pointer transition-colors duration-200 ${
-                selectedLocation?.id === location.id 
-                  ? 'bg-blue-50 border border-blue-200' 
-                  : hoveredLocation?.id === location.id
-                  ? 'bg-gray-50'
-                  : ''
-              }`}
+              className={`space-y-1 cursor-pointer transition-colors duration-200`}
               onClick={() => handleLocationClick(location)}
             >
               {/* Location name and value */}
               <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-900">{location.name}</span>
-                <span className="text-xs text-gray-900 font-medium">{location.value}</span>
+                <span className={`text-xs ${
+                  selectedLocation?.id === location.id 
+                    ? 'text-blue-600 font-semibold' 
+                    : 'text-gray-900'
+                }`}>
+                  {location.name}
+                </span>
+                <span className="text-xs text-gray-900 font-medium">{getLocationValue(location)}</span>
               </div>
               
               {/* Progress bar */}
@@ -133,14 +132,6 @@ export default function WorldMap() {
                   style={{ width: `${location.progress}%` }}
                 />
               </div>
-              
-              {/* Additional info when selected */}
-              {selectedLocation?.id === location.id && (
-                <div className="mt-2 text-xs text-gray-600">
-                  <div>Country: {location.country}</div>
-                  <div>Revenue: ${location.revenue?.toLocaleString()}</div>
-                </div>
-              )}
             </div>
           ))}
         </div>
