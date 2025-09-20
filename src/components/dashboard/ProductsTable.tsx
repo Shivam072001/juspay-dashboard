@@ -1,45 +1,50 @@
-import { productsData } from '../../data/mockDashboardData';
+import { memo } from 'react';
+import DashboardCard from '../ui/DashboardCard';
+import { useProductsData } from '../../hooks/useDashboardData';
+import { componentStyles, theme } from '../../styles/theme';
 
-export default function ProductsTable() {
+const ProductsTable = memo(() => {
+  const productsData = useProductsData();
+
   return (
-    <div className="bg-[#F7F9FB] p-6 rounded-2xl w-full flex flex-col">
-      <div className="mb-4">
-        <h3 className="text-sm font-semibold text-gray-900">Top Selling Products</h3>
-      </div>
-      
+    <DashboardCard title="Top Selling Products">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-200">
-              <th className="text-left text-xs text-gray-400 font-normal pb-2 pr-3">Name</th>
-              <th className="text-left text-xs text-gray-400 font-normal pb-2 px-3">Price</th>
-              <th className="text-left text-xs text-gray-400 font-normal pb-2 px-3">Quantity</th>
-              <th className="text-left text-xs text-gray-400 font-normal pb-2 pl-3">Amount</th>
+              <th className={`text-left ${componentStyles.text.muted} pb-2 pr-3`}>Name</th>
+              <th className={`text-left ${componentStyles.text.muted} pb-2 px-3`}>Price</th>
+              <th className={`text-left ${componentStyles.text.muted} pb-2 px-3`}>Quantity</th>
+              <th className={`text-left ${componentStyles.text.muted} pb-2 pl-3`}>Amount</th>
             </tr>
           </thead>
           <tbody className="space-y-2">
             {productsData.map((product, index) => (
               <tr 
                 key={index} 
-                className="hover:bg-white hover:bg-opacity-60 transition-colors duration-200"
+                className={`hover:bg-white hover:bg-opacity-60 ${theme.transitions.colors}`}
               >
                 <td className="py-2 pr-3">
-                  <span className="text-xs text-gray-900">{product.name}</span>
+                  <span className={componentStyles.text.xs}>{product.name}</span>
                 </td>
                 <td className="py-2 px-3">
-                  <span className="text-xs text-gray-900">{product.price}</span>
+                  <span className={componentStyles.text.xs}>{product.price}</span>
                 </td>
                 <td className="py-2 px-3">
-                  <span className="text-xs text-gray-900">{product.quantity}</span>
+                  <span className={componentStyles.text.xs}>{product.quantity}</span>
                 </td>
                 <td className="py-2 pl-3">
-                  <span className="text-xs text-gray-900">{product.amount}</span>
+                  <span className={componentStyles.text.xs}>{product.amount}</span>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </div>
+    </DashboardCard>
   );
-}
+});
+
+ProductsTable.displayName = 'ProductsTable';
+
+export default ProductsTable;

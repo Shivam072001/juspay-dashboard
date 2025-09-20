@@ -1,14 +1,18 @@
+import { memo } from 'react';
 import StatCard from './StatCard';
-import { kpiData } from '../../data/mockDashboardData';
+import { useKPIData } from '../../hooks/useDashboardData';
+import { theme } from '../../styles/theme';
 
-export default function StatsCards() {
+const StatsCards = memo(() => {
+  const kpiData = useKPIData();
+
   return (
     <div 
       className="w-full"
       style={{
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
-        gap: '28px',
+        gap: theme.spacing.xl,
         gridTemplateRows: 'auto auto'
       }}
     >
@@ -17,4 +21,8 @@ export default function StatsCards() {
       ))}
     </div>
   );
-}
+});
+
+StatsCards.displayName = 'StatsCards';
+
+export default StatsCards;

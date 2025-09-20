@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback, memo } from 'react';
 import { worldMapData, getLocationValue } from '../../data/worldMapLocations';
 import type { WorldMapLocation } from '../../data/worldMapLocations';
+import DashboardCard from '../ui/DashboardCard';
 import CoordinateFinder from '../ui/CoordinateFinder';
+import { useActiveLocations, useLocationSelection } from '../../hooks/useDashboardData';
+import { theme } from '../../styles/theme';
 
 interface LocationMarkerProps {
   location: WorldMapLocation;
@@ -9,47 +12,51 @@ interface LocationMarkerProps {
   onHover?: (location: WorldMapLocation | null) => void;
 }
 
-function LocationMarker({ location, onClick, onHover }: LocationMarkerProps) {
+const LocationMarker = memo(({ location, onClick, onHover }: LocationMarkerProps) => {
+  const handleClick = useCallback(() => onClick?.(location), [location, onClick]);
+  const handleMouseEnter = useCallback(() => onHover?.(location), [location, onHover]);
+  const handleMouseLeave = useCallback(() => onHover?.(null), [onHover]);
+
   return (
     <div 
-      className="absolute bg-[#1C1C1C] rounded-full border border-white cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
+      className={`absolute bg-[#1C1C1C] rounded-full border border-white cursor-pointer hover:scale-125 ${theme.transitions.transform}`}
       style={{ 
         width: '8px',
         height: '8px',
         left: `${location.coordinates.x}px`, 
         top: `${location.coordinates.y}px`,
-        filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1))',
+        filter: theme.shadows.sm,
         transform: 'translate(-50%, -50%)',
-        backgroundColor: location.color || '#1C1C1C'
+        backgroundColor: location.color || theme.colors.primary
       }}
-      onClick={() => onClick?.(location)}
-      onMouseEnter={() => onHover?.(location)}
-      onMouseLeave={() => onHover?.(null)}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       title={`${location.name}: ${getLocationValue(location)}`}
     />
   );
-}
+});
 
-export default function WorldMap() {
+LocationMarker.displayName = 'LocationMarker';
+
+const WorldMap = memo(() => {
   const [hoveredLocation, setHoveredLocation] = useState<WorldMapLocation | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<WorldMapLocation | null>(null);
   
-  const activeLocations = worldMapData.locations.filter(loc => loc.isActive);
+  const activeLocations = useActiveLocations();
+  const { handleLocationClick } = useLocationSelection();
 
-  const handleLocationClick = (location: WorldMapLocation) => {
-    setSelectedLocation(selectedLocation?.id === location.id ? null : location);
+  const onLocationClick = useCallback((location: WorldMapLocation) => {
+    handleLocationClick(selectedLocation, location, setSelectedLocation);
     console.log('Location clicked:', location);
-  };
+  }, [selectedLocation, handleLocationClick]);
 
-  const handleLocationHover = (location: WorldMapLocation | null) => {
+  const onLocationHover = useCallback((location: WorldMapLocation | null) => {
     setHoveredLocation(location);
-  };
+  }, []);
 
   return (
-    <div className="bg-[#F7F9FB] p-6 rounded-2xl w-full flex flex-col">
-      <div className="mb-4 text-center">
-        <h3 className="text-sm font-semibold text-[#1C1C1C]">Revenue by Location</h3>
-      </div>
+    <DashboardCard title="Revenue by Location" titleClassName="text-sm font-semibold text-center text-[#1C1C1C]">
       
       <div className="space-y-4">
         {/* World Map Visualization - Programmatic */}
@@ -66,7 +73,7 @@ export default function WorldMap() {
               src="/src/assets/icons/world-map-complete.svg"
               alt="World Map"
               className="w-full h-full drop-shadow-sm" 
-              style={{ filter: 'drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.01))' }}
+              style={{ filter: theme.shadows.md }}
             />
             
             {/* Programmatically rendered location markers */}
@@ -75,8 +82,8 @@ export default function WorldMap() {
                 <LocationMarker
                   key={location.id}
                   location={location}
-                  onClick={handleLocationClick}
-                  onHover={handleLocationHover}
+                  onClick={onLocationClick}
+                  onHover={onLocationHover}
                 />
               ))}
             </div>
@@ -110,8 +117,8 @@ export default function WorldMap() {
           {activeLocations.map((location) => (
             <div 
               key={location.id} 
-              className={`space-y-1 cursor-pointer transition-colors duration-200`}
-              onClick={() => handleLocationClick(location)}
+              className={`space-y-1 cursor-pointer ${theme.transitions.colors}`}
+              onClick={() => onLocationClick(location)}
             >
               {/* Location name and value */}
               <div className="flex items-center justify-between">
@@ -128,7 +135,7 @@ export default function WorldMap() {
               {/* Progress bar */}
               <div className="h-1 bg-white bg-opacity-20 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-[#A8C5DA] rounded-full transition-all duration-300 ease-out"
+                  className={`h-full bg-[#A8C5DA] rounded-full ${theme.transitions.slow}`}
                   style={{ width: `${location.progress}%` }}
                 />
               </div>
@@ -145,6 +152,10 @@ export default function WorldMap() {
           Selected: {selectedLocation?.name || 'None'}
         </div>
       )}
-    </div>
+    </DashboardCard>
   );
-}
+});
+
+WorldMap.displayName = 'WorldMap';
+
+export default WorldMap;

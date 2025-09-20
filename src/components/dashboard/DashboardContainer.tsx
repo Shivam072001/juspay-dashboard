@@ -1,44 +1,52 @@
-import StatsCards from './StatsCards'
-import ProjectionsChart from './ProjectionsChart'
-import RevenueChart from './RevenueChart'
-import WorldMap from './WorldMap'
-import SalesChart from './SalesChart'
-import ProductsTable from './ProductsTable'
+import { memo } from 'react';
+import {
+  LazyStatsCards,
+  LazyProjectionsChart,
+  LazyRevenueChart,
+  LazyWorldMap,
+  LazySalesChart,
+  LazyProductsTable
+} from './LazyDashboard';
+import { theme } from '../../styles/theme';
 
-export default function DashboardContainer() {
+const DashboardContainer = memo(() => {
   return (
-    <div className="w-full flex flex-col gap-7">
-      <h1 className="text-2xl font-bold text-gray-900 text-left">Dashboard</h1>
+    <div className="w-full flex flex-col" style={{ gap: theme.spacing.xl }}>
+      <h1 className="text-2xl font-bold text-gray-900 text-left">eCommerce</h1>
       
       {/* Row 1: Stats Cards (max-width) + Projections Chart (remaining space) */}
-      <div className="flex flex-col lg:flex-row gap-7 w-full">
+      <div className="flex flex-col lg:flex-row w-full" style={{ gap: theme.spacing.xl }}>
         <div className="w-full lg:w-auto lg:max-w-[520px] lg:flex-shrink-0">
-          <StatsCards />
+          <LazyStatsCards />
         </div>
         <div className="w-full lg:flex-1 lg:min-w-0">
-          <ProjectionsChart />
+          <LazyProjectionsChart />
         </div>
       </div>
       
       {/* Row 2: Revenue Chart (70%) + World Map (30%) */}
-      <div className="flex flex-col lg:flex-row gap-7 w-full lg:items-stretch">
+      <div className="flex flex-col lg:flex-row w-full lg:items-stretch" style={{ gap: theme.spacing.xl }}>
         <div className="w-full lg:flex-[7] lg:min-w-0 flex">
-          <RevenueChart />
+          <LazyRevenueChart />
         </div>
         <div className="w-full lg:flex-[3] lg:min-w-0 flex">
-          <WorldMap />
+          <LazyWorldMap />
         </div>
       </div>
       
       {/* Row 3: Products Table (70%) + Sales Chart (30%) */}
-      <div className="flex flex-col lg:flex-row gap-7 w-full lg:items-stretch">
+      <div className="flex flex-col lg:flex-row w-full lg:items-stretch" style={{ gap: theme.spacing.xl }}>
         <div className="w-full lg:flex-[7] lg:min-w-0 flex">
-          <ProductsTable />
+          <LazyProductsTable />
         </div>
         <div className="w-full lg:flex-[3] lg:min-w-0 flex">
-          <SalesChart />
+          <LazySalesChart />
         </div>
       </div>
     </div>
   );
-}
+});
+
+DashboardContainer.displayName = 'DashboardContainer';
+
+export default DashboardContainer;

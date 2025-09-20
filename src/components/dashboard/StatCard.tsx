@@ -1,10 +1,12 @@
+import { memo } from 'react';
 import type { KPIData } from '../../data/mockDashboardData';
+import { theme } from '../../styles/theme';
 
 interface StatCardProps {
   data: KPIData;
 }
 
-export default function StatCard({ data }: StatCardProps) {
+const StatCard = memo(({ data }: StatCardProps) => {
   const { title, value, change, isPositive, bgColor } = data;
   
   return (
@@ -12,11 +14,11 @@ export default function StatCard({ data }: StatCardProps) {
         className="w-full rounded-2xl"
         style={{ 
           backgroundColor: bgColor, 
-          fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
-          padding: '24px',
+          fontFamily: theme.typography.fontFamily,
+          padding: theme.spacing.lg,
           display: 'flex',
           flexDirection: 'column',
-          gap: '8px'
+          gap: theme.spacing.sm
         }}
       >
       {/* Title */}
@@ -24,11 +26,11 @@ export default function StatCard({ data }: StatCardProps) {
         <h3 
           className="text-black" 
           style={{ 
-            fontSize: '14px', 
-            lineHeight: '1.4285714285714286em', 
-            fontWeight: 600,
+            fontSize: theme.typography.sizes.sm, 
+            lineHeight: theme.typography.lineHeights.normal, 
+            fontWeight: theme.typography.weights.semibold,
             margin: 0,
-            fontFamily: 'Inter, sans-serif',
+            fontFamily: theme.typography.fontFamily,
             textAlign: 'left'
           }}
         >
@@ -44,10 +46,10 @@ export default function StatCard({ data }: StatCardProps) {
         <div 
           className="text-black" 
           style={{ 
-            fontSize: '24px', 
-            lineHeight: '1.5em', 
-            fontWeight: 600,
-            fontFamily: 'Inter, sans-serif',
+            fontSize: theme.typography.sizes.xl, 
+            lineHeight: theme.typography.lineHeights.relaxed, 
+            fontWeight: theme.typography.weights.semibold,
+            fontFamily: theme.typography.fontFamily,
             flex: '1',
             textAlign: 'left'
           }}
@@ -58,17 +60,17 @@ export default function StatCard({ data }: StatCardProps) {
         <div 
           className="flex items-center flex-shrink-0" 
           style={{ 
-            gap: '4px',
-            marginLeft: '8px'
+            gap: theme.spacing.xs,
+            marginLeft: theme.spacing.sm
           }}
         >
           <span 
             className="text-black whitespace-nowrap" 
             style={{ 
-              fontSize: '12px', 
-              lineHeight: '1.5em', 
-              fontWeight: 400,
-              fontFamily: 'Inter, sans-serif',
+              fontSize: theme.typography.sizes.xs, 
+              lineHeight: theme.typography.lineHeights.relaxed, 
+              fontWeight: theme.typography.weights.normal,
+              fontFamily: theme.typography.fontFamily,
               textAlign: 'left'
             }}
           >
@@ -109,4 +111,8 @@ export default function StatCard({ data }: StatCardProps) {
       </div>
     </div>
   );
-}
+});
+
+StatCard.displayName = 'StatCard';
+
+export default StatCard;
