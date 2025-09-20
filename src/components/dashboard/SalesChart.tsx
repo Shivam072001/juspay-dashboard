@@ -1,11 +1,11 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import { salesData } from '../../data/mockDashboardData';
 import { useState } from 'react';
 
 export default function SalesChart() {
   const [activeIndex, setActiveIndex] = useState<number | undefined>(undefined);
 
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Array<{ value: number }> }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-gray-900 bg-opacity-80 backdrop-blur-xl px-2 py-1 rounded-lg">
@@ -16,7 +16,7 @@ export default function SalesChart() {
     return null;
   };
 
-  const onPieEnter = (_: any, index: number) => {
+  const onPieEnter = (_: unknown, index: number) => {
     setActiveIndex(index);
   };
 
@@ -33,31 +33,29 @@ export default function SalesChart() {
       {/* Pie Chart */}
       <div className="relative mb-6">
         <div className="w-30 h-30">
-          <ResponsiveContainer width={120} height={120}>
-            <PieChart>
-              <Pie
-                data={salesData}
-                cx="50%"
-                cy="50%"
-                innerRadius={30}
-                outerRadius={50}
-                paddingAngle={2}
-                dataKey="value"
-                onMouseEnter={onPieEnter}
-                onMouseLeave={onPieLeave}
-              >
-                {salesData.map((entry, index) => (
-                  <Cell 
-                    key={`cell-${index}`} 
-                    fill={entry.color}
-                    stroke={activeIndex === index ? "#FFFFFF" : "none"}
-                    strokeWidth={activeIndex === index ? 2 : 0}
-                  />
-                ))}
-              </Pie>
-              <Tooltip content={<CustomTooltip />} />
-            </PieChart>
-          </ResponsiveContainer>
+          <PieChart width={120} height={120}>
+            <Pie
+              data={salesData}
+              cx="50%"
+              cy="50%"
+              innerRadius={30}
+              outerRadius={50}
+              paddingAngle={2}
+              dataKey="value"
+              onMouseEnter={onPieEnter}
+              onMouseLeave={onPieLeave}
+            >
+              {salesData.map((entry, index) => (
+                <Cell 
+                  key={`cell-${index}`} 
+                  fill={entry.color}
+                  stroke={activeIndex === index ? "#FFFFFF" : "none"}
+                  strokeWidth={activeIndex === index ? 2 : 0}
+                />
+              ))}
+            </Pie>
+            <Tooltip content={<CustomTooltip />} />
+          </PieChart>
         </div>
       </div>
       
