@@ -2,23 +2,50 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 
 import { projectionsData } from '../../data/mockDashboardData';
 
 export default function ProjectionsChart() {
+  // Transform data for stacked bars: bottom=actual, top=projected gap
+  const transformedData = projectionsData.map(item => ({
+    month: item.month,
+    actual: item.actual,
+    projectedGap: item.projected - item.actual
+  }));
+
   return (
-    <div className="bg-[#F7F9FB] p-6 rounded-2xl h-full">
-      <div className="mb-4">
-        <h3 className="text-sm font-semibold text-gray-900">Projections vs Actuals</h3>
+    <div 
+      className="rounded-2xl h-full"
+      style={{
+        backgroundColor: '#F7F9FB',
+        padding: '24px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px'
+      }}
+    >
+      <div>
+        <h3 
+          style={{ 
+            fontSize: '14px', 
+            lineHeight: '1.4285714285714286em', 
+            fontWeight: 600,
+            margin: 0,
+            fontFamily: 'Inter, sans-serif',
+            color: '#1C1C1C'
+          }}
+        >
+          Projections vs Actuals
+        </h3>
       </div>
       
-      <div className="h-[200px]">
+      <div style={{ height: '200px', flex: 1 }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={projectionsData}
+            data={transformedData}
             margin={{
-              top: 20,
-              right: 30,
-              left: 20,
-              bottom: 5,
+              top: 16,
+              right: 0,
+              left: 16,
+              bottom: 28,
             }}
-            barCategoryGap="20%"
+            barCategoryGap={8}
           >
             <CartesianGrid 
               strokeDasharray="none" 
@@ -30,28 +57,40 @@ export default function ProjectionsChart() {
               dataKey="month" 
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: 'rgba(28, 28, 28, 0.4)' }}
+              tick={{ 
+                fontSize: 12, 
+                fill: 'rgba(28, 28, 28, 0.4)',
+                fontFamily: 'Inter, sans-serif',
+                textAnchor: 'middle'
+              }}
               dy={10}
             />
             <YAxis 
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 12, fill: 'rgba(28, 28, 28, 0.4)' }}
+              tick={{ 
+                fontSize: 12, 
+                fill: 'rgba(28, 28, 28, 0.4)',
+                fontFamily: 'Inter, sans-serif',
+                textAnchor: 'middle'
+              }}
               domain={[0, 35]}
               ticks={[0, 10, 20, 30]}
-              tickFormatter={(value) => `${value}M`}
+              tickFormatter={(value) => value === 0 ? '0' : `${value}M`}
               dx={-10}
             />
             <Bar 
-              dataKey="projected" 
+              dataKey="actual" 
+              stackId="a"
               fill="#A8C5DA" 
-              opacity={0.5}
-              radius={[4, 4, 0, 0]}
+              radius={[0, 0, 0, 0]}
               maxBarSize={20}
             />
             <Bar 
-              dataKey="actual" 
+              dataKey="projectedGap" 
+              stackId="a"
               fill="#A8C5DA" 
+              opacity={0.5}
               radius={[4, 4, 0, 0]}
               maxBarSize={20}
             />

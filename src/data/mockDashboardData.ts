@@ -73,23 +73,25 @@ export const kpiData: KPIData[] = [
 ];
 
 // Projections vs Actuals Chart Data (6 months)
+// Based on Figma design: 3 full bars (Feb, Apr, May) and 3 stacked bars (Jan, Mar, Jun)
 export const projectionsData: ProjectionData[] = [
-  { month: "Jan", actual: 15, projected: 25 },
-  { month: "Feb", actual: 22, projected: 20 },
-  { month: "Mar", actual: 18, projected: 28 },
-  { month: "Apr", actual: 30, projected: 25 },
-  { month: "May", actual: 12, projected: 20 },
-  { month: "Jun", actual: 22, projected: 20 }
+  { month: "Jan", actual: 15, projected: 25 },  // Stacked: 15 + 10 gap
+  { month: "Feb", actual: 20, projected: 22 },  // Full bar: no gap
+  { month: "Mar", actual: 18, projected: 28 },  // Stacked: 18 + 10 gap  
+  { month: "Apr", actual: 28, projected: 30 },  // Full bar: no gap
+  { month: "May", actual: 17, projected: 20 },  // Full bar: no gap
+  { month: "Jun", actual: 22, projected: 24 }   // Stacked: 22 + 2 gap
 ];
 
 // Revenue Chart Data (Line chart with two series)
+// Based on exact Figma design patterns
 export const revenueChartData: RevenueData[] = [
-  { month: "Jan", currentWeek: 20, previousWeek: 25 },
-  { month: "Feb", currentWeek: 25, previousWeek: 22 },
-  { month: "Mar", currentWeek: 15, previousWeek: 28 },
-  { month: "Apr", currentWeek: 32, previousWeek: 20 },
+  { month: "Jan", currentWeek: 20, previousWeek: 24 },
+  { month: "Feb", currentWeek: 25, previousWeek: 28 },
+  { month: "Mar", currentWeek: 15, previousWeek: 22 },
+  { month: "Apr", currentWeek: 32, previousWeek: 18 },
   { month: "May", currentWeek: 18, previousWeek: 25 },
-  { month: "Jun", currentWeek: 28, previousWeek: 24 }
+  { month: "Jun", currentWeek: 28, previousWeek: 27 }
 ];
 
 // Location Stats from Figma
