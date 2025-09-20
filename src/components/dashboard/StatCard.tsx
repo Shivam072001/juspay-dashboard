@@ -24,7 +24,7 @@ const StatCard = memo(({ data }: StatCardProps) => {
       {/* Title */}
       <div>
         <h3 
-          className="text-black" 
+          className="text-foreground" 
           style={{ 
             fontSize: theme.typography.sizes.sm, 
             lineHeight: theme.typography.lineHeights.normal, 
@@ -44,7 +44,7 @@ const StatCard = memo(({ data }: StatCardProps) => {
         style={{ width: '100%' }}
       >
         <div 
-          className="text-black" 
+          className="text-foreground" 
           style={{ 
             fontSize: theme.typography.sizes.xl, 
             lineHeight: theme.typography.lineHeights.relaxed, 
@@ -65,7 +65,7 @@ const StatCard = memo(({ data }: StatCardProps) => {
           }}
         >
           <span 
-            className="text-black whitespace-nowrap" 
+            className="text-foreground whitespace-nowrap" 
             style={{ 
               fontSize: theme.typography.sizes.xs, 
               lineHeight: theme.typography.lineHeights.relaxed, 

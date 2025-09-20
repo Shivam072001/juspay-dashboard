@@ -62,7 +62,7 @@ export default function AppLayout() {
       <div className="flex h-screen w-full max-w-none xl:mx-auto transition-all duration-300 ease-in-out relative">
         {/* Left Sidebar */}
         <div 
-          className={`border-r border-gray-100 transition-all duration-300 ease-in-out overflow-hidden bg-white flex-shrink-0 ${
+          className={`border-r border-border theme-transition overflow-hidden bg-background flex-shrink-0 ${
             isLeftPanelOpen ? 'opacity-100' : 'opacity-0'
           } ${isMobileOverlay ? 'fixed left-0 top-0 h-full z-50 shadow-xl' : ''}`}
           style={{ 
@@ -76,19 +76,19 @@ export default function AppLayout() {
         {/* Main Content Area */}
         <div className="flex flex-col flex-1 min-w-0">
           {/* Header */}
-          <div className="border-b border-gray-100 bg-white z-30 flex-shrink-0">
+          <div className="border-b border-border bg-background z-30 flex-shrink-0 theme-transition">
             <Header />
           </div>
           
           {/* Dashboard Content */}
-          <div className="p-4 md:p-6 overflow-auto bg-white flex-1">
+          <div className="p-4 md:p-6 overflow-auto bg-background flex-1 theme-transition">
             <DashboardContainer />
           </div>
         </div>
         
         {/* Right Panel */}
         <div 
-          className={`border-l border-gray-100 bg-white transition-all duration-300 ease-in-out overflow-hidden flex-shrink-0 ${
+          className={`border-l border-border bg-background theme-transition overflow-hidden flex-shrink-0 ${
             isRightPanelOpen ? 'opacity-100' : 'opacity-0'
           } ${typeof window !== 'undefined' && window.innerWidth < 1024 ? 'hidden' : ''}`}
           style={{ width: rightPanelWidth }}

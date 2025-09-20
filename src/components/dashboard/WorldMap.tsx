@@ -91,7 +91,7 @@ const WorldMap = memo(() => {
             {/* Hover tooltip - positioned smartly below marker */}
             {hoveredLocation && (
               <div 
-                className="absolute bg-gray-900 text-white px-2 py-1 rounded text-xs pointer-events-none z-10 whitespace-nowrap"
+                className="absolute bg-card border border-border text-foreground px-2 py-1 rounded text-xs pointer-events-none z-10 whitespace-nowrap shadow-md"
                 style={{
                   left: `${hoveredLocation.coordinates.x}px`,
                   top: `${hoveredLocation.coordinates.y + 15}px`,
@@ -124,16 +124,16 @@ const WorldMap = memo(() => {
               <div className="flex items-center justify-between">
                 <span className={`text-xs ${
                   selectedLocation?.id === location.id 
-                    ? 'text-blue-600 font-semibold' 
-                    : 'text-gray-900'
+                    ? 'text-primary font-semibold' 
+                    : 'text-foreground'
                 }`}>
                   {location.name}
                 </span>
-                <span className="text-xs text-gray-900 font-medium">{getLocationValue(location)}</span>
+                <span className="text-xs text-foreground font-medium">{getLocationValue(location)}</span>
               </div>
               
               {/* Progress bar */}
-              <div className="h-1 bg-white bg-opacity-20 rounded-full overflow-hidden">
+              <div className="h-1 bg-muted rounded-full overflow-hidden">
                 <div 
                   className={`h-full bg-[#A8C5DA] rounded-full ${theme.transitions.slow}`}
                   style={{ width: `${location.progress}%` }}

@@ -81,9 +81,9 @@ function GenericListItem({
     return (
       <div 
         ref={itemRef}
-        className={`flex gap-2 p-1 rounded-lg cursor-pointer transition-all duration-150 ${
+        className={`flex gap-2 p-1 rounded-lg cursor-pointer theme-transition ${
           isRead ? 'opacity-70' : ''
-        } ${isHovered ? 'bg-gray-50' : ''}`}
+        } ${isHovered ? 'bg-hover' : ''}`}
         onClick={handleClick}
         onDoubleClick={handleDoubleClick}
         onKeyDown={handleKeyDown}
@@ -113,19 +113,19 @@ function GenericListItem({
         
         {/* Content */}
         <div className="flex flex-col flex-1 min-w-0">
-          <p className={`text-sm font-normal leading-[1.4285714285714286] truncate transition-colors duration-150 ${
-            isRead ? 'text-[rgba(28,28,28,0.6)]' : 'text-[#1C1C1C]'
+          <p className={`text-sm font-normal leading-[1.4285714285714286] truncate theme-transition ${
+            isRead ? 'text-muted-foreground' : 'text-foreground'
           }`}>
             {notification.title}
           </p>
-          <p className="text-xs font-normal text-[rgba(28,28,28,0.4)] leading-[1.5] truncate">
+          <p className="text-xs font-normal text-muted-foreground leading-[1.5] truncate">
             {notification.time}
           </p>
         </div>
         
         {/* Unread indicator */}
         {!isRead && (
-          <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0 self-center animate-pulse" />
+          <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0 self-center animate-pulse" />
         )}
       </div>
     );
@@ -138,8 +138,8 @@ function GenericListItem({
     return (
       <div 
         ref={itemRef}
-        className={`flex gap-2 p-1 rounded-lg cursor-pointer transition-all duration-150 ${
-          isHovered ? 'bg-gray-50' : ''
+        className={`flex gap-2 p-1 rounded-lg cursor-pointer theme-transition ${
+          isHovered ? 'bg-hover' : ''
         }`}
         onClick={handleClick}
         onDoubleClick={handleDoubleClick}
@@ -155,23 +155,23 @@ function GenericListItem({
           <img 
             src={activity.avatar} 
             alt="" 
-            className={`w-6 h-6 rounded-full object-cover relative z-10 transition-all duration-150 ${
-              isHovered ? 'ring-2 ring-blue-200 scale-105' : ''
+            className={`w-6 h-6 rounded-full object-cover relative z-10 theme-transition ${
+              isHovered ? 'ring-2 ring-primary/20 scale-105' : ''
             }`}
             loading="lazy"
           />
           {/* Timeline connector - maintaining exact same design */}
           {!isLast && (
-            <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-px h-3.5 bg-[rgba(28,28,28,0.1)]"></div>
+            <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-px h-3.5 bg-border"></div>
           )}
         </div>
         
         {/* Content */}
         <div className="flex flex-col flex-1 min-w-0">
-          <p className="text-sm font-normal text-[#1C1C1C] leading-[1.4285714285714286] truncate transition-colors duration-150">
+          <p className="text-sm font-normal text-foreground leading-[1.4285714285714286] truncate theme-transition">
             {activity.title}
           </p>
-          <p className="text-xs font-normal text-[rgba(28,28,28,0.4)] leading-[1.5] truncate">
+          <p className="text-xs font-normal text-muted-foreground leading-[1.5] truncate">
             {activity.time}
           </p>
         </div>
@@ -187,8 +187,8 @@ function GenericListItem({
     return (
       <div 
         ref={itemRef}
-        className={`flex gap-2 p-1 rounded-lg cursor-pointer transition-all duration-150 ${
-          isHovered ? 'bg-gray-50' : ''
+        className={`flex gap-2 p-1 rounded-lg cursor-pointer theme-transition ${
+          isHovered ? 'bg-hover' : ''
         }`}
         onClick={handleClick}
         onDoubleClick={handleDoubleClick}
@@ -204,21 +204,21 @@ function GenericListItem({
           <img 
             src={contact.avatar} 
             alt="" 
-            className={`w-6 h-6 rounded-full object-cover transition-all duration-150 ${
-              isHovered ? 'ring-2 ring-blue-200 scale-105' : ''
+            className={`w-6 h-6 rounded-full object-cover theme-transition ${
+              isHovered ? 'ring-2 ring-primary/20 scale-105' : ''
             }`}
             loading="lazy"
           />
           {/* Online indicator */}
           {isOnline && (
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-white rounded-full animate-pulse" />
+            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-background rounded-full animate-pulse" />
           )}
         </div>
         
         {/* Name with online status */}
         <div className="flex items-center flex-1 min-w-0">
-          <p className={`text-sm font-normal leading-[1.4285714285714286] truncate transition-colors duration-150 ${
-            isOnline ? 'text-[#1C1C1C]' : 'text-[rgba(28,28,28,0.7)]'
+          <p className={`text-sm font-normal leading-[1.4285714285714286] truncate theme-transition ${
+            isOnline ? 'text-foreground' : 'text-muted-foreground'
           }`}>
             {contact.name}
           </p>

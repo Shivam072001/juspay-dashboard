@@ -27,17 +27,30 @@ function SidebarTabs({ onTabChange }: SidebarTabsProps) {
   }, [handleTabClick]);
 
   return (
-    <div className="flex items-center gap-1 w-full" role="tablist" aria-label="Sidebar tabs">
+    <div className="flex items-center gap-2 w-full" role="tablist" aria-label="Sidebar tabs">
       {tabs.map((tab) => {
         const isActive = activeTab === tab.id;
         return (
           <button
             key={tab.id}
-            className={`flex items-center justify-center gap-1 px-2 py-1 text-sm font-normal rounded-lg transition-all duration-150 ${
-              isActive 
-                ? 'text-[rgba(28,28,28,0.7)] bg-gray-50' 
-                : 'text-[rgba(28,28,28,0.4)] hover:bg-gray-50 hover:text-[rgba(28,28,28,0.6)]'
-            }`}
+            className="flex items-center justify-center gap-1 px-2 py-1 text-[14px] font-[400] rounded-lg theme-transition"
+            style={{ 
+              lineHeight: '1.4285714285714286em',
+              color: isActive ? 'var(--color-sidebar-text-primary)' : 'var(--color-sidebar-text-secondary)',
+              backgroundColor: isActive ? 'var(--color-card)' : 'transparent'
+            }}
+            onMouseEnter={(e) => {
+              if (!isActive) {
+                e.currentTarget.style.backgroundColor = 'var(--color-sidebar-bg-hover)';
+                e.currentTarget.style.color = 'var(--color-sidebar-text-primary)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isActive) {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = 'var(--color-sidebar-text-secondary)';
+              }
+            }}
             onClick={() => handleTabClick(tab.id)}
             onKeyDown={(e) => handleKeyDown(e, tab.id)}
             role="tab"

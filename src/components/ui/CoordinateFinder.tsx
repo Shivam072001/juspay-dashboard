@@ -103,16 +103,16 @@ export default function CoordinateFinder({ viewBox, onCoordinateFound }: Coordin
       
       {/* Control Panel - Bottom Right */}
       <div className="fixed bottom-4 right-4 z-50">
-        <div className="bg-white shadow-lg rounded-lg border border-gray-200 p-3 min-w-[250px]">
+        <div className="bg-card shadow-lg rounded-lg border border-border p-3 min-w-[250px]">
           {/* Header */}
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xs font-semibold text-gray-700">Coordinate Finder</h3>
+            <h3 className="text-xs font-semibold text-foreground">Coordinate Finder</h3>
             <button
               onClick={() => setIsEnabled(!isEnabled)}
               className={`px-2 py-1 text-xs rounded transition-colors ${
                 isEnabled 
                   ? 'bg-green-100 text-green-700 border border-green-200' 
-                  : 'bg-gray-100 text-gray-600 border border-gray-200'
+                  : 'bg-muted text-muted-foreground border border-border'
               }`}
             >
               {isEnabled ? '✅ Enabled' : '❌ Disabled'}
@@ -133,9 +133,9 @@ export default function CoordinateFinder({ viewBox, onCoordinateFound }: Coordin
           {/* Coordinates Display */}
           {lastCoordinates && (
             <div className="space-y-2">
-              <div className="bg-gray-50 p-2 rounded text-xs font-mono">
-                <div className="text-gray-600">Coordinates:</div>
-                <div className="text-gray-900 font-semibold">
+              <div className="bg-muted p-2 rounded text-xs font-mono">
+                <div className="text-muted-foreground">Coordinates:</div>
+                <div className="text-foreground font-semibold">
                   x: {lastCoordinates.x}, y: {lastCoordinates.y}
                 </div>
               </div>
@@ -144,13 +144,13 @@ export default function CoordinateFinder({ viewBox, onCoordinateFound }: Coordin
               <div className="flex gap-2">
                 <button
                   onClick={copyToClipboard}
-                  className="flex-1 bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1.5 rounded transition-colors"
+                  className="flex-1 bg-primary hover:bg-primary/80 text-primary-foreground text-xs px-3 py-1.5 rounded transition-colors"
                 >
                   {showCopiedFeedback ? '✅ Copied!' : '📋 Copy Coords'}
                 </button>
                 <button
                   onClick={generateLocationTemplate}
-                  className="flex-1 bg-purple-500 hover:bg-purple-600 text-white text-xs px-3 py-1.5 rounded transition-colors"
+                  className="flex-1 bg-secondary hover:bg-secondary/80 text-primary-foreground text-xs px-3 py-1.5 rounded transition-colors"
                 >
                   📝 Template
                 </button>

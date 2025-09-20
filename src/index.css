@@ -1,1 +1,147 @@
 @import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-primary: #1C1C1C;
+  --color-secondary: #A8C5DA;
+  --color-accent: #E3F5FF;
+  --color-muted: #E5ECF6;
+  --color-card: #F7F9FB;
+  --color-background: #FFFFFF;
+  --color-foreground: #1C1C1C;
+  --color-muted-foreground: rgba(28, 28, 28, 0.4);
+  --color-border: rgba(28, 28, 28, 0.05);
+  --color-primary-foreground: #FFFFFF;
+  --color-hover: rgba(28, 28, 28, 0.08);
+  --color-active: rgba(28, 28, 28, 0.12);
+  
+  /* Sidebar specific colors for light mode */
+  --color-sidebar-text-primary: #1C1C1C;
+  --color-sidebar-text-secondary: rgba(28, 28, 28, 0.4);
+  --color-sidebar-text-inactive: rgba(28, 28, 28, 0.2);
+  --color-sidebar-bg-selected: rgba(28, 28, 28, 0.05);
+  --color-sidebar-bg-hover: rgba(28, 28, 28, 0.02);
+  --color-sidebar-border: rgba(28, 28, 28, 0.1);
+  --color-sidebar-indicator: #1C1C1C;
+  
+  /* Chart colors - consistent across all themes */
+  --color-chart-1: #1C1C1C;
+  --color-chart-2: #A8C5DA;
+  --color-chart-3: #BAEDBD;
+  --color-chart-4: #95A4FC;
+  --color-chart-5: #B1E3FF;
+}
+
+/* System preference for dark mode (lower specificity) */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --color-primary: #FFFFFF;
+    --color-secondary: #7C97B8;
+    --color-accent: #1E293B;
+    --color-muted: #334155;
+    --color-card: #1E293B;
+    --color-background: #0F172A;
+    --color-foreground: #F8FAFC;
+    --color-muted-foreground: rgba(248, 250, 252, 0.7);
+    --color-border: rgba(248, 250, 252, 0.1);
+    --color-primary-foreground: #0F172A;
+    --color-hover: rgba(248, 250, 252, 0.1);
+    --color-active: rgba(248, 250, 252, 0.15);
+    
+    /* Sidebar specific colors for dark mode */
+    --color-sidebar-text-primary: #FFFFFF;
+    --color-sidebar-text-secondary: rgba(255, 255, 255, 0.4);
+    --color-sidebar-text-inactive: rgba(255, 255, 255, 0.2);
+    --color-sidebar-bg-selected: rgba(255, 255, 255, 0.1);
+    --color-sidebar-bg-hover: rgba(255, 255, 255, 0.05);
+    --color-sidebar-border: rgba(255, 255, 255, 0.1);
+    --color-sidebar-indicator: #C6C7F8;
+    
+    /* Chart colors - consistent across all themes */
+    --color-chart-1: #1C1C1C;
+    --color-chart-2: #A8C5DA;
+    --color-chart-3: #BAEDBD;
+    --color-chart-4: #95A4FC;
+    --color-chart-5: #B1E3FF;
+  }
+}
+
+/* Manual light mode override (higher specificity) */
+.light {
+  --color-primary: #1C1C1C !important;
+  --color-secondary: #A8C5DA !important;
+  --color-accent: #E3F5FF !important;
+  --color-muted: #E5ECF6 !important;
+  --color-card: #F7F9FB !important;
+  --color-background: #FFFFFF !important;
+  --color-foreground: #1C1C1C !important;
+  --color-muted-foreground: rgba(28, 28, 28, 0.4) !important;
+  --color-border: rgba(28, 28, 28, 0.05) !important;
+  --color-primary-foreground: #FFFFFF !important;
+  --color-hover: rgba(28, 28, 28, 0.08) !important;
+  --color-active: rgba(28, 28, 28, 0.12) !important;
+  
+  /* Sidebar specific colors for light mode */
+  --color-sidebar-text-primary: #1C1C1C !important;
+  --color-sidebar-text-secondary: rgba(28, 28, 28, 0.4) !important;
+  --color-sidebar-text-inactive: rgba(28, 28, 28, 0.2) !important;
+  --color-sidebar-bg-selected: rgba(28, 28, 28, 0.05) !important;
+  --color-sidebar-bg-hover: rgba(28, 28, 28, 0.02) !important;
+  --color-sidebar-border: rgba(28, 28, 28, 0.1) !important;
+  --color-sidebar-indicator: #1C1C1C !important;
+  
+  /* Chart colors - consistent across themes */
+  --color-chart-1: #1C1C1C !important;
+  --color-chart-2: #A8C5DA !important;
+  --color-chart-3: #BAEDBD !important;
+  --color-chart-4: #95A4FC !important;
+  --color-chart-5: #B1E3FF !important;
+}
+
+/* Manual dark mode override (higher specificity) */
+.dark {
+  --color-primary: #FFFFFF !important;
+  --color-secondary: #7C97B8 !important;
+  --color-accent: #1E293B !important;
+  --color-muted: #334155 !important;
+  --color-card: #1E293B !important;
+  --color-background: #0F172A !important;
+  --color-foreground: #F8FAFC !important;
+  --color-muted-foreground: rgba(248, 250, 252, 0.7) !important;
+  --color-border: rgba(248, 250, 252, 0.1) !important;
+  --color-primary-foreground: #0F172A !important;
+  --color-hover: rgba(248, 250, 252, 0.1) !important;
+  --color-active: rgba(248, 250, 252, 0.15) !important;
+  
+  /* Sidebar specific colors for dark mode */
+  --color-sidebar-text-primary: #FFFFFF !important;
+  --color-sidebar-text-secondary: rgba(255, 255, 255, 0.4) !important;
+  --color-sidebar-text-inactive: rgba(255, 255, 255, 0.2) !important;
+  --color-sidebar-bg-selected: rgba(255, 255, 255, 0.1) !important;
+  --color-sidebar-bg-hover: rgba(255, 255, 255, 0.05) !important;
+  --color-sidebar-border: rgba(255, 255, 255, 0.1) !important;
+  --color-sidebar-indicator: #C6C7F8 !important;
+  
+  /* Chart colors - consistent across themes */
+  --color-chart-1: #1C1C1C !important;
+  --color-chart-2: #A8C5DA !important;
+  --color-chart-3: #BAEDBD !important;
+  --color-chart-4: #95A4FC !important;
+  --color-chart-5: #B1E3FF !important;
+}
+
+/* Global styles with theme awareness */
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Custom utility classes */
+.theme-transition {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}

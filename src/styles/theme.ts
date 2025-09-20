@@ -1,26 +1,26 @@
 // Shared theme constants for consistent styling across dashboard components
 export const theme = {
-  // Colors
+  // Colors - using CSS custom properties for theme-aware values
   colors: {
-    primary: '#1C1C1C',
-    secondary: '#A8C5DA',
+    primary: 'rgb(var(--color-primary))',
+    secondary: 'rgb(var(--color-secondary))',
     background: {
-      card: '#F7F9FB',
-      primary: '#E3F5FF',
-      secondary: '#E5ECF6',
+      card: 'rgb(var(--color-card))',
+      primary: 'rgb(var(--color-accent))',
+      secondary: 'rgb(var(--color-muted))',
     },
     text: {
-      primary: '#1C1C1C',
-      secondary: 'rgba(28, 28, 28, 0.4)',
-      muted: 'rgba(28, 28, 28, 0.2)',
-      light: '#FFFFFF',
+      primary: 'rgb(var(--color-foreground))',
+      secondary: 'rgb(var(--color-muted-foreground))',
+      muted: 'rgb(var(--color-muted-foreground) / 0.6)',
+      light: 'rgb(var(--color-primary-foreground))',
     },
-    border: 'rgba(28, 28, 28, 0.05)',
+    border: 'rgb(var(--color-border))',
     sales: {
-      direct: '#1C1C1C',
-      affiliate: '#BAEDBD', 
-      sponsored: '#95A4FC',
-      email: '#B1E3FF',
+      direct: 'rgb(var(--color-chart-1))',
+      affiliate: 'rgb(var(--color-chart-3))', 
+      sponsored: 'rgb(var(--color-chart-4))',
+      email: 'rgb(var(--color-chart-5))',
     },
   },
 
@@ -123,19 +123,19 @@ export const chartTheme = {
 export const componentStyles = {
   card: {
     base: 'rounded-2xl w-full',
-    background: 'bg-[#F7F9FB]',
+    background: 'bg-card',
     padding: 'p-6',
-    full: 'bg-[#F7F9FB] p-6 rounded-2xl w-full',
+    full: 'bg-card p-6 rounded-2xl w-full theme-transition',
   },
   title: {
-    base: 'font-semibold text-gray-900',
-    small: 'text-sm font-semibold text-gray-900',
-    medium: 'text-base font-semibold text-gray-900',
+    base: 'font-semibold text-foreground',
+    small: 'text-sm font-semibold text-foreground',
+    medium: 'text-base font-semibold text-foreground',
   },
   text: {
-    xs: 'text-xs text-gray-900',
-    small: 'text-sm text-gray-900',
-    muted: 'text-xs text-gray-400 font-normal',
+    xs: 'text-xs text-foreground',
+    small: 'text-sm text-foreground',
+    muted: 'text-xs text-muted-foreground font-normal',
   },
 } as const;
 

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine } from 'recharts';
 import DashboardCard from '../ui/DashboardCard';
 import { getCartesianGridConfig, getXAxisConfig, getYAxisConfig, getBarConfig, chartMargins } from '../../utils/chartConfig';
 import { useProjectionsData } from '../../hooks/useDashboardData';
@@ -19,6 +19,11 @@ const ProjectionsChart = memo(() => {
             barCategoryGap={theme.chart.bar.categoryGap}
           >
             <CartesianGrid {...getCartesianGridConfig()} />
+            <ReferenceLine 
+              y={0} 
+              stroke="rgba(28, 28, 28, 0.3)" 
+              strokeWidth={2}
+            />
             <XAxis 
               dataKey="month" 
               {...getXAxisConfig(10)}

@@ -1,11 +1,37 @@
 import { memo, useCallback, useMemo, useRef, useEffect } from 'react';
 import { useSidebarMenu } from '../../../hooks/useSidebarMenu';
 import type { SidebarMenuItem as MenuItem } from '../../../data/sidebarData';
+import SvgIcon, { type IconName } from '../../ui/SvgIcon';
 
 interface SidebarMenuItemProps {
   item: MenuItem;
   level?: number;
 }
+
+// Helper function to extract icon name from file path
+const getIconNameFromPath = (iconPath?: string): IconName | null => {
+  if (!iconPath || iconPath === 'dot') return null;
+  
+  const fileName = iconPath.split('/').pop();
+  if (!fileName) return null;
+  
+  const iconName = fileName.replace('.svg', '') as IconName;
+  
+  // Verify it's a valid icon name
+  const validIcons: IconName[] = [
+    'chart-pie-slice-duotone',
+    'shopping-bag-open-duotone',
+    'folder-notch-duotone',
+    'book-open-duotone',
+    'identification-badge-duotone',
+    'identification-card-duotone',
+    'users-three-duotone',
+    'notebook-duotone',
+    'chats-teardrop-duotone',
+  ];
+  
+  return validIcons.includes(iconName) ? iconName : null;
+};
 
 // Icon component memoized for performance
 const MenuIcon = memo(({ icon, label }: { icon?: string; label: string }) => {
@@ -14,20 +40,53 @@ const MenuIcon = memo(({ icon, label }: { icon?: string; label: string }) => {
   if (icon === 'dot') {
     return (
       <div className="flex items-center justify-center w-5 h-5">
-        <div className="w-1.5 h-1.5 bg-gray-300 rounded-full transition-colors duration-200 hover:bg-gray-400"></div>
+        <div className="w-1.5 h-1.5 rounded-full theme-transition" style={{ backgroundColor: 'var(--color-sidebar-text-inactive)' }}></div>
+      </div>
+    );
+  }
+
+  const iconName = getIconNameFromPath(icon);
+  if (!iconName) {
+    // Fallback to img tag for non-duotone icons
+    return (
+      <div 
+        className="flex items-center justify-center w-5 h-5 transition-colors duration-200"
+        style={{ color: 'var(--color-sidebar-text-primary)' }}
+      >
+        <img 
+          src={icon} 
+          alt={label} 
+          width="20" 
+          height="20"
+          className="transition-opacity duration-200"
+          style={{
+            opacity: 0.7,
+            transition: 'opacity 0.2s ease, filter 0.2s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.opacity = '1';
+            e.currentTarget.parentElement!.style.color = 'var(--color-sidebar-text-primary)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.opacity = '0.7';
+            e.currentTarget.parentElement!.style.color = 'var(--color-sidebar-text-primary)';
+          }}
+          loading="lazy"
+        />
       </div>
     );
   }
 
   return (
-    <div className="flex items-center justify-center w-5 h-5">
-      <img 
-        src={icon} 
-        alt={label} 
-        width="20" 
-        height="20"
-        className="transition-opacity duration-200 hover:opacity-80"
-        loading="lazy"
+    <div 
+      className="flex items-center justify-center w-5 h-5 transition-colors duration-200 group-hover:opacity-100 opacity-70"
+      style={{ color: 'var(--color-sidebar-text-primary)' }}
+    >
+      <SvgIcon 
+        name={iconName} 
+        width={20} 
+        height={20}
+        className="transition-opacity duration-200"
       />
     </div>
   );
@@ -44,6 +103,7 @@ const DropdownArrow = memo(({ isExpanded }: { isExpanded: boolean }) => (
       viewBox="0 0 16 16"
       fill="none"
       className={`transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}
+      style={{ color: 'var(--color-sidebar-text-inactive)' }}
       aria-hidden="true"
     >
       <path
@@ -123,10 +183,9 @@ function SidebarMenuItem({ item, level = 0 }: SidebarMenuItemProps) {
 
   const itemClassNames = useMemo(() => [
     'flex items-center gap-1 px-2 py-1 rounded-lg relative cursor-pointer',
-    'transition-all duration-150 ease-in-out',
-    'hover:bg-gray-50 focus:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500/20',
-    'group',
-    item.isActive ? 'bg-[rgba(28,28,28,0.05)]' : ''
+    'theme-transition',
+    'focus:outline-none',
+    'group'
   ].filter(Boolean).join(' '), [item.isActive]);
 
   return (
@@ -137,7 +196,12 @@ function SidebarMenuItem({ item, level = 0 }: SidebarMenuItemProps) {
         className={itemClassNames}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
-        style={itemStyles}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--color-sidebar-bg-hover)'}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = item.isActive ? 'var(--color-sidebar-bg-selected)' : 'transparent'}
+        style={{
+          ...itemStyles,
+          backgroundColor: item.isActive ? 'var(--color-sidebar-bg-selected)' : 'transparent'
+        }}
         role="button"
         tabIndex={0}
         aria-expanded={item.hasDropdown ? isExpanded : undefined}
@@ -147,7 +211,8 @@ function SidebarMenuItem({ item, level = 0 }: SidebarMenuItemProps) {
         {/* Active indicator */}
         {item.isActive && level === 0 && (
           <div 
-            className="w-1 h-4 bg-[#1C1C1C] rounded-sm absolute left-0 top-1/2 transform -translate-y-1/2 transition-all duration-200"
+            className="w-1 h-4 rounded-sm absolute left-0 top-1/2 transform -translate-y-1/2 theme-transition"
+            style={{ backgroundColor: 'var(--color-sidebar-indicator)' }}
             aria-hidden="true"
           />
         )}
@@ -162,7 +227,7 @@ function SidebarMenuItem({ item, level = 0 }: SidebarMenuItemProps) {
           <MenuIcon icon={item.icon} label={item.label} />
           
           {/* Label */}
-          <span className="text-sm font-normal text-[#1C1C1C] group-hover:text-gray-900 transition-colors duration-150">
+          <span className="text-[14px] font-[400] theme-transition" style={{ lineHeight: '1.4285714285714286em', color: 'var(--color-sidebar-text-primary)' }}>
             {item.label}
           </span>
         </div>

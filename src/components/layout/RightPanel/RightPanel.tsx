@@ -47,12 +47,12 @@ const SearchBar = memo(({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="w-full px-3 py-2 pl-9 pr-8 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-300 transition-all duration-150"
+        className="w-full px-3 py-2 pl-9 pr-8 text-sm border border-border bg-background text-foreground rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/30 theme-transition"
         aria-label="Search notifications, activities, and contacts"
       />
       
       {/* Search icon */}
-      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
@@ -62,7 +62,7 @@ const SearchBar = memo(({
       {value && (
         <button
           onClick={onClear}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-gray-100 transition-colors duration-150 text-gray-400 hover:text-gray-600"
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-hover theme-transition text-muted-foreground hover:text-foreground"
           aria-label="Clear search"
         >
           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -93,15 +93,15 @@ const TabNavigation = memo(({
   ];
 
   return (
-    <div className="flex bg-gray-50 rounded-lg p-1 mb-4" role="tablist" aria-label="Right panel sections">
+    <div className="flex bg-card rounded-lg p-1 mb-4 theme-transition" role="tablist" aria-label="Right panel sections">
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => onTabChange(tab.id)}
-          className={`flex-1 px-3 py-2 text-sm font-medium rounded-md transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
+          className={`flex-1 px-3 py-2 text-sm font-medium rounded-md theme-transition focus:outline-none focus:ring-2 focus:ring-primary/20 ${
             activeTab === tab.id
-              ? 'bg-white text-gray-900 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-background text-foreground shadow-sm'
+              : 'text-muted-foreground hover:text-foreground'
           }`}
           role="tab"
           aria-selected={activeTab === tab.id}
@@ -109,7 +109,7 @@ const TabNavigation = memo(({
         >
           {tab.label}
           {tab.count !== undefined && tab.count > 0 && (
-            <span className="ml-2 inline-flex items-center justify-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+            <span className="ml-2 inline-flex items-center justify-center px-2 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
               {tab.count}
             </span>
           )}
@@ -175,7 +175,7 @@ function RightPanelContent({
 
   // Panel classes with responsive design
   const panelClasses = useMemo(() => [
-    'h-full bg-white transition-all duration-300 ease-in-out flex flex-col',
+    'h-full bg-background theme-transition flex flex-col',
     isCollapsed ? 'w-16' : 'w-[280px]',
     className
   ].filter(Boolean).join(' '), [isCollapsed, className]);
@@ -233,7 +233,7 @@ function RightPanelContent({
       {/* Header with collapse toggle */}
       <div className="flex items-center justify-between mb-4">
         {!isCollapsed && (
-          <h2 className="text-lg font-semibold text-gray-900">
+          <h2 className="text-lg font-semibold text-foreground">
             {showTabs ? 'Activity' : 'Overview'}
           </h2>
         )}
@@ -241,7 +241,7 @@ function RightPanelContent({
         {isCollapsible && (
           <button
             onClick={handleCollapseToggle}
-            className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            className="p-1.5 rounded-lg hover:bg-hover theme-transition focus:outline-none focus:ring-2 focus:ring-primary/20"
             aria-label={isCollapsed ? 'Expand right panel' : 'Collapse right panel'}
             title={isCollapsed ? 'Expand right panel' : 'Collapse right panel'}
           >
@@ -293,8 +293,8 @@ function RightPanelContent({
           /* Collapsed view - show summary icons */
           <div className="flex flex-col items-center gap-4">
             {unreadNotificationsCount > 0 && (
-              <div className="relative p-2 rounded-lg bg-blue-50 hover:bg-blue-100 transition-colors duration-150 cursor-pointer">
-                <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <div className="relative p-2 rounded-lg bg-primary/10 hover:bg-primary/20 theme-transition cursor-pointer">
+                <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                 </svg>
                 {unreadNotificationsCount > 0 && (
@@ -313,8 +313,8 @@ function RightPanelContent({
 
       {/* Footer with status info */}
       {!isCollapsed && (
-        <div className="mt-4 pt-4 border-t border-gray-100">
-          <div className="text-xs text-gray-500 text-center">
+        <div className="mt-4 pt-4 border-t border-border">
+          <div className="text-xs text-muted-foreground text-center">
             {searchQuery && `Searching for "${searchQuery}"`}
           </div>
         </div>

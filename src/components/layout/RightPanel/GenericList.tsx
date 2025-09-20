@@ -80,23 +80,23 @@ const ActionMenu = memo(({
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         onKeyDown={handleKeyDown}
-        className="p-1 rounded-md hover:bg-gray-100 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+        className="p-1 rounded-md hover:bg-hover theme-transition focus:outline-none focus:ring-2 focus:ring-primary/20"
         aria-label="More actions"
         aria-expanded={isOpen}
         aria-haspopup="menu"
       >
-        <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
         </svg>
       </button>
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 top-full mt-1 w-40 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-10 right-panel-dropdown">
+        <div className="absolute right-0 top-full mt-1 w-40 bg-background rounded-lg shadow-lg border border-border py-1 z-10 right-panel-dropdown theme-transition">
           {hasMarkAsReadAction && (
             <button
               onClick={handleMarkAllRead}
-              className="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-150 focus:outline-none focus:bg-blue-50"
+              className="w-full px-3 py-2 text-left text-sm text-foreground hover:bg-primary/10 hover:text-primary theme-transition focus:outline-none focus:bg-primary/10"
               role="menuitem"
             >
               <div className="flex items-center gap-2">
@@ -111,7 +111,7 @@ const ActionMenu = memo(({
           {hasClearAction && (
             <button
               onClick={handleClearAll}
-              className="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-red-50 hover:text-red-600 transition-colors duration-150 focus:outline-none focus:bg-red-50"
+              className="w-full px-3 py-2 text-left text-sm text-foreground hover:bg-red-50 hover:text-red-600 theme-transition focus:outline-none focus:bg-red-50"
               role="menuitem"
             >
               <div className="flex items-center gap-2">
@@ -203,7 +203,7 @@ function GenericList({
 
     return (
       <div className="text-center py-6">
-        <p className="text-sm text-[rgba(28,28,28,0.4)]">
+        <p className="text-sm text-muted-foreground">
           {emptyStateMessage || defaultMessages[type]}
         </p>
       </div>
@@ -225,7 +225,7 @@ function GenericList({
     <div className={`flex flex-col gap-2 self-stretch ${className}`}>
       {/* Title Section with Actions */}
       <div className="flex items-center justify-between px-2 py-1 self-stretch">
-        <h3 className="text-sm font-semibold text-[#1C1C1C] leading-[1.4285714285714286]">
+        <h3 className="text-sm font-semibold text-foreground leading-[1.4285714285714286]">
           {displayTitle}
         </h3>
         

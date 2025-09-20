@@ -8,13 +8,15 @@ interface SidebarSectionProps {
 
 function SidebarSection({ section }: SidebarSectionProps) {
   return (
-    <section className="mb-4" aria-labelledby={section.title ? `section-${section.id}` : undefined}>
+    <section className="mb-3" aria-labelledby={section.title ? `section-${section.id}` : undefined}>
       {/* Section Title */}
       {section.title && (
         <div className="px-3 py-1 mb-1">
           <h3 
             id={`section-${section.id}`}
-            className="text-sm font-normal text-[rgba(28,28,28,0.4)] transition-colors duration-150"
+            className="text-[14px] font-[400] theme-transition"
+            style={{ color: 'var(--color-sidebar-text-secondary)' }}
+            style={{ lineHeight: '1.4285714285714286em' }}
           >
             {section.title}
           </h3>
@@ -26,6 +28,7 @@ function SidebarSection({ section }: SidebarSectionProps) {
         className="space-y-1"
         role="navigation"
         aria-label={section.title || 'Navigation menu'}
+        style={{ gap: '4px' }}
       >
         {section.items.map((item) => (
           <SidebarMenuItem 
