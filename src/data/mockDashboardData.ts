@@ -110,7 +110,7 @@ export const locationData: LocationData[] = worldMapData.locations
   .filter(location => location.isActive)
   .map(location => ({
     name: location.name,
-    value: formatValueForLocationData(location.value),
+    value: formatValueForLocationData(location.revenue.toString()),
     progress: location.progress
   }));
 
