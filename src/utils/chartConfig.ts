@@ -2,8 +2,9 @@ import { chartTheme } from '../styles/theme';
 
 // Shared chart configurations to eliminate duplication
 export const getCartesianGridConfig = () => ({
-  strokeDasharray: chartTheme.margin.default.strokeDasharray || 'none',
-  stroke: chartTheme.colors.grid,
+  strokeDasharray: 'none',
+  stroke: 'rgba(28, 28, 28, 0.1)', // Light grid lines
+  strokeWidth: 1,
   horizontal: true,
   vertical: false,
 });
