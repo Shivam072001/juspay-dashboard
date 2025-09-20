@@ -59,7 +59,7 @@ export default function AppLayout() {
         />
       )}
       
-      <div className="flex h-screen w-full max-w-none xl:max-w-[1440px] xl:mx-auto transition-all duration-300 ease-in-out relative">
+      <div className="flex h-screen w-full max-w-none xl:mx-auto transition-all duration-300 ease-in-out relative">
         {/* Left Sidebar */}
         <div 
           className={`border-r border-gray-100 transition-all duration-300 ease-in-out overflow-hidden bg-white flex-shrink-0 ${

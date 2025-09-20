@@ -7,7 +7,7 @@ import ProductsTable from './ProductsTable'
 
 export default function DashboardContainer() {
   return (
-    <div className="w-full max-w-[892px] flex flex-col gap-7">
+    <div className="w-full flex flex-col gap-7">
       <h1 className="text-2xl font-bold text-gray-900 text-left">Dashboard</h1>
       
       {/* Row 1: Stats Cards (1/2) + Projections Chart (1/2) */}
