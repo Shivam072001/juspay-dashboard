@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
 import { projectionsData } from '../../data/mockDashboardData';
 
 export default function ProjectionsChart() {
@@ -52,11 +52,6 @@ export default function ProjectionsChart() {
               stroke="rgba(28, 28, 28, 0.05)" 
               horizontal={true}
               vertical={false}
-            />
-            <ReferenceLine 
-              y={0} 
-              stroke="rgba(28, 28, 28, 0.2)" 
-              strokeWidth={1} 
             />
             <XAxis 
               dataKey="month" 
