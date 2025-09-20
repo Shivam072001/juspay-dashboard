@@ -85,8 +85,8 @@ export default function CoordinateFinder({ viewBox, onCoordinateFound }: Coordin
     }
   }, [lastCoordinates]);
 
-  // Don't render in production
-  if (!import.meta.env.DEV) {
+  // Only render in dev mode
+  if (import.meta.env.VITE_DEV_MODE !== 'true') {
     return null;
   }
 

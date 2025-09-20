@@ -145,7 +145,7 @@ export default function WorldMap() {
       </div>
       
       {/* Debug info */}
-      {import.meta.env.DEV && (
+      {import.meta.env.VITE_DEV_MODE === 'true' && (
         <div className="mt-4 text-xs text-gray-500">
           Active Locations: {activeLocations.length} | 
           Hovered: {hoveredLocation?.name || 'None'} | 

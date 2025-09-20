@@ -20,7 +20,7 @@ export interface CoordinateFinderOptions {
  */
 export class CoordinateFinder {
   private options: Required<CoordinateFinderOptions>;
-  private toastTimeout: NodeJS.Timeout | null = null;
+  private toastTimeout: number | null = null;
 
   constructor(options: CoordinateFinderOptions = {}) {
     this.options = {
@@ -235,15 +235,8 @@ export const isValidMapCoordinates = (x: number, y: number): boolean => {
 };
 
 /**
- * Get environment-based development mode status
+ * Check if dev mode is enabled
  */
 export const isDevMode = (): boolean => {
-  return import.meta.env.DEV && import.meta.env.VITE_DEV_MODE === 'true';
-};
-
-/**
- * Check if coordinate finder should be enabled
- */
-export const isCoordinateFinderEnabled = (): boolean => {
-  return isDevMode() && import.meta.env.VITE_SHOW_COORDINATE_FINDER === 'true';
+  return import.meta.env.VITE_DEV_MODE === 'true';
 };
