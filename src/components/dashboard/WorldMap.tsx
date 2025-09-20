@@ -1,6 +1,48 @@
-import { locationData } from '../../data/mockDashboardData';
+import { useState } from 'react';
+import { worldMapData } from '../../data/worldMapLocations';
+import type { WorldMapLocation } from '../../data/worldMapLocations';
+import CoordinateFinder from '../ui/CoordinateFinder';
+
+interface LocationMarkerProps {
+  location: WorldMapLocation;
+  onClick?: (location: WorldMapLocation) => void;
+  onHover?: (location: WorldMapLocation | null) => void;
+}
+
+function LocationMarker({ location, onClick, onHover }: LocationMarkerProps) {
+  return (
+    <div 
+      className="absolute w-2 h-2 bg-[#1C1C1C] rounded-full border border-white cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
+      style={{ 
+        left: `${location.coordinates.x}px`, 
+        top: `${location.coordinates.y}px`,
+        filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1))',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: location.color || '#1C1C1C'
+      }}
+      onClick={() => onClick?.(location)}
+      onMouseEnter={() => onHover?.(location)}
+      onMouseLeave={() => onHover?.(null)}
+      title={`${location.name}: ${location.value}`}
+    />
+  );
+}
 
 export default function WorldMap() {
+  const [hoveredLocation, setHoveredLocation] = useState<WorldMapLocation | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<WorldMapLocation | null>(null);
+  
+  const activeLocations = worldMapData.locations.filter(loc => loc.isActive);
+
+  const handleLocationClick = (location: WorldMapLocation) => {
+    setSelectedLocation(selectedLocation?.id === location.id ? null : location);
+    console.log('Location clicked:', location);
+  };
+
+  const handleLocationHover = (location: WorldMapLocation | null) => {
+    setHoveredLocation(location);
+  };
+
   return (
     <div className="bg-[#F7F9FB] p-6 rounded-2xl">
       <div className="mb-4">
@@ -8,9 +50,16 @@ export default function WorldMap() {
       </div>
       
       <div className="flex items-start gap-6">
-        {/* World Map Visualization from Figma */}
+        {/* World Map Visualization - Programmatic */}
         <div className="flex-shrink-0 relative">
-          <div className="w-[154px] h-[82px]">
+          <div 
+            className="relative"
+            style={{ 
+              width: `${worldMapData.viewBox.width}px`, 
+              height: `${worldMapData.viewBox.height}px` 
+            }}
+          >
+            {/* Base World Map SVG */}
             <img 
               src="/src/assets/icons/world-map-complete.svg"
               alt="World Map"
@@ -18,59 +67,57 @@ export default function WorldMap() {
               style={{ filter: 'drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.01))' }}
             />
             
-            {/* Location markers positioned exactly as per Figma coordinates */}
+            {/* Programmatically rendered location markers */}
             <div className="absolute inset-0">
-              {/* Location marker 1: (16.21, 26) */}
-              <div 
-                className="absolute w-2 h-2 bg-[#1C1C1C] rounded-full border border-white"
-                style={{ 
-                  left: '16.21px', 
-                  top: '26px',
-                  filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1))',
-                  transform: 'translate(-50%, -50%)'
-                }}
-              />
-              
-              {/* Location marker 2: (37.49, 31) */}
-              <div 
-                className="absolute w-2 h-2 bg-[#1C1C1C] rounded-full border border-white"
-                style={{ 
-                  left: '37.49px', 
-                  top: '31px',
-                  filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1))',
-                  transform: 'translate(-50%, -50%)'
-                }}
-              />
-              
-              {/* Location marker 3: (110.43, 48) */}
-              <div 
-                className="absolute w-2 h-2 bg-[#1C1C1C] rounded-full border border-white"
-                style={{ 
-                  left: '110.43px', 
-                  top: '48px',
-                  filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1))',
-                  transform: 'translate(-50%, -50%)'
-                }}
-              />
-              
-              {/* Location marker 4: (127.66, 62) */}
-              <div 
-                className="absolute w-2 h-2 bg-[#1C1C1C] rounded-full border border-white"
-                style={{ 
-                  left: '127.66px', 
-                  top: '62px',
-                  filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1))',
-                  transform: 'translate(-50%, -50%)'
-                }}
-              />
+              {activeLocations.map((location) => (
+                <LocationMarker
+                  key={location.id}
+                  location={location}
+                  onClick={handleLocationClick}
+                  onHover={handleLocationHover}
+                />
+              ))}
             </div>
+            
+            {/* Hover tooltip */}
+            {hoveredLocation && (
+              <div 
+                className="absolute bg-gray-900 text-white px-2 py-1 rounded text-xs pointer-events-none z-10 whitespace-nowrap"
+                style={{
+                  left: `${hoveredLocation.coordinates.x + 10}px`,
+                  top: `${hoveredLocation.coordinates.y - 30}px`,
+                  transform: 'translate(-50%, 0)'
+                }}
+              >
+                <div className="font-medium">{hoveredLocation.name}</div>
+                <div className="text-gray-300">{hoveredLocation.value}</div>
+              </div>
+            )}
+            
+            {/* Coordinate Finder Utility */}
+            <CoordinateFinder 
+              viewBox={worldMapData.viewBox}
+              onCoordinateFound={(coords) => {
+                console.log('🎯 Found coordinates:', coords);
+              }}
+            />
           </div>
         </div>
         
-        {/* Location Stats */}
+        {/* Location Stats - Data-driven */}
         <div className="flex-1 space-y-4">
-          {locationData.map((location, index) => (
-            <div key={index} className="space-y-1">
+          {activeLocations.map((location) => (
+            <div 
+              key={location.id} 
+              className={`space-y-1 p-2 rounded cursor-pointer transition-colors duration-200 ${
+                selectedLocation?.id === location.id 
+                  ? 'bg-blue-50 border border-blue-200' 
+                  : hoveredLocation?.id === location.id
+                  ? 'bg-gray-50'
+                  : ''
+              }`}
+              onClick={() => handleLocationClick(location)}
+            >
               {/* Location name and value */}
               <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-900">{location.name}</span>
@@ -84,10 +131,27 @@ export default function WorldMap() {
                   style={{ width: `${location.progress}%` }}
                 />
               </div>
+              
+              {/* Additional info when selected */}
+              {selectedLocation?.id === location.id && (
+                <div className="mt-2 text-xs text-gray-600">
+                  <div>Country: {location.country}</div>
+                  <div>Revenue: ${location.revenue?.toLocaleString()}</div>
+                </div>
+              )}
             </div>
           ))}
         </div>
       </div>
+      
+      {/* Debug info */}
+      {import.meta.env.DEV && (
+        <div className="mt-4 text-xs text-gray-500">
+          Active Locations: {activeLocations.length} | 
+          Hovered: {hoveredLocation?.name || 'None'} | 
+          Selected: {selectedLocation?.name || 'None'}
+        </div>
+      )}
     </div>
   );
 }
