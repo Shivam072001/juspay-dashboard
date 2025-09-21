@@ -1,50 +1,39 @@
 import { memo } from 'react';
 import { XAxis, YAxis, CartesianGrid, ResponsiveContainer, Line, LineChart } from 'recharts';
-import DashboardCard from '../ui/DashboardCard';
-import ChartLegend from '../ui/ChartLegend';
-import { getCartesianGridConfig, getXAxisConfig, getYAxisConfig, getLineConfig, chartMargins } from '../../utils/chartConfig';
+import { getCartesianGridConfig, getXAxisConfig, getYAxisConfig, chartMargins } from '../../utils/chartConfig';
 import { useRevenueChartData, useRevenueLegendData } from '../../hooks/useDashboardData';
-import { theme } from '../../styles/theme';
 
 const RevenueChart = memo(() => {
   const revenueData = useRevenueChartData();
   const legendData = useRevenueLegendData();
 
   return (
-    <DashboardCard className="h-full flex flex-col gap-4">
+    <div className="revenue-card">
       {/* Header with title and legend */}
-      <div className="flex items-center gap-4 flex-wrap">
-        <h3 
-          style={{ 
-            fontSize: theme.typography.sizes.sm, 
-            lineHeight: theme.typography.lineHeights.normal, 
-            fontWeight: theme.typography.weights.semibold,
-            margin: 0,
-            fontFamily: theme.typography.fontFamily,
-            color: theme.colors.primary
-          }}
-        >
-          Revenue
-        </h3>
-        <span 
-          style={{ 
-            fontSize: theme.typography.sizes.sm, 
-            lineHeight: theme.typography.lineHeights.normal, 
-            fontWeight: theme.typography.weights.normal,
-            fontFamily: theme.typography.fontFamily,
-            color: theme.colors.text.muted
-          }}
-        >
-          |
-        </span>
-        <ChartLegend items={legendData} orientation="horizontal" />
+      <div className="revenue-card-header">
+        <h3 className="revenue-card-title">Revenue</h3>
+        <span className="revenue-card-separator">|</span>
+        <div className="revenue-legend">
+          {legendData.map((item, index) => (
+            <div key={index} className="revenue-legend-item">
+              <div 
+                className="revenue-legend-dot" 
+                style={{ backgroundColor: item.color }}
+              />
+              <span className="revenue-legend-text">
+                {item.name} {item.value}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
       
-      <div style={{ height: '200px', flex: 1 }}>
+      <div className="revenue-chart-container">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={revenueData}
             margin={chartMargins.revenueChart}
+            className="revenue-chart"
           >
             <CartesianGrid {...getCartesianGridConfig()} />
             <XAxis 
@@ -59,12 +48,50 @@ const RevenueChart = memo(() => {
                 dx: -10
               })}
             />
-            <Line {...getLineConfig('previousWeek', theme.colors.secondary)} />
-            <Line {...getLineConfig('currentWeek', theme.colors.primary)} />
+            <Line
+              type="monotone"
+              dataKey="previousWeek"
+              stroke="#A8C5DA"
+              strokeWidth={3}
+              fill="none"
+              dot={{ 
+                fill: '#A8C5DA', 
+                stroke: '#A8C5DA', 
+                strokeWidth: 2, 
+                r: 3 
+              }}
+              activeDot={{ 
+                r: 4, 
+                stroke: '#A8C5DA', 
+                strokeWidth: 2, 
+                fill: '#A8C5DA' 
+              }}
+              className="revenue-line-previous"
+            />
+            <Line
+              type="monotone"
+              dataKey="currentWeek"
+              stroke="#1C1C1C"
+              strokeWidth={3}
+              fill="none"
+              dot={{ 
+                fill: '#1C1C1C', 
+                stroke: '#1C1C1C', 
+                strokeWidth: 2, 
+                r: 3 
+              }}
+              activeDot={{ 
+                r: 4, 
+                stroke: '#1C1C1C', 
+                strokeWidth: 2, 
+                fill: '#1C1C1C' 
+              }}
+              className="revenue-line-current"
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>
-    </DashboardCard>
+    </div>
   );
 });
 

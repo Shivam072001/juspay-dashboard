@@ -1,10 +1,8 @@
 import { useState, useCallback, memo } from 'react';
 import { worldMapData, getLocationValue } from '../../data/worldMapLocations';
 import type { WorldMapLocation } from '../../data/worldMapLocations';
-import DashboardCard from '../ui/DashboardCard';
 import CoordinateFinder from '../ui/CoordinateFinder';
 import { useActiveLocations, useLocationSelection } from '../../hooks/useDashboardData';
-import { theme } from '../../styles/theme';
 
 interface LocationMarkerProps {
   location: WorldMapLocation;
@@ -19,15 +17,11 @@ const LocationMarker = memo(({ location, onClick, onHover }: LocationMarkerProps
 
   return (
     <div 
-      className={`absolute bg-[#1C1C1C] rounded-full border border-white cursor-pointer hover:scale-125 ${theme.transitions.transform}`}
+      className="location-marker"
       style={{ 
-        width: '8px',
-        height: '8px',
         left: `${location.coordinates.x}px`, 
         top: `${location.coordinates.y}px`,
-        filter: theme.shadows.sm,
-        transform: 'translate(-50%, -50%)',
-        backgroundColor: location.color || theme.colors.primary
+        backgroundColor: location.color || '#1C1C1C'
       }}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
@@ -56,13 +50,15 @@ const WorldMap = memo(() => {
   }, []);
 
   return (
-    <DashboardCard title="Revenue by Location" titleClassName="text-sm font-semibold text-center text-[#1C1C1C]">
+    <div className="location-card">
+      {/* Title */}
+      <h3 className="location-card-title">Revenue by Location</h3>
       
-      <div className="space-y-4">
+      <div className="location-card-content">
         {/* World Map Visualization - Programmatic */}
-        <div className="flex justify-center">
+        <div className="location-map-container">
           <div 
-            className="relative"
+            className="location-map-wrapper"
             style={{ 
               width: `${worldMapData.viewBox.width}px`, 
               height: `${worldMapData.viewBox.height}px` 
@@ -72,8 +68,7 @@ const WorldMap = memo(() => {
             <img 
               src="/src/assets/icons/world-map-complete.svg"
               alt="World Map"
-              className="w-full h-full drop-shadow-sm" 
-              style={{ filter: theme.shadows.md }}
+              className="location-map-image"
             />
             
             {/* Programmatically rendered location markers */}
@@ -91,14 +86,13 @@ const WorldMap = memo(() => {
             {/* Hover tooltip - positioned smartly below marker */}
             {hoveredLocation && (
               <div 
-                className="absolute bg-card border border-border text-foreground px-2 py-1 rounded text-xs pointer-events-none z-10 whitespace-nowrap shadow-md"
+                className="location-tooltip"
                 style={{
                   left: `${hoveredLocation.coordinates.x}px`,
-                  top: `${hoveredLocation.coordinates.y + 15}px`,
-                  transform: 'translate(-50%, 0)'
+                  top: `${hoveredLocation.coordinates.y + 15}px`
                 }}
               >
-                <div className="font-medium">{hoveredLocation.name}</div>
+                <div className="location-tooltip-name">{hoveredLocation.name}</div>
               </div>
             )}
             
@@ -113,29 +107,27 @@ const WorldMap = memo(() => {
         </div>
         
         {/* Location Stats - Data-driven - Vertical Layout */}
-        <div className="space-y-4">
+        <div className="location-stats-container">
           {activeLocations.map((location) => (
             <div 
               key={location.id} 
-              className={`space-y-1 cursor-pointer ${theme.transitions.colors}`}
+              className="location-stats-item"
               onClick={() => onLocationClick(location)}
             >
               {/* Location name and value */}
-              <div className="flex items-center justify-between">
-                <span className={`text-xs ${
-                  selectedLocation?.id === location.id 
-                    ? 'text-primary font-semibold' 
-                    : 'text-foreground'
+              <div className="location-stats-header">
+                <span className={`location-stats-name ${
+                  selectedLocation?.id === location.id ? 'selected' : ''
                 }`}>
                   {location.name}
                 </span>
-                <span className="text-xs text-foreground font-medium">{getLocationValue(location)}</span>
+                <span className="location-stats-value">{getLocationValue(location)}</span>
               </div>
               
               {/* Progress bar */}
-              <div className="h-1 bg-muted rounded-full overflow-hidden">
+              <div className="location-progress-container">
                 <div 
-                  className={`h-full bg-[#A8C5DA] rounded-full ${theme.transitions.slow}`}
+                  className="location-progress-bar"
                   style={{ width: `${location.progress}%` }}
                 />
               </div>
@@ -152,7 +144,7 @@ const WorldMap = memo(() => {
           Selected: {selectedLocation?.name || 'None'}
         </div>
       )}
-    </DashboardCard>
+    </div>
   );
 });
 

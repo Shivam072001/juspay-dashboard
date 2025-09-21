@@ -145,3 +145,795 @@ body {
 .theme-transition {
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
+
+/* ===== KPI CARDS LIGHT MODE STYLES ===== */
+
+/* KPI Cards Container */
+.kpi-cards-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 28px;
+  width: 100%;
+}
+
+/* Individual KPI Card Base Styles */
+.kpi-card {
+  padding: 24px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  width: 100%;
+}
+
+/* KPI Card Background Colors - Light Mode */
+.kpi-card.customers {
+  background-color: #E3F5FF;
+}
+
+.kpi-card.orders {
+  background-color: #F7F9FB;
+}
+
+.kpi-card.revenue {
+  background-color: #F7F9FB;
+}
+
+.kpi-card.growth {
+  background-color: #E5ECF6;
+}
+
+/* KPI Card Title */
+.kpi-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4285714285714286;
+  color: #1C1C1C;
+  margin: 0;
+  text-align: left;
+  font-family: inherit;
+}
+
+/* KPI Card Content Row */
+.kpi-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* KPI Card Main Value */
+.kpi-card-value {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #1C1C1C;
+  font-family: inherit;
+  flex: 1;
+  text-align: left;
+}
+
+/* KPI Card Change Container */
+.kpi-card-change {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+/* KPI Card Change Text */
+.kpi-card-change-text {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #1C1C1C;
+  font-family: inherit;
+  white-space: nowrap;
+  text-align: left;
+}
+
+/* KPI Card Arrow Icons */
+.kpi-card-arrow {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Positive Arrow (Up) - Green Color */
+.kpi-card-arrow.positive svg path {
+  fill: #22C55E;
+}
+
+/* Negative Arrow (Down) - Red Color */
+.kpi-card-arrow.negative svg path {
+  fill: #EF4444;
+}
+
+/* KPI Card Hover Effects */
+.kpi-card:hover {
+  transform: translateY(-1px);
+  transition: transform 0.2s ease;
+}
+
+/* ===== PROJECTION CARD STYLES - LIGHT & DARK MODE ===== */
+
+/* Projection Card Container - Light Mode Default */
+.projection-card {
+  background-color: #F7F9FB;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.2s ease;
+}
+
+/* Projection Card Title - Light Mode Default */
+.projection-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4285714285714286em;
+  color: #1C1C1C;
+  margin: 0;
+  text-align: left;
+  font-family: inherit;
+  transition: color 0.2s ease;
+}
+
+/* Projection Chart Container */
+.projection-chart-container {
+  flex: 1;
+  height: 196px;
+  position: relative;
+}
+
+/* Projection Chart Styling - Light Mode */
+.projection-chart .recharts-cartesian-grid-horizontal line {
+  stroke: rgba(28, 28, 28, 0.05);
+  stroke-width: 1px;
+}
+
+.projection-chart .recharts-cartesian-grid-vertical line {
+  stroke: rgba(28, 28, 28, 0.05);
+  stroke-width: 1px;
+}
+
+.projection-chart .recharts-xAxis .recharts-cartesian-axis-tick-value {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  fill: rgba(28, 28, 28, 0.4);
+}
+
+.projection-chart .recharts-yAxis .recharts-cartesian-axis-tick-value {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  fill: rgba(28, 28, 28, 0.4);
+}
+
+.projection-chart .recharts-reference-line line {
+  stroke: rgba(28, 28, 28, 0.3);
+  stroke-width: 2px;
+}
+
+/* Projection Chart Bars - Light Mode */
+.projection-bar-actual {
+  fill: #A8C5DA;
+}
+
+.projection-bar-projected {
+  fill: #A8C5DA;
+  fill-opacity: 0.5;
+}
+
+/* Dark Mode Overrides for Projection Card */
+.dark .projection-card {
+  background-color: #1E293B !important;
+}
+
+.dark .projection-card-title {
+  color: #F8FAFC !important;
+}
+
+.dark .projection-chart .recharts-cartesian-grid-horizontal line {
+  stroke: rgba(248, 250, 252, 0.1) !important;
+}
+
+.dark .projection-chart .recharts-cartesian-grid-vertical line {
+  stroke: rgba(248, 250, 252, 0.1) !important;
+}
+
+.dark .projection-chart .recharts-xAxis .recharts-cartesian-axis-tick-value {
+  fill: rgba(248, 250, 252, 0.7) !important;
+}
+
+.dark .projection-chart .recharts-yAxis .recharts-cartesian-axis-tick-value {
+  fill: rgba(248, 250, 252, 0.7) !important;
+}
+
+.dark .projection-chart .recharts-reference-line line {
+  stroke: rgba(248, 250, 252, 0.4) !important;
+}
+
+/* Dark Mode Chart Bars */
+.dark .projection-bar-actual {
+  fill: #7C97B8 !important;
+}
+
+.dark .projection-bar-projected {
+  fill: #7C97B8 !important;
+  fill-opacity: 0.4 !important;
+}
+
+/* System Dark Mode Preferences (lower specificity) */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) .projection-card {
+    background-color: #1E293B;
+  }
+  
+  :root:not(.light) .projection-card-title {
+    color: #F8FAFC;
+  }
+  
+  :root:not(.light) .projection-chart .recharts-cartesian-grid-horizontal line {
+    stroke: rgba(248, 250, 252, 0.1);
+  }
+  
+  :root:not(.light) .projection-chart .recharts-cartesian-grid-vertical line {
+    stroke: rgba(248, 250, 252, 0.1);
+  }
+  
+  :root:not(.light) .projection-chart .recharts-xAxis .recharts-cartesian-axis-tick-value {
+    fill: rgba(248, 250, 252, 0.7);
+  }
+  
+  :root:not(.light) .projection-chart .recharts-yAxis .recharts-cartesian-axis-tick-value {
+    fill: rgba(248, 250, 252, 0.7);
+  }
+  
+  :root:not(.light) .projection-chart .recharts-reference-line line {
+    stroke: rgba(248, 250, 252, 0.4);
+  }
+  
+  :root:not(.light) .projection-bar-actual {
+    fill: #7C97B8;
+  }
+  
+  :root:not(.light) .projection-bar-projected {
+    fill: #7C97B8;
+    fill-opacity: 0.4;
+  }
+}
+
+/* ===== REVENUE CARD STYLES - LIGHT & DARK MODE ===== */
+
+/* Revenue Card Container - Light Mode Default */
+.revenue-card {
+  background-color: #F7F9FB;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.2s ease;
+}
+
+/* Revenue Card Header */
+.revenue-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Revenue Card Title - Light Mode Default */
+.revenue-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4285714285714286em;
+  color: #1C1C1C;
+  margin: 0;
+  text-align: left;
+  font-family: inherit;
+  transition: color 0.2s ease;
+}
+
+/* Revenue Card Separator */
+.revenue-card-separator {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4285714285714286em;
+  color: rgba(28, 28, 28, 0.6);
+  font-family: inherit;
+  transition: color 0.2s ease;
+}
+
+/* Revenue Chart Container */
+.revenue-chart-container {
+  height: 200px;
+  flex: 1;
+  position: relative;
+}
+
+/* Revenue Chart Legend */
+.revenue-legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.revenue-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.revenue-legend-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.revenue-legend-text {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: inherit;
+  color: rgba(28, 28, 28, 0.9);
+  transition: color 0.2s ease;
+}
+
+/* Revenue Chart Styling - Light Mode */
+.revenue-chart .recharts-cartesian-grid-horizontal line {
+  stroke: rgba(28, 28, 28, 0.05);
+  stroke-width: 1px;
+}
+
+.revenue-chart .recharts-cartesian-grid-vertical line {
+  stroke: rgba(28, 28, 28, 0.05);
+  stroke-width: 1px;
+}
+
+.revenue-chart .recharts-xAxis .recharts-cartesian-axis-tick-value {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  fill: rgba(28, 28, 28, 0.4);
+}
+
+.revenue-chart .recharts-yAxis .recharts-cartesian-axis-tick-value {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+  fill: rgba(28, 28, 28, 0.4);
+}
+
+/* Revenue Chart Lines - Light Mode */
+.revenue-line-current {
+  stroke: #1C1C1C;
+  stroke-width: 3px;
+  fill: none;
+}
+
+.revenue-line-previous {
+  stroke: #A8C5DA;
+  stroke-width: 3px;
+  fill: none;
+}
+
+/* Revenue Chart Dots - Light Mode */
+.revenue-dot-current {
+  fill: #1C1C1C;
+  stroke: #1C1C1C;
+  stroke-width: 2px;
+  r: 3;
+}
+
+.revenue-dot-previous {
+  fill: #A8C5DA;
+  stroke: #A8C5DA;
+  stroke-width: 2px;
+  r: 3;
+}
+
+/* Active dots for hover */
+.revenue-activedot-current {
+  fill: #1C1C1C;
+  stroke: #1C1C1C;
+  stroke-width: 2px;
+  r: 4;
+}
+
+.revenue-activedot-previous {
+  fill: #A8C5DA;
+  stroke: #A8C5DA;
+  stroke-width: 2px;
+  r: 4;
+}
+
+/* Dark Mode Overrides for Revenue Card */
+.dark .revenue-card {
+  background-color: #1E293B !important;
+}
+
+.dark .revenue-card-title {
+  color: #F8FAFC !important;
+}
+
+.dark .revenue-card-separator {
+  color: rgba(248, 250, 252, 0.6) !important;
+}
+
+.dark .revenue-legend-text {
+  color: rgba(248, 250, 252, 0.9) !important;
+}
+
+.dark .revenue-chart .recharts-cartesian-grid-horizontal line {
+  stroke: rgba(248, 250, 252, 0.1) !important;
+}
+
+.dark .revenue-chart .recharts-cartesian-grid-vertical line {
+  stroke: rgba(248, 250, 252, 0.1) !important;
+}
+
+.dark .revenue-chart .recharts-xAxis .recharts-cartesian-axis-tick-value {
+  fill: rgba(248, 250, 252, 0.7) !important;
+}
+
+.dark .revenue-chart .recharts-yAxis .recharts-cartesian-axis-tick-value {
+  fill: rgba(248, 250, 252, 0.7) !important;
+}
+
+/* Dark Mode Chart Lines */
+.dark .revenue-line-current {
+  stroke: #F8FAFC !important;
+}
+
+.dark .revenue-line-previous {
+  stroke: #7C97B8 !important;
+}
+
+/* Dark Mode Chart Dots */
+.dark .revenue-dot-current {
+  fill: #F8FAFC !important;
+  stroke: #F8FAFC !important;
+}
+
+.dark .revenue-dot-previous {
+  fill: #7C97B8 !important;
+  stroke: #7C97B8 !important;
+}
+
+.dark .revenue-activedot-current {
+  fill: #F8FAFC !important;
+  stroke: #F8FAFC !important;
+}
+
+.dark .revenue-activedot-previous {
+  fill: #7C97B8 !important;
+  stroke: #7C97B8 !important;
+}
+
+/* System Dark Mode Preferences (lower specificity) */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) .revenue-card {
+    background-color: #1E293B;
+  }
+  
+  :root:not(.light) .revenue-card-title {
+    color: #F8FAFC;
+  }
+  
+  :root:not(.light) .revenue-card-separator {
+    color: rgba(248, 250, 252, 0.6);
+  }
+  
+  :root:not(.light) .revenue-legend-text {
+    color: rgba(248, 250, 252, 0.9);
+  }
+  
+  :root:not(.light) .revenue-chart .recharts-cartesian-grid-horizontal line {
+    stroke: rgba(248, 250, 252, 0.1);
+  }
+  
+  :root:not(.light) .revenue-chart .recharts-cartesian-grid-vertical line {
+    stroke: rgba(248, 250, 252, 0.1);
+  }
+  
+  :root:not(.light) .revenue-chart .recharts-xAxis .recharts-cartesian-axis-tick-value {
+    fill: rgba(248, 250, 252, 0.7);
+  }
+  
+  :root:not(.light) .revenue-chart .recharts-yAxis .recharts-cartesian-axis-tick-value {
+    fill: rgba(248, 250, 252, 0.7);
+  }
+  
+  :root:not(.light) .revenue-line-current {
+    stroke: #F8FAFC;
+  }
+  
+  :root:not(.light) .revenue-line-previous {
+    stroke: #7C97B8;
+  }
+  
+  :root:not(.light) .revenue-dot-current {
+    fill: #F8FAFC;
+    stroke: #F8FAFC;
+  }
+  
+  :root:not(.light) .revenue-dot-previous {
+    fill: #7C97B8;
+    stroke: #7C97B8;
+  }
+  
+  :root:not(.light) .revenue-activedot-current {
+    fill: #F8FAFC;
+    stroke: #F8FAFC;
+  }
+  
+  :root:not(.light) .revenue-activedot-previous {
+    fill: #7C97B8;
+    stroke: #7C97B8;
+  }
+}
+
+/* ===== REVENUE BY LOCATION CARD STYLES - LIGHT & DARK MODE ===== */
+
+/* Revenue by Location Card Container - Light Mode Default */
+.location-card {
+  background-color: #F7F9FB;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.2s ease;
+}
+
+/* Revenue by Location Card Title - Light Mode Default */
+.location-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4285714285714286em;
+  color: #1C1C1C;
+  margin: 0;
+  text-align: center;
+  font-family: inherit;
+  transition: color 0.2s ease;
+  margin-bottom: 16px;
+}
+
+/* Location Card Content Container */
+.location-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* World Map Container */
+.location-map-container {
+  display: flex;
+  justify-content: center;
+}
+
+.location-map-wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.location-map-image {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.01));
+  transition: filter 0.2s ease;
+}
+
+/* Location Markers */
+.location-marker {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: #1C1C1C;
+  border: 1px solid #FFFFFF;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease-out, background-color 0.2s ease;
+  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.1));
+}
+
+.location-marker:hover {
+  transform: translate(-50%, -50%) scale(1.25);
+}
+
+/* Location Tooltip */
+.location-tooltip {
+  position: absolute;
+  background-color: #F7F9FB;
+  border: 1px solid rgba(28, 28, 28, 0.05);
+  color: #1C1C1C;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 10;
+  white-space: nowrap;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translate(-50%, 0);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.location-tooltip-name {
+  font-weight: 500;
+}
+
+/* Location Stats List */
+.location-stats-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.location-stats-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.location-stats-item:hover {
+  opacity: 0.8;
+}
+
+/* Location Stats Header */
+.location-stats-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.location-stats-name {
+  font-size: 12px;
+  font-weight: 400;
+  color: #1C1C1C;
+  transition: color 0.2s ease, font-weight 0.2s ease;
+  font-family: inherit;
+}
+
+.location-stats-name.selected {
+  color: #1C1C1C;
+  font-weight: 600;
+}
+
+.location-stats-value {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1C1C1C;
+  font-family: inherit;
+  transition: color 0.2s ease;
+}
+
+/* Location Progress Bar */
+.location-progress-container {
+  height: 4px;
+  background-color: #E5ECF6;
+  border-radius: 9999px;
+  overflow: hidden;
+  transition: background-color 0.2s ease;
+}
+
+.location-progress-bar {
+  height: 100%;
+  background-color: #A8C5DA;
+  border-radius: 9999px;
+  transition: all 0.3s ease-out;
+}
+
+/* Dark Mode Overrides for Location Card */
+.dark .location-card {
+  background-color: #1E293B !important;
+}
+
+.dark .location-card-title {
+  color: #F8FAFC !important;
+}
+
+.dark .location-map-image {
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.3)) !important;
+}
+
+.dark .location-marker {
+  background-color: #F8FAFC !important;
+  border-color: #1E293B !important;
+}
+
+.dark .location-tooltip {
+  background-color: #1E293B !important;
+  border-color: rgba(248, 250, 252, 0.1) !important;
+  color: #F8FAFC !important;
+}
+
+.dark .location-stats-name {
+  color: #F8FAFC !important;
+}
+
+.dark .location-stats-name.selected {
+  color: #F8FAFC !important;
+}
+
+.dark .location-stats-value {
+  color: #F8FAFC !important;
+}
+
+.dark .location-progress-container {
+  background-color: #334155 !important;
+}
+
+.dark .location-progress-bar {
+  background-color: #7C97B8 !important;
+}
+
+/* System Dark Mode Preferences (lower specificity) */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) .location-card {
+    background-color: #1E293B;
+  }
+  
+  :root:not(.light) .location-card-title {
+    color: #F8FAFC;
+  }
+  
+  :root:not(.light) .location-map-image {
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.3));
+  }
+  
+  :root:not(.light) .location-marker {
+    background-color: #F8FAFC;
+    border-color: #1E293B;
+  }
+  
+  :root:not(.light) .location-tooltip {
+    background-color: #1E293B;
+    border-color: rgba(248, 250, 252, 0.1);
+    color: #F8FAFC;
+  }
+  
+  :root:not(.light) .location-stats-name {
+    color: #F8FAFC;
+  }
+  
+  :root:not(.light) .location-stats-name.selected {
+    color: #F8FAFC;
+  }
+  
+  :root:not(.light) .location-stats-value {
+    color: #F8FAFC;
+  }
+  
+  :root:not(.light) .location-progress-container {
+    background-color: #334155;
+  }
+  
+  :root:not(.light) .location-progress-bar {
+    background-color: #7C97B8;
+  }
+}

@@ -1,27 +1,28 @@
 import { memo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine } from 'recharts';
-import DashboardCard from '../ui/DashboardCard';
-import { getCartesianGridConfig, getXAxisConfig, getYAxisConfig, getBarConfig, chartMargins } from '../../utils/chartConfig';
+import { getCartesianGridConfig, getXAxisConfig, getYAxisConfig, chartMargins } from '../../utils/chartConfig';
 import { useProjectionsData } from '../../hooks/useDashboardData';
-import { theme } from '../../styles/theme';
 
 const ProjectionsChart = memo(() => {
   const transformedData = useProjectionsData();
 
   return (
-    <DashboardCard title="Projections vs Actuals" className="h-full flex flex-col gap-4">
+    <div className="projection-card">
+      {/* Title */}
+      <h3 className="projection-card-title">Projections vs Actuals</h3>
       
-      <div style={{ height: '196px', flex: 1 }}>
+      {/* Chart Container */}
+      <div className="projection-chart-container">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={transformedData}
             margin={chartMargins.projectionsChart}
-            barCategoryGap={theme.chart.bar.categoryGap}
+            barCategoryGap={8}
+            className="projection-chart"
           >
             <CartesianGrid {...getCartesianGridConfig()} />
             <ReferenceLine 
               y={0} 
-              stroke="rgba(28, 28, 28, 0.3)" 
               strokeWidth={2}
             />
             <XAxis 
@@ -40,24 +41,24 @@ const ProjectionsChart = memo(() => {
               tickCount={4}
             />
             <Bar 
-              {...getBarConfig('actual', theme.colors.secondary, {
-                stackId: 'a',
-                radius: [0, 0, 4, 4] as [number, number, number, number],
-                barSize: 20
-              })}
+              dataKey="actual"
+              stackId="a"
+              radius={[0, 0, 4, 4] as [number, number, number, number]}
+              barSize={20}
+              className="projection-bar-actual"
             />
             <Bar 
-              {...getBarConfig('projectedGap', theme.colors.secondary, {
-                stackId: 'a',
-                fillOpacity: 0.5,
-                radius: [4, 4, 0, 0] as [number, number, number, number],
-                barSize: 20
-              })}
+              dataKey="projectedGap"
+              stackId="a"
+              fillOpacity={0.5}
+              radius={[4, 4, 0, 0] as [number, number, number, number]}
+              barSize={20}
+              className="projection-bar-projected"
             />
           </BarChart>
         </ResponsiveContainer>
       </div>
-    </DashboardCard>
+    </div>
   );
 });
 
