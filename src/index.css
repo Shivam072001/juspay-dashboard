@@ -251,10 +251,18 @@ aside[role="navigation"] .group-hover\\:opacity-100 {
 /* KPI Cards Container */
 .kpi-cards-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-columns: 1fr; /* Single column for small screens */
+  grid-template-rows: auto;
   gap: 28px;
   width: 100%;
+}
+
+/* 2x2 grid for tablets and larger screens */
+@media (min-width: 768px) {
+  .kpi-cards-container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
 }
 
 /* Individual KPI Card Base Styles */
@@ -392,7 +400,7 @@ aside[role="navigation"] .group-hover\\:opacity-100 {
 /* Projection Chart Container */
 .projection-chart-container {
   flex: 1;
-  height: 196px;
+  min-height: 196px; /* Consistent min-height for desktop */
   position: relative;
 }
 

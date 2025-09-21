@@ -13,13 +13,15 @@ const ProjectionsChart = memo(() => {
       
       {/* Chart Container */}
       <div className="projection-chart-container">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={transformedData}
-            margin={chartMargins.projectionsChart}
-            barCategoryGap={8}
-            className="projection-chart"
-          >
+        <div className="overflow-x-auto">
+          <div style={{ minWidth: '500px', height: '196px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                data={transformedData}
+                margin={chartMargins.projectionsChart}
+                barCategoryGap={8}
+                className="projection-chart"
+              >
             <CartesianGrid {...getCartesianGridConfig()} />
             <ReferenceLine 
               y={0} 
@@ -57,6 +59,8 @@ const ProjectionsChart = memo(() => {
             />
           </BarChart>
         </ResponsiveContainer>
+          </div>
+        </div>
       </div>
     </div>
   );
