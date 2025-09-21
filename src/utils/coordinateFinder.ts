@@ -98,8 +98,11 @@ export class CoordinateFinder {
    * Log coordinates to console in a clean format
    */
   private logCoordinates(result: CoordinateClickResult): void {
+    console.group('🗺️ Map Coordinates');
     
     if (result.isValid) {
+      console.log('✅ Valid coordinates:', `x: ${result.x}, y: ${result.y}`);
+      
       const locationTemplate = {
         id: "new-location",
         name: "Location Name",
@@ -111,6 +114,8 @@ export class CoordinateFinder {
         color: "#1C1C1C",
         isActive: true
       };
+      
+      console.log('📋 Location template:', locationTemplate);
     } else {
       console.warn('❌ Coordinates are outside map bounds');
     }
