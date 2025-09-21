@@ -12,7 +12,7 @@ import { theme } from '../../styles/theme';
 const DashboardContainer = memo(() => {
   return (
     <div className="w-full flex flex-col" style={{ gap: theme.spacing.xl }}>
-      <h1 className="text-2xl font-bold text-gray-900 text-left">eCommerce</h1>
+      <h1 className="text-2xl font-bold text-foreground text-left">eCommerce</h1>
       
       {/* Row 1: Stats Cards (max-width) + Projections Chart (remaining space) */}
       <div className="flex flex-col lg:flex-row w-full" style={{ gap: theme.spacing.xl }}>
