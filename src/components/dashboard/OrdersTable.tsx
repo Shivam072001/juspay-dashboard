@@ -69,7 +69,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9801',
     user: {
       name: 'Natali Craig',
-      avatar: '/src/assets/avatars/avatar-female15.png'
+      avatar: '/avatars/avatar-female15.png'
     },
     project: 'Landing Page',
     address: 'Meadow Lane Oakland',
@@ -81,7 +81,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9802',
     user: {
       name: 'Kate Morrison',
-      avatar: '/src/assets/avatars/avatar-female09.png'
+      avatar: '/avatars/avatar-female09.png'
     },
     project: 'CRM Admin pages',
     address: 'Larry San Francisco',
@@ -93,7 +93,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9803',
     user: {
       name: 'Drew Cano',
-      avatar: '/src/assets/avatars/avatar-male08.png'
+      avatar: '/avatars/avatar-male08.png'
     },
     project: 'Client Project',
     address: 'Bagwell Avenue Ocala',
@@ -105,7 +105,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9804',
     user: {
       name: 'Orlando Diggs',
-      avatar: '/src/assets/avatars/avatar-male06.png'
+      avatar: '/avatars/avatar-male06.png'
     },
     project: 'Admin Dashboard',
     address: 'Washburn Baton Rouge',
@@ -117,7 +117,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9805',
     user: {
       name: 'Andi Lane',
-      avatar: '/src/assets/avatars/avatar-female08.png'
+      avatar: '/avatars/avatar-female08.png'
     },
     project: 'App Landing Page',
     address: 'Nest Lane Olivette',
@@ -129,7 +129,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9806',
     user: {
       name: 'Tom Wilson',
-      avatar: '/src/assets/avatars/avatar-male11.png'
+      avatar: '/avatars/avatar-male11.png'
     },
     project: 'E-commerce Site',
     address: 'Broadway New York',
@@ -141,7 +141,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9807',
     user: {
       name: 'Sarah Davis',
-      avatar: '/src/assets/avatars/avatar-female05.png'
+      avatar: '/avatars/avatar-female05.png'
     },
     project: 'Mobile Banking App',
     address: 'Pine Street Seattle',
@@ -153,7 +153,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9808',
     user: {
       name: 'Mike Johnson',
-      avatar: '/src/assets/avatars/avatar-3d05.png'
+      avatar: '/avatars/avatar-3d05.png'
     },
     project: 'Dashboard Redesign',
     address: 'Market Street Denver',
@@ -165,7 +165,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9809',
     user: {
       name: 'Emily Chen',
-      avatar: '/src/assets/avatars/avatar-3d03.png'
+      avatar: '/avatars/avatar-3d03.png'
     },
     project: 'API Integration',
     address: 'Oak Avenue Chicago',
@@ -177,7 +177,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9810',
     user: {
       name: 'Alex Rodriguez',
-      avatar: '/src/assets/avatars/avatar-male07.png'
+      avatar: '/avatars/avatar-male07.png'
     },
     project: 'Data Analytics Platform',
     address: 'Cedar Avenue Portland',
@@ -189,7 +189,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9811',
     user: {
       name: 'Lisa Thompson',
-      avatar: '/src/assets/avatars/avatar-female09.png'
+      avatar: '/avatars/avatar-female09.png'
     },
     project: 'Customer Portal',
     address: 'Elm Street Austin',
@@ -201,7 +201,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9812',
     user: {
       name: 'James Wilson',
-      avatar: '/src/assets/avatars/avatar-3d08.png'
+      avatar: '/avatars/avatar-3d08.png'
     },
     project: 'Payment Gateway',
     address: 'Maple Drive Boston',
@@ -213,7 +213,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9813',
     user: {
       name: 'Anna Garcia',
-      avatar: '/src/assets/avatars/avatar-female15.png'
+      avatar: '/avatars/avatar-female15.png'
     },
     project: 'Content Management System',
     address: 'River Road Phoenix',
@@ -225,7 +225,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9814',
     user: {
       name: 'Robert Kim',
-      avatar: '/src/assets/avatars/avatar-male06.png'
+      avatar: '/avatars/avatar-male06.png'
     },
     project: 'Inventory System',
     address: 'Lake View Miami',
@@ -237,7 +237,7 @@ const mockOrders: OrderData[] = [
     orderId: '#CM9815',
     user: {
       name: 'Jessica Brown',
-      avatar: '/src/assets/avatars/avatar-female08.png'
+      avatar: '/avatars/avatar-female08.png'
     },
     project: 'Social Media App',
     address: 'Harbor Street San Diego',
