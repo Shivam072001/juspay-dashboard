@@ -27,7 +27,8 @@ export const useSalesLegendData = () => {
     return salesData.map(item => ({
       name: item.name,
       value: item.amount,
-      color: item.color
+      color: item.color,
+      darkColor: item.darkColor
     }));
   }, []);
 };
@@ -35,8 +36,8 @@ export const useSalesLegendData = () => {
 // Transform revenue data for legend - memoized
 export const useRevenueLegendData = () => {
   return useMemo(() => [
-    { name: 'Current Week', value: '$58,211', color: '#1C1C1C' },
-    { name: 'Previous Week', value: '$68,768', color: '#A8C5DA' }
+    { name: 'Current Week', value: '$58,211', color: '#1C1C1C', darkColor: '#C6C7F8' },
+    { name: 'Previous Week', value: '$68,768', color: '#A8C5DA', darkColor: '#A8C5DA' }
   ], []);
 };
 

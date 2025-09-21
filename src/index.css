@@ -600,7 +600,7 @@ body {
 
 /* Dark Mode Chart Lines */
 .dark .revenue-line-current {
-  stroke: #F8FAFC !important;
+  stroke: #C6C7F8 !important;
 }
 
 .dark .revenue-line-previous {
@@ -609,8 +609,8 @@ body {
 
 /* Dark Mode Chart Dots */
 .dark .revenue-dot-current {
-  fill: #F8FAFC !important;
-  stroke: #F8FAFC !important;
+  fill: #C6C7F8 !important;
+  stroke: #C6C7F8 !important;
 }
 
 .dark .revenue-dot-previous {
@@ -619,8 +619,8 @@ body {
 }
 
 .dark .revenue-activedot-current {
-  fill: #F8FAFC !important;
-  stroke: #F8FAFC !important;
+  fill: #C6C7F8 !important;
+  stroke: #C6C7F8 !important;
 }
 
 .dark .revenue-activedot-previous {
@@ -663,7 +663,7 @@ body {
   }
   
   :root:not(.light) .revenue-line-current {
-    stroke: #F8FAFC;
+    stroke: #C6C7F8;
   }
   
   :root:not(.light) .revenue-line-previous {
@@ -671,8 +671,8 @@ body {
   }
   
   :root:not(.light) .revenue-dot-current {
-    fill: #F8FAFC;
-    stroke: #F8FAFC;
+    fill: #C6C7F8;
+    stroke: #C6C7F8;
   }
   
   :root:not(.light) .revenue-dot-previous {
@@ -681,8 +681,8 @@ body {
   }
   
   :root:not(.light) .revenue-activedot-current {
-    fill: #F8FAFC;
-    stroke: #F8FAFC;
+    fill: #C6C7F8;
+    stroke: #C6C7F8;
   }
   
   :root:not(.light) .revenue-activedot-previous {

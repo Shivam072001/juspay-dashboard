@@ -2,10 +2,20 @@ import { memo } from 'react';
 import { XAxis, YAxis, CartesianGrid, ResponsiveContainer, Line, LineChart } from 'recharts';
 import { getCartesianGridConfig, getXAxisConfig, getYAxisConfig, chartMargins } from '../../utils/chartConfig';
 import { useRevenueChartData, useRevenueLegendData } from '../../hooks/useDashboardData';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const RevenueChart = memo(() => {
   const revenueData = useRevenueChartData();
   const legendData = useRevenueLegendData();
+  const { theme: currentTheme } = useTheme();
+  
+  // Get theme-aware colors from legend data
+  const currentWeekColor = currentTheme === 'dark' && legendData[0].darkColor 
+    ? legendData[0].darkColor 
+    : legendData[0].color;
+  const previousWeekColor = currentTheme === 'dark' && legendData[1].darkColor 
+    ? legendData[1].darkColor 
+    : legendData[1].color;
 
   return (
     <div className="revenue-card">
@@ -18,7 +28,11 @@ const RevenueChart = memo(() => {
             <div key={index} className="revenue-legend-item">
               <div 
                 className="revenue-legend-dot" 
-                style={{ backgroundColor: item.color }}
+                style={{ 
+                  backgroundColor: currentTheme === 'dark' && item.darkColor 
+                    ? item.darkColor 
+                    : item.color 
+                }}
               />
               <span className="revenue-legend-text">
                 {item.name} {item.value}
@@ -51,40 +65,40 @@ const RevenueChart = memo(() => {
             <Line
               type="monotone"
               dataKey="previousWeek"
-              stroke="#A8C5DA"
+              stroke={previousWeekColor}
               strokeWidth={3}
               fill="none"
               dot={{ 
-                fill: '#A8C5DA', 
-                stroke: '#A8C5DA', 
+                fill: previousWeekColor, 
+                stroke: previousWeekColor, 
                 strokeWidth: 2, 
                 r: 3 
               }}
               activeDot={{ 
                 r: 4, 
-                stroke: '#A8C5DA', 
+                stroke: previousWeekColor, 
                 strokeWidth: 2, 
-                fill: '#A8C5DA' 
+                fill: previousWeekColor 
               }}
               className="revenue-line-previous"
             />
             <Line
               type="monotone"
               dataKey="currentWeek"
-              stroke="#1C1C1C"
+              stroke={currentWeekColor}
               strokeWidth={3}
               fill="none"
               dot={{ 
-                fill: '#1C1C1C', 
-                stroke: '#1C1C1C', 
+                fill: currentWeekColor, 
+                stroke: currentWeekColor, 
                 strokeWidth: 2, 
                 r: 3 
               }}
               activeDot={{ 
                 r: 4, 
-                stroke: '#1C1C1C', 
+                stroke: currentWeekColor, 
                 strokeWidth: 2, 
-                fill: '#1C1C1C' 
+                fill: currentWeekColor 
               }}
               className="revenue-line-current"
             />
