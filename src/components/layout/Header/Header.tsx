@@ -1,8 +1,12 @@
 import { usePanelContext } from '../../../contexts/SidebarContext';
+import { useNavigation } from '../../../contexts/NavigationContext';
 import ThemeToggle from '../../ui/ThemeToggle';
 
 export default function Header() {
   const { toggleLeftPanel, toggleRightPanel } = usePanelContext();
+  const { getBreadcrumb } = useNavigation();
+  
+  const breadcrumb = getBreadcrumb();
 
   return (
     <div className="flex items-center justify-between w-full px-4 md:px-7 py-5 border-b border-border bg-background theme-transition">
@@ -46,15 +50,22 @@ export default function Header() {
           </button>
         </div>
 
-        {/* Breadcrumb */}
+        {/* Dynamic Breadcrumb */}
         <div className="hidden md:flex items-center gap-2 ml-2">
-          <button className="px-2 py-1 text-sm font-normal text-muted-foreground hover:bg-hover rounded-lg theme-transition hover:text-foreground">
-            Dashboards
-          </button>
-          <span className="text-sm font-normal text-muted-foreground opacity-50">/</span>
-          <button className="px-2 py-1 text-sm font-normal text-foreground hover:bg-hover rounded-lg theme-transition">
-            Default
-          </button>
+          {breadcrumb.map((crumb, index) => (
+            <div key={index} className="flex items-center gap-2">
+              <button className={`px-2 py-1 text-sm font-normal hover:bg-hover rounded-lg theme-transition ${
+                index === breadcrumb.length - 1 
+                  ? 'text-foreground' 
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}>
+                {crumb.label}
+              </button>
+              {index < breadcrumb.length - 1 && (
+                <span className="text-sm font-normal text-muted-foreground opacity-50">/</span>
+              )}
+            </div>
+          ))}
         </div>
       </div>
 

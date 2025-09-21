@@ -3,10 +3,26 @@ import Sidebar from './Sidebar/Sidebar'
 import Header from './Header/Header'
 import RightPanel from './RightPanel/RightPanel'
 import DashboardContainer from '../dashboard/DashboardContainer'
+import OrderListPage from '../pages/OrderListPage'
 import { usePanelContext } from '../../contexts/SidebarContext'
+import { useNavigation } from '../../contexts/NavigationContext'
 
 export default function AppLayout() {
   const { isLeftPanelOpen, isRightPanelOpen, toggleLeftPanel } = usePanelContext();
+  const { getCurrentPage } = useNavigation();
+
+  // Page router - render different components based on current page
+  const renderCurrentPage = () => {
+    const currentPage = getCurrentPage();
+    
+    switch (currentPage) {
+      case 'ecommerce-orders':
+        return <OrderListPage />;
+      case 'default':
+      default:
+        return <DashboardContainer />;
+    }
+  };
 
   // Responsive panel widths
   const getLeftPanelWidth = () => {
@@ -80,9 +96,9 @@ export default function AppLayout() {
             <Header />
           </div>
           
-          {/* Dashboard Content */}
+          {/* Page Content */}
           <div className="p-4 md:p-6 overflow-auto bg-background flex-1 theme-transition">
-            <DashboardContainer />
+            {renderCurrentPage()}
           </div>
         </div>
         

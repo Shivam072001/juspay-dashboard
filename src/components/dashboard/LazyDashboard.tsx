@@ -7,6 +7,7 @@ const RevenueChart = lazy(() => import('./RevenueChart'));
 const WorldMap = lazy(() => import('./WorldMap'));
 const SalesChart = lazy(() => import('./SalesChart'));
 const ProductsTable = lazy(() => import('./ProductsTable'));
+const OrdersTable = lazy(() => import('./OrdersTable'));
 
 // Loading fallback component
 const ComponentLoader = memo(() => (
@@ -54,6 +55,12 @@ export const LazyProductsTable = memo(() => (
   </Suspense>
 ));
 
+export const LazyOrdersTable = memo(() => (
+  <Suspense fallback={<ComponentLoader />}>
+    <OrdersTable />
+  </Suspense>
+));
+
 // Set display names
 LazyStatsCards.displayName = 'LazyStatsCards';
 LazyProjectionsChart.displayName = 'LazyProjectionsChart';
@@ -61,3 +68,4 @@ LazyRevenueChart.displayName = 'LazyRevenueChart';
 LazyWorldMap.displayName = 'LazyWorldMap';
 LazySalesChart.displayName = 'LazySalesChart';
 LazyProductsTable.displayName = 'LazyProductsTable';
+LazyOrdersTable.displayName = 'LazyOrdersTable';

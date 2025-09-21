@@ -10,6 +10,7 @@ interface SidebarMenuContextType {
   isItemExpanded: (itemId: string) => boolean;
   getActiveItemId: () => string | null;
   searchItems: (query: string) => SidebarMenuItem[];
+  setNavigationCallback: (callback: (pageId: string, breadcrumb: { label: string; id?: string }[]) => void) => void;
 }
 
 export const SidebarMenuContext = createContext<SidebarMenuContextType | undefined>(undefined);
@@ -19,6 +20,8 @@ interface SidebarMenuProviderProps {
 }
 
 export function SidebarMenuProvider({ children }: SidebarMenuProviderProps) {
+  const [navigationCallback, setNavigationCallbackState] = useState<((pageId: string, breadcrumb: { label: string; id?: string }[]) => void) | null>(null);
+  
   // Moved utility functions inside the component to fix Fast Refresh
   const createItemsMap = useCallback((sections: SidebarSection[]): Map<string, SidebarMenuItem> => {
     const itemsMap = new Map<string, SidebarMenuItem>();
@@ -79,7 +82,38 @@ export function SidebarMenuProvider({ children }: SidebarMenuProviderProps) {
     });
   }, [updateItemInTree]);
 
-  // Optimized active item setter with proper cleanup
+  // Helper function to determine navigation info based on menu item
+  const getNavigationInfo = useCallback((itemId: string) => {
+    switch (itemId) {
+      case 'default':
+        return {
+          page: 'default',
+          breadcrumb: [{ label: 'Dashboards' }, { label: 'Default' }]
+        };
+      case 'ecommerce-orders':
+        return {
+          page: 'ecommerce-orders',
+          breadcrumb: [{ label: 'Dashboards' }, { label: 'eCommerce' }, { label: 'Order List' }]
+        };
+      case 'ecommerce-analytics':
+        return {
+          page: 'ecommerce-analytics',
+          breadcrumb: [{ label: 'Dashboards' }, { label: 'eCommerce' }, { label: 'Analytics' }]
+        };
+      case 'ecommerce-products':
+        return {
+          page: 'ecommerce-products',
+          breadcrumb: [{ label: 'Dashboards' }, { label: 'eCommerce' }, { label: 'Products' }]
+        };
+      default:
+        return {
+          page: itemId,
+          breadcrumb: [{ label: 'Dashboards' }, { label: itemId }]
+        };
+    }
+  }, []);
+
+  // Optimized active item setter with proper cleanup and navigation
   const setActiveItem = useCallback((itemId: string) => {
     setMenuData(prevData => {
       return prevData.map(section => ({
@@ -91,7 +125,13 @@ export function SidebarMenuProvider({ children }: SidebarMenuProviderProps) {
         )
       }));
     });
-  }, [updateItemInTree]);
+
+    // Handle navigation
+    if (navigationCallback) {
+      const navInfo = getNavigationInfo(itemId);
+      navigationCallback(navInfo.page, navInfo.breadcrumb);
+    }
+  }, [updateItemInTree, navigationCallback, getNavigationInfo]);
 
   // Memoized expanded state check
   const isItemExpanded = useCallback((itemId: string): boolean => {
@@ -123,6 +163,11 @@ export function SidebarMenuProvider({ children }: SidebarMenuProviderProps) {
     return results;
   }, [itemsMap]);
 
+  // Function to set navigation callback
+  const setNavigationCallback = useCallback((callback: (pageId: string, breadcrumb: { label: string; id?: string }[]) => void) => {
+    setNavigationCallbackState(() => callback);
+  }, []);
+
   // Memoized context value to prevent unnecessary re-renders
   const contextValue = useMemo(() => ({
     menuData,
@@ -130,8 +175,9 @@ export function SidebarMenuProvider({ children }: SidebarMenuProviderProps) {
     setActiveItem,
     isItemExpanded,
     getActiveItemId,
-    searchItems
-  }), [menuData, toggleMenuItem, setActiveItem, isItemExpanded, getActiveItemId, searchItems]);
+    searchItems,
+    setNavigationCallback
+  }), [menuData, toggleMenuItem, setActiveItem, isItemExpanded, getActiveItemId, searchItems, setNavigationCallback]);
 
   return (
     <SidebarMenuContext.Provider value={contextValue}>

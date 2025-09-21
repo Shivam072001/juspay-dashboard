@@ -49,7 +49,7 @@ export const sidebarData: SidebarSection[] = [
         children: [
           { id: 'ecommerce-analytics', label: 'Analytics' },
           { id: 'ecommerce-products', label: 'Products' },
-          { id: 'ecommerce-orders', label: 'Orders' }
+          { id: 'ecommerce-orders', label: 'Order List' }
         ]
       },
       {
