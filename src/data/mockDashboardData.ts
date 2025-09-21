@@ -39,6 +39,7 @@ export interface SalesData {
   value: number;
   amount: string;
   color: string;
+  darkColor?: string; // Optional dark theme color
 }
 
 // KPI Cards data from Figma
@@ -125,8 +126,8 @@ export const productsData: ProductData[] = [
 
 // Total Sales Chart Data (Pie chart)
 export const salesData: SalesData[] = [
-  { name: "Direct", value: 38.6, amount: "$300.56", color: "#1C1C1C" },
-  { name: "Affiliate", value: 22.5, amount: "$135.18", color: "#BAEDBD" },
-  { name: "Sponsored", value: 30.8, amount: "$154.02", color: "#95A4FC" },
-  { name: "E-mail", value: 8.1, amount: "$48.96", color: "#B1E3FF" }
+  { name: "Direct", value: 38.6, amount: "$300.56", color: "#1C1C1C", darkColor: "#C6C7F8" },
+  { name: "Affiliate", value: 22.5, amount: "$135.18", color: "#BAEDBD", darkColor: "#BAEDBD" },
+  { name: "Sponsored", value: 30.8, amount: "$154.02", color: "#95A4FC", darkColor: "#95A4FC" },
+  { name: "E-mail", value: 8.1, amount: "$48.96", color: "#B1E3FF", darkColor: "#B1E3FF" }
 ];

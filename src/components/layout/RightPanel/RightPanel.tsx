@@ -251,6 +251,7 @@ function RightPanelContent({
               viewBox="0 0 16 16"
               fill="none"
               className={`transition-transform duration-200 ${isCollapsed ? 'rotate-180' : ''}`}
+              style={{ color: 'var(--color-sidebar-text-secondary)' }}
             >
               <path
                 d="M6 12L10 8L6 4"

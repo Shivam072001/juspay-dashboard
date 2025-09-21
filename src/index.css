@@ -937,3 +937,37 @@ body {
     background-color: #7C97B8;
   }
 }
+
+/* ===== TOTAL SALES CARD STYLES - LIGHT & DARK MODE ===== */
+
+/* Total Sales Card - Light Mode Default */
+.total-sales-card {
+  background-color: #F7F9FB !important;
+  color: #1C1C1C;
+}
+
+.total-sales-card h3,
+.total-sales-card .text-sm {
+  color: #1C1C1C !important;
+}
+
+.total-sales-card .text-foreground,
+.total-sales-card .text-muted-foreground {
+  color: #1C1C1C !important;
+}
+
+/* Total Sales Card - Dark Mode */
+:root:not(.light) .total-sales-card {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #FFFFFF;
+}
+
+:root:not(.light) .total-sales-card h3,
+:root:not(.light) .total-sales-card .text-sm {
+  color: #FFFFFF !important;
+}
+
+:root:not(.light) .total-sales-card .text-foreground,
+:root:not(.light) .total-sales-card .text-muted-foreground {
+  color: #FFFFFF !important;
+}

@@ -9,7 +9,7 @@ const SalesChart = memo(() => {
   const legendData = useSalesLegendData();
 
   return (
-    <DashboardCard title="Total Sales" className="flex flex-col items-center">
+    <DashboardCard title="Total Sales" className="total-sales-card flex flex-col items-center">
       {/* Custom Rounded Donut Chart */}
       <div className="relative mb-6">
         <RoundedDonutChart 

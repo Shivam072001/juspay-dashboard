@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface DonutSegment {
   name: string;
   value: number;
   amount: string;
   color: string;
+  darkColor?: string; // Optional dark theme color
 }
 
 interface RoundedDonutChartProps {
@@ -24,52 +26,62 @@ export default function RoundedDonutChart({
   width = 120,
   height = 120,
   strokeWidth = 20,
-  segmentGap = 4, // Default 4 degree gap between segments
+  segmentGap = 4,
   className = '',
   showPercentage = true,
   onSegmentHover,
   onSegmentLeave,
 }: RoundedDonutChartProps) {
   const [activeIndex, setActiveIndex] = useState<number | undefined>(undefined);
+  const { theme } = useTheme();
 
   const centerX = width / 2;
   const centerY = height / 2;
-  const radius = (Math.min(width, height) / 2) - (strokeWidth / 2) - 2;
+  const outerRadius = Math.min(width, height) / 2 - 2;
+  const innerRadius = outerRadius - strokeWidth;
 
-  // Calculate total and segment angles with gaps
   const total = data.reduce((sum, item) => sum + item.value, 0);
-  const totalGapInRadians = (segmentGap * data.length * Math.PI) / 180; // Convert degrees to radians
-  const availableCircle = 2 * Math.PI - totalGapInRadians; // Available space after gaps
-  
-  let cumulativeAngle = 0; // Track cumulative angle including gaps
-  
+  const totalGapInRadians = (segmentGap * data.length * Math.PI) / 180;
+  const availableCircle = 2 * Math.PI - totalGapInRadians;
+
+  let cumulativeAngle = 0;
+
   const segmentsWithPaths = data.map((segment) => {
-    // Calculate the proportion of this segment relative to total values
-    const segmentProportion = segment.value / total;
-    const segmentAngleRange = segmentProportion * availableCircle;
-    
-    // Start angle includes previous segments and their gaps
-    const startAngle = cumulativeAngle - Math.PI / 2; // Start from top (12 o'clock)
-    const endAngle = cumulativeAngle + segmentAngleRange - Math.PI / 2;
-    
-    // Calculate start and end points
-    const x1 = centerX + radius * Math.cos(startAngle);
-    const y1 = centerY + radius * Math.sin(startAngle);
-    const x2 = centerX + radius * Math.cos(endAngle);
-    const y2 = centerY + radius * Math.sin(endAngle);
-    
-    // Create arc path
-    const largeArcFlag = segmentAngleRange > Math.PI ? 1 : 0;
-    const pathData = `M ${x1} ${y1} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`;
-    
-    // Update cumulative angle for next segment (include gap)
-    cumulativeAngle += segmentAngleRange + (segmentGap * Math.PI) / 180;
-    
+    const proportion = segment.value / total;
+    const segmentAngle = proportion * availableCircle;
+
+    const startAngle = cumulativeAngle - Math.PI / 2;
+    const endAngle = cumulativeAngle + segmentAngle - Math.PI / 2;
+
+    // Outer arc start/end
+    const x1 = centerX + outerRadius * Math.cos(startAngle);
+    const y1 = centerY + outerRadius * Math.sin(startAngle);
+    const x2 = centerX + outerRadius * Math.cos(endAngle);
+    const y2 = centerY + outerRadius * Math.sin(endAngle);
+
+    // Inner arc start/end
+    const x3 = centerX + innerRadius * Math.cos(endAngle);
+    const y3 = centerY + innerRadius * Math.sin(endAngle);
+    const x4 = centerX + innerRadius * Math.cos(startAngle);
+    const y4 = centerY + innerRadius * Math.sin(startAngle);
+
+    const largeArcFlag = segmentAngle > Math.PI ? 1 : 0;
+
+    // Closed donut slice path
+    const pathData = `
+      M ${x1} ${y1}
+      A ${outerRadius} ${outerRadius} 0 ${largeArcFlag} 1 ${x2} ${y2}
+      Q ${centerX} ${centerY} ${x3} ${y3}
+      A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 0 ${x4} ${y4}
+      Q ${centerX} ${centerY} ${x1} ${y1}
+      Z
+    `;
+
+    cumulativeAngle += segmentAngle + (segmentGap * Math.PI) / 180;
+
     return {
       ...segment,
       pathData,
-      startAngle,
-      endAngle,
     };
   });
 
@@ -86,48 +98,24 @@ export default function RoundedDonutChart({
   return (
     <div className={`relative ${className}`}>
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
-        <defs>
-          <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
-            <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="rgba(0,0,0,0.15)" />
-          </filter>
-        </defs>
-
         {segmentsWithPaths.map((segment, index) => {
           const isActive = activeIndex === index;
-          
           return (
-            <g key={`path-segment-${index}`}>
-              {/* Main segment path */}
-              <path
-                d={segment.pathData}
-                fill="none"
-                stroke={segment.color}
-                strokeWidth={strokeWidth}
-                strokeLinecap="round" // This creates the rounded caps!
-                className="transition-all duration-200 cursor-pointer"
-                filter={isActive ? 'url(#dropShadow)' : 'none'}
-                onMouseEnter={() => handleSegmentEnter(segment, index)}
-                onMouseLeave={handleSegmentLeave}
-              />
-              
-              {/* Active state border - rendered on top */}
-              {isActive && (
-                <path
-                  d={segment.pathData}
-                  fill="none"
-                  stroke="#FFFFFF"
-                  strokeWidth={strokeWidth + 4}
-                  strokeLinecap="round"
-                  opacity={0.8}
-                  pointerEvents="none"
-                />
-              )}
-            </g>
+            <path
+              key={`seg-${index}`}
+              d={segment.pathData}
+              fill={theme === 'dark' && segment.darkColor ? segment.darkColor : segment.color}
+              className="transition-all duration-200 cursor-pointer"
+              style={{
+                filter: isActive ? 'drop-shadow(0px 2px 6px rgba(0,0,0,0.2))' : 'none'
+              }}
+              onMouseEnter={() => handleSegmentEnter(segment, index)}
+              onMouseLeave={handleSegmentLeave}
+            />
           );
         })}
       </svg>
-      
-      {/* Percentage display in center when hovering */}
+
       {showPercentage && activeIndex !== undefined && (
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="bg-gray-900 bg-opacity-90 backdrop-blur-xl px-3 py-2 rounded-lg">
