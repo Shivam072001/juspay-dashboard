@@ -91,7 +91,7 @@ export const revenueChartData: RevenueData[] = [
   { month: "Jan", currentWeek: 20, previousWeek: 24 },
   { month: "Feb", currentWeek: 25, previousWeek: 28 },
   { month: "Mar", currentWeek: 15, previousWeek: 22 },
-  { month: "Apr", currentWeek: 32, previousWeek: 18 },
+  { month: "Apr", currentWeek: 30, previousWeek: 18 },
   { month: "May", currentWeek: 18, previousWeek: 25 },
   { month: "Jun", currentWeek: 28, previousWeek: 27 }
 ];

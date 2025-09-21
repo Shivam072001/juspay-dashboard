@@ -76,22 +76,9 @@ export const getBarConfig = (dataKey: string, color: string, options?: {
   ...(options?.radius && { radius: options.radius }),
 });
 
-// Common chart margin configurations
+// Simple chart margin - one clean configuration for all charts
 export const chartMargins = {
-  default: chartTheme.margin.default,
-  compact: chartTheme.margin.compact,
-  revenueChart: {
-    top: 16,
-    right: 0,
-    left: 16,
-    bottom: 28,
-  },
-  projectionsChart: {
-    top: 16,
-    right: 0,
-    left: 0,
-    bottom: 0,
-  },
+  default: { top: 12, right: 8, left: 8, bottom: 12 }
 };
 
 // Common formatters

@@ -544,7 +544,7 @@ aside[role="navigation"] .group-hover\\:opacity-100 {
   display: flex;
   align-items: center;
   gap: 16px;
-  flex-wrap: wrap;
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
 /* Revenue Card Title - Light Mode Default */
@@ -571,7 +571,7 @@ aside[role="navigation"] .group-hover\\:opacity-100 {
 
 /* Revenue Chart Container */
 .revenue-chart-container {
-  height: 200px;
+  min-height: 200px; /* Consistent min-height for desktop */
   flex: 1;
   position: relative;
 }
@@ -581,7 +581,7 @@ aside[role="navigation"] .group-hover\\:opacity-100 {
   display: flex;
   align-items: center;
   gap: 16px;
-  flex-wrap: wrap;
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
 .revenue-legend-item {

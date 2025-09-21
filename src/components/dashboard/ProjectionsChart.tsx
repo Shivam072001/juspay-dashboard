@@ -18,7 +18,7 @@ const ProjectionsChart = memo(() => {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={transformedData}
-                margin={chartMargins.projectionsChart}
+                margin={chartMargins.default}
                 barCategoryGap={8}
                 className="projection-chart"
               >
