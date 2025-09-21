@@ -141,6 +141,30 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+/* Clean global scrollbar styles for main content */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-muted-foreground) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-muted-foreground);
+  border-radius: 1px;
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 /* Custom utility classes */
 .theme-transition {
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
