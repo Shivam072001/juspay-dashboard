@@ -1,5 +1,6 @@
 import { memo, useCallback, useState, useRef, useEffect } from 'react';
 import type { Notification, Activity, Contact } from '../../../types/rightPanel';
+import SvgIcon, { type IconName } from '../../ui/SvgIcon';
 import { useRightPanel } from '../../../hooks/useRightPanel';
 
 // Generic item type that can handle all three types
@@ -92,7 +93,7 @@ function GenericListItem({
         tabIndex={0}
         role="button"
         aria-label={`Notification: ${notification.title}`}
-        aria-pressed={isRead}
+        aria-pressed={isRead ? "true" : "false"}
       >
         {/* Icon */}
         <div 
@@ -102,13 +103,25 @@ function GenericListItem({
             transform: isHovered ? 'scale(1.05)' : 'scale(1)'
           }}
         >
-          <img 
-            src={notification.icon} 
-            alt="" 
-            className="w-4 h-4 transition-opacity duration-150"
-            style={{ opacity: isHovered ? 0.9 : 1 }}
-            loading="lazy"
-          />
+          {/* Check if icon is a valid SvgIcon name, otherwise use img fallback */}
+          {['bug-beetle', 'user', 'broadcast'].includes(notification.icon) ? (
+            <SvgIcon 
+              name={notification.icon as IconName}
+              width={16} 
+              height={16}
+              className="transition-opacity duration-150"
+              style={{ opacity: isHovered ? 0.9 : 1 }}
+              color="var(--color-sidebar-text-primary)"
+            />
+          ) : (
+            <img 
+              src={notification.icon} 
+              alt="" 
+              className="w-4 h-4 transition-opacity duration-150"
+              style={{ opacity: isHovered ? 0.9 : 1 }}
+              loading="lazy"
+            />
+          )}
         </div>
         
         {/* Content */}

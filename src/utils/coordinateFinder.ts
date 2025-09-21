@@ -98,12 +98,8 @@ export class CoordinateFinder {
    * Log coordinates to console in a clean format
    */
   private logCoordinates(result: CoordinateClickResult): void {
-    console.group('🎯 Coordinate Finder');
-    console.log('📍 Position:', result.x, result.y);
-    console.log('✅ Valid:', result.isValid ? 'Yes' : 'No');
     
     if (result.isValid) {
-      console.log('📋 Copy this location object:');
       const locationTemplate = {
         id: "new-location",
         name: "Location Name",
@@ -115,7 +111,6 @@ export class CoordinateFinder {
         color: "#1C1C1C",
         isActive: true
       };
-      console.log(JSON.stringify(locationTemplate, null, 2));
     } else {
       console.warn('❌ Coordinates are outside map bounds');
     }
@@ -132,7 +127,6 @@ export class CoordinateFinder {
     
     try {
       await navigator.clipboard.writeText(coordinateString);
-      console.log('📋 Coordinates copied to clipboard!');
     } catch (err) {
       console.warn('📋 Could not copy to clipboard:', err);
     }

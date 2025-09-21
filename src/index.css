@@ -146,6 +146,82 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
+/* Ensure SVG icons inherit proper colors in production builds */
+.text-foreground svg,
+button svg {
+  color: inherit;
+}
+
+/* Theme toggle specific color enforcement */
+button[aria-label*="Switch to"] {
+  color: var(--color-foreground) !important;
+}
+
+.dark button[aria-label*="Switch to"] {
+  color: var(--color-foreground) !important;
+}
+
+/* Sidebar SVG color inheritance fixes for production builds */
+aside[role="navigation"] svg {
+  color: inherit;
+}
+
+/* Sidebar dropdown arrows */
+aside[role="navigation"] svg[stroke="currentColor"] {
+  stroke: currentColor;
+  color: inherit;
+}
+
+/* Sidebar search icons */
+aside[role="navigation"] .absolute svg {
+  color: inherit;
+}
+
+/* Sidebar collapse/expand button */
+aside[role="navigation"] button svg {
+  color: var(--color-sidebar-text-secondary) !important;
+}
+
+/* Sidebar menu item icons */
+aside[role="navigation"] [role="button"] svg {
+  color: inherit;
+}
+
+/* Force sidebar colors in dark mode */
+.dark aside[role="navigation"] button svg {
+  color: var(--color-sidebar-text-secondary) !important;
+}
+
+.dark aside[role="navigation"] svg {
+  color: inherit;
+}
+
+/* SvgIcon component specific fixes */
+aside[role="navigation"] svg[fill="currentColor"] path,
+aside[role="navigation"] svg[fill="currentColor"] path[fill="currentColor"] {
+  fill: currentColor;
+}
+
+/* Ensure SvgIcon containers have proper color */
+aside[role="navigation"] .transition-colors {
+  color: inherit;
+}
+
+/* Fix sidebar icon containers */
+aside[role="navigation"] [role="button"] .transition-colors,
+aside[role="navigation"] .group-hover\\:opacity-100 {
+  color: inherit;
+}
+
+/* Additional production build safeguards for sidebar SVGs */
+.dark aside[role="navigation"] svg[fill="currentColor"] path[fill="currentColor"] {
+  fill: currentColor;
+}
+
+.dark aside[role="navigation"] .transition-colors {
+  color: inherit;
+}
+
 /* ===== KPI CARDS LIGHT MODE STYLES ===== */
 
 /* KPI Cards Container */

@@ -87,6 +87,7 @@ const MenuIcon = memo(({ icon, label }: { icon?: string; label: string }) => {
         width={20} 
         height={20}
         className="transition-opacity duration-200"
+        color="var(--color-sidebar-text-primary)"
       />
     </div>
   );
@@ -135,10 +136,12 @@ function SidebarMenuItem({ item, level = 0 }: SidebarMenuItemProps) {
 
   // Optimized click handler
   const handleClick = useCallback(() => {
+    // Always set the clicked item as active (clears all other active states)
+    setActiveItem(item.id);
+    
+    // Also toggle dropdown if this item has one
     if (item.hasDropdown) {
       toggleMenuItem(item.id);
-    } else {
-      setActiveItem(item.id);
     }
   }, [item.hasDropdown, item.id, toggleMenuItem, setActiveItem]);
 
@@ -153,17 +156,20 @@ function SidebarMenuItem({ item, level = 0 }: SidebarMenuItemProps) {
       case 'ArrowRight':
         if (item.hasDropdown && !isExpanded) {
           event.preventDefault();
+          // Set active and expand dropdown
+          setActiveItem(item.id);
           toggleMenuItem(item.id);
         }
         break;
       case 'ArrowLeft':
         if (item.hasDropdown && isExpanded) {
           event.preventDefault();
+          // Just collapse dropdown, keep active state
           toggleMenuItem(item.id);
         }
         break;
     }
-  }, [handleClick, item.hasDropdown, item.id, isExpanded, toggleMenuItem]);
+  }, [handleClick, item.hasDropdown, item.id, isExpanded, toggleMenuItem, setActiveItem]);
 
   // Auto-focus on active item
   useEffect(() => {
@@ -186,7 +192,7 @@ function SidebarMenuItem({ item, level = 0 }: SidebarMenuItemProps) {
     'theme-transition',
     'focus:outline-none',
     'group'
-  ].filter(Boolean).join(' '), [item.isActive]);
+  ].filter(Boolean).join(' '), []);
 
   return (
     <>
@@ -209,7 +215,7 @@ function SidebarMenuItem({ item, level = 0 }: SidebarMenuItemProps) {
         aria-current={item.isActive ? 'page' : undefined}
       >
         {/* Active indicator */}
-        {item.isActive && level === 0 && (
+        {item.isActive && (
           <div 
             className="w-1 h-4 rounded-sm absolute left-0 top-1/2 transform -translate-y-1/2 theme-transition"
             style={{ backgroundColor: 'var(--color-sidebar-indicator)' }}

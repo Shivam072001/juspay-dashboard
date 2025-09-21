@@ -15,8 +15,10 @@ function SidebarSection({ section }: SidebarSectionProps) {
           <h3 
             id={`section-${section.id}`}
             className="text-[14px] font-[400] theme-transition"
-            style={{ color: 'var(--color-sidebar-text-secondary)' }}
-            style={{ lineHeight: '1.4285714285714286em' }}
+            style={{ 
+              color: 'var(--color-sidebar-text-secondary)',
+              lineHeight: '1.4285714285714286em'
+            }}
           >
             {section.title}
           </h3>

@@ -1,6 +1,7 @@
 import { usePanelContext } from '../../../contexts/SidebarContext';
 import { useNavigation } from '../../../contexts/NavigationContext';
 import ThemeToggle from '../../ui/ThemeToggle';
+import searchIcon from '../../../assets/icons/search.svg';
 
 export default function Header() {
   const { toggleLeftPanel, toggleRightPanel } = usePanelContext();
@@ -75,7 +76,7 @@ export default function Header() {
         <div className="hidden sm:flex items-center gap-2 px-2 py-1 bg-card rounded-lg w-32 md:w-40 hover:bg-hover theme-transition focus-within:bg-hover focus-within:ring-2 focus-within:ring-border">
           <div className="flex items-center gap-1 flex-1">
             <div className="w-4 h-4 flex items-center justify-center">
-              <img src="/src/assets/icons/search.svg" alt="Search" width="16" height="16" />
+              <img src={searchIcon} alt="Search" width="16" height="16" />
             </div>
             <span className="text-sm font-normal text-muted-foreground flex-1">Search</span>
           </div>

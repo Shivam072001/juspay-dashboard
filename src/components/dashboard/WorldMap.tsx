@@ -3,6 +3,7 @@ import { worldMapData, getLocationValue } from '../../data/worldMapLocations';
 import type { WorldMapLocation } from '../../data/worldMapLocations';
 import CoordinateFinder from '../ui/CoordinateFinder';
 import { useActiveLocations, useLocationSelection } from '../../hooks/useDashboardData';
+import worldMapSvg from '../../assets/icons/world-map-complete.svg';
 
 interface LocationMarkerProps {
   location: WorldMapLocation;
@@ -42,7 +43,6 @@ const WorldMap = memo(() => {
 
   const onLocationClick = useCallback((location: WorldMapLocation) => {
     handleLocationClick(selectedLocation, location, setSelectedLocation);
-    console.log('Location clicked:', location);
   }, [selectedLocation, handleLocationClick]);
 
   const onLocationHover = useCallback((location: WorldMapLocation | null) => {
@@ -66,7 +66,7 @@ const WorldMap = memo(() => {
           >
             {/* Base World Map SVG */}
             <img 
-              src="/src/assets/icons/world-map-complete.svg"
+              src={worldMapSvg}
               alt="World Map"
               className="location-map-image"
             />

@@ -1,3 +1,6 @@
+// Use string icon names that correspond to SvgIcon component
+// This ensures all icons are rendered as React components and can be styled with CSS
+
 export interface SidebarMenuItem {
   id: string;
   label: string;
@@ -37,13 +40,12 @@ export const sidebarData: SidebarSection[] = [
       {
         id: 'default',
         label: 'Default',
-        icon: '/src/assets/icons/chart-pie-slice-duotone.svg',
-        isActive: true
+        icon: 'chart-pie-slice-duotone'
       },
       {
         id: 'ecommerce',
         label: 'eCommerce',
-        icon: '/src/assets/icons/shopping-bag-open-duotone.svg',
+        icon: 'shopping-bag-open-duotone',
         hasDropdown: true,
         isExpanded: false,
         children: [
@@ -55,7 +57,7 @@ export const sidebarData: SidebarSection[] = [
       {
         id: 'projects-dash',
         label: 'Projects',
-        icon: '/src/assets/icons/folder-notch-duotone.svg',
+        icon: 'folder-notch-duotone',
         hasDropdown: true,
         isExpanded: false,
         children: [
@@ -67,7 +69,7 @@ export const sidebarData: SidebarSection[] = [
       {
         id: 'online-courses',
         label: 'Online Courses',
-        icon: '/src/assets/icons/book-open-duotone.svg',
+        icon: 'book-open-duotone',
         hasDropdown: true,
         isExpanded: false,
         children: [
@@ -85,7 +87,7 @@ export const sidebarData: SidebarSection[] = [
       {
         id: 'user-profile',
         label: 'User Profile',
-        icon: '/src/assets/icons/identification-badge-duotone.svg',
+        icon: 'identification-badge-duotone',
         hasDropdown: true,
         isExpanded: true, // This one is expanded by default as shown in the current UI
         children: [
@@ -99,7 +101,7 @@ export const sidebarData: SidebarSection[] = [
       {
         id: 'account',
         label: 'Account',
-        icon: '/src/assets/icons/identification-card-duotone.svg',
+        icon: 'identification-card-duotone',
         hasDropdown: true,
         isExpanded: false,
         children: [
@@ -111,7 +113,7 @@ export const sidebarData: SidebarSection[] = [
       {
         id: 'corporate',
         label: 'Corporate',
-        icon: '/src/assets/icons/users-three-duotone.svg',
+        icon: 'users-three-duotone',
         hasDropdown: true,
         isExpanded: false,
         children: [
@@ -123,7 +125,7 @@ export const sidebarData: SidebarSection[] = [
       {
         id: 'blog',
         label: 'Blog',
-        icon: '/src/assets/icons/notebook-duotone.svg',
+        icon: 'notebook-duotone',
         hasDropdown: true,
         isExpanded: false,
         children: [
@@ -135,7 +137,7 @@ export const sidebarData: SidebarSection[] = [
       {
         id: 'social',
         label: 'Social',
-        icon: '/src/assets/icons/chats-teardrop-duotone.svg',
+        icon: 'chats-teardrop-duotone',
         hasDropdown: true,
         isExpanded: false,
         children: [

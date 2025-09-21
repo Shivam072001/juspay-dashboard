@@ -7,7 +7,8 @@ const ThemeToggle = memo(() => {
   return (
     <button
       onClick={toggleTheme}
-      className="group p-1 hover:bg-hover rounded-lg theme-transition ease-in-out transform hover:scale-105 active:scale-95"
+      className="group p-1 hover:bg-hover rounded-lg theme-transition ease-in-out transform hover:scale-105 active:scale-95 text-foreground"
+      style={{ color: 'var(--color-foreground)' }}
       title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
     >

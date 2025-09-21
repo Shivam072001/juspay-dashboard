@@ -1,4 +1,3 @@
-import React from 'react';
 import OrdersTable from '../dashboard/OrdersTable';
 
 export default function OrderListPage() {

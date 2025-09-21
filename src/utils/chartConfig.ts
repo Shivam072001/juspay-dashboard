@@ -1,4 +1,4 @@
-import { chartTheme } from '../styles/theme';
+import { chartTheme, theme } from '../styles/theme';
 
 // Shared chart configurations to eliminate duplication
 export const getCartesianGridConfig = () => ({
@@ -47,15 +47,15 @@ export const getLineConfig = (dataKey: string, color: string) => ({
   type: 'monotone' as const,
   dataKey,
   stroke: color,
-  strokeWidth: chartTheme.line?.strokeWidth || 3,
+  strokeWidth: theme.chart.line.strokeWidth,
   dot: { 
     fill: color, 
     stroke: color, 
     strokeWidth: 2, 
-    r: chartTheme.line?.dotRadius || 3 
+    r: theme.chart.line.dotRadius
   },
   activeDot: { 
-    r: chartTheme.line?.activeDotRadius || 4, 
+    r: theme.chart.line.activeDotRadius, 
     stroke: color, 
     strokeWidth: 2, 
     fill: color 
@@ -70,7 +70,7 @@ export const getBarConfig = (dataKey: string, color: string, options?: {
 }) => ({
   dataKey,
   fill: color,
-  barSize: options?.barSize || chartTheme.bar?.size || 20,
+  barSize: options?.barSize || theme.chart.bar.size,
   ...(options?.stackId && { stackId: options.stackId }),
   ...(options?.fillOpacity && { fillOpacity: options.fillOpacity }),
   ...(options?.radius && { radius: options.radius }),

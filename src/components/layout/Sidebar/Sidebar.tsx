@@ -226,6 +226,7 @@ function Sidebar({ isCollapsed = false, onCollapseToggle, className = '' }: Side
                           width={20} 
                           height={20}
                           className="transition-opacity duration-200"
+                          color="var(--color-sidebar-text-primary)"
                         />
                       </div>
                     ) : (

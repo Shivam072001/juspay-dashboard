@@ -87,7 +87,6 @@ export const generateSampleLocation = (
     name,
     country,
     coordinates: { x, y },
-    value: `$${Math.round(baseRevenue).toLocaleString()}`,
     progress: Math.round(40 + Math.random() * 60),
     revenue: Math.round(baseRevenue),
     color: '#1C1C1C',
