@@ -576,6 +576,13 @@ aside[role="navigation"] .group-hover\\:opacity-100 {
   position: relative;
 }
 
+/* Revenue Chart Wrapper - Desktop vertical centering */
+@media (min-width: 1024px) {
+  .revenue-chart-wrapper {
+    margin-top: 20px !important;
+  }
+}
+
 /* Revenue Chart Legend */
 .revenue-legend {
   display: flex;

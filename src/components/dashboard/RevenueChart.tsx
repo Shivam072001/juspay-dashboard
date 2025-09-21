@@ -44,7 +44,7 @@ const RevenueChart = memo(() => {
                 ))}
               </div>
             </div>
-            <div style={{ height: '200px' }}>
+            <div style={{ height: '200px' }} className="revenue-chart-wrapper">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={revenueData}
