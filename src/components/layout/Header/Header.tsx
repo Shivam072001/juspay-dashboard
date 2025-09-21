@@ -1,13 +1,34 @@
+import { useState, useRef, useEffect } from 'react';
 import { usePanelContext } from '../../../contexts/SidebarContext';
-import { useNavigation } from '../../../contexts/NavigationContext';
-import ThemeToggle from '../../ui/ThemeToggle';
+import { useNavigation } from '../../../hooks/useNavigation';
+import { useTheme } from '../../../contexts/ThemeContext';
 import searchIcon from '../../../assets/icons/search.svg';
 
 export default function Header() {
   const { toggleLeftPanel, toggleRightPanel } = usePanelContext();
   const { getBreadcrumb } = useNavigation();
+  const { theme, toggleTheme } = useTheme();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
   
   const breadcrumb = getBreadcrumb();
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    }
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   return (
     <div className="flex items-center justify-between w-full px-4 md:px-7 py-5 border-b border-border bg-background theme-transition">
@@ -71,9 +92,9 @@ export default function Header() {
       </div>
 
       {/* Right Section: Search and Actions */}
-      <div className="flex items-center gap-3 md:gap-5">
+      <div className="flex items-center gap-2 md:gap-3">
         {/* Search Bar */}
-        <div className="hidden sm:flex items-center gap-2 px-2 py-1 bg-card rounded-lg w-32 md:w-40 hover:bg-hover theme-transition focus-within:bg-hover focus-within:ring-2 focus-within:ring-border">
+        <div className="hidden sm:flex items-center gap-2 px-2 py-1 bg-card rounded-lg w-28 md:w-36 hover:bg-hover theme-transition focus-within:bg-hover focus-within:ring-2 focus-within:ring-border">
           <div className="flex items-center gap-1 flex-1">
             <div className="w-4 h-4 flex items-center justify-center">
               <img src={searchIcon} alt="Search" width="16" height="16" />
@@ -100,27 +121,46 @@ export default function Header() {
             </div>
           </button>
 
-          {/* Theme toggle */}
-          <ThemeToggle />
-
-          {/* History/Clock button */}
-          <button className="hidden md:block group p-1 hover:bg-hover rounded-lg theme-transition ease-in-out transform hover:scale-105 active:scale-95">
+          {/* Desktop Action Buttons - Hidden on mobile/tablet */}
+          <div className="hidden lg:flex items-center gap-1">
+            {/* Theme toggle */}
+          <button 
+              onClick={toggleTheme}
+              className="group p-1 hover:bg-hover rounded-lg theme-transition ease-in-out transform hover:scale-105 active:scale-95 text-foreground"
+              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          >
             <div className="w-5 h-5 flex items-center justify-center">
-              <svg 
-                width="20" 
-                height="20" 
-                viewBox="0 0 20 20" 
-                fill="none" 
-                className="transition-transform duration-200 group-hover:scale-110 text-foreground"
-              >
-                <path d="M16.875 10C16.875 11.3597 16.4718 12.689 15.7164 13.8195C14.9609 14.9501 13.8872 15.8313 12.631 16.3517C11.3747 16.872 9.99238 17.0082 8.65876 16.7429C7.32514 16.4776 6.10013 15.8228 5.13864 14.8614C4.17716 13.8999 3.52238 12.6749 3.2571 11.3412C2.99183 10.0076 3.12798 8.62529 3.64833 7.36905C4.16868 6.11281 5.04987 5.03908 6.18046 4.28365C7.31105 3.52821 8.64026 3.125 10 3.125C11.8234 3.125 13.5721 3.84933 14.8614 5.13864C16.1507 6.42795 16.875 8.17664 16.875 10Z" fill="currentColor" fillOpacity="0.1"/>
-                <path d="M10.625 6.25002V9.64612L13.4469 11.3391C13.589 11.4245 13.6914 11.5628 13.7316 11.7237C13.7717 11.8845 13.7463 12.0548 13.6609 12.1969C13.5756 12.339 13.4372 12.4414 13.2764 12.4816C13.1155 12.5217 12.9453 12.4963 12.8031 12.411L9.67812 10.536C9.58563 10.4804 9.50911 10.4018 9.45599 10.3079C9.40287 10.214 9.37497 10.1079 9.375 10V6.25002C9.375 6.08426 9.44085 5.92529 9.55806 5.80808C9.67527 5.69087 9.83424 5.62502 10 5.62502C10.1658 5.62502 10.3247 5.69087 10.4419 5.80808C10.5592 5.92529 10.625 6.08426 10.625 6.25002ZM10 2.50002C9.01406 2.49757 8.03742 2.69067 7.12661 3.06817C6.21579 3.44566 5.38889 4.00005 4.69375 4.69924C4.12578 5.27424 3.62109 5.82737 3.125 6.40627V5.00002C3.125 4.83426 3.05915 4.67529 2.94194 4.55808C2.82473 4.44087 2.66576 4.37502 2.5 4.37502C2.33424 4.37502 2.17527 4.44087 2.05806 4.55808C1.94085 4.67529 1.875 4.83426 1.875 5.00002V8.12502C1.875 8.29078 1.94085 8.44975 2.05806 8.56697C2.17527 8.68418 2.33424 8.75002 2.5 8.75002H5.625C5.79076 8.75002 5.94973 8.68418 6.06694 8.56697C6.18415 8.44975 6.25 8.29078 6.25 8.12502C6.25 7.95926 6.18415 7.80029 6.06694 7.68308C5.94973 7.56587 5.79076 7.50002 5.625 7.50002H3.82812C4.38672 6.84221 4.94297 6.22268 5.57734 5.58049C6.44598 4.71186 7.55133 4.11847 8.75529 3.87446C9.95924 3.63045 11.2084 3.74665 12.3467 4.20853C13.485 4.67041 14.4619 5.45749 15.1555 6.47144C15.849 7.48538 16.2283 8.68121 16.2461 9.90952C16.2639 11.1378 15.9193 12.3441 15.2554 13.3777C14.5915 14.4113 13.6377 15.2263 12.5132 15.7209C11.3888 16.2155 10.1435 16.3678 8.93299 16.1587C7.72249 15.9496 6.60043 15.3885 5.70703 14.5453C5.64732 14.4889 5.57708 14.4448 5.50032 14.4155C5.42356 14.3862 5.34179 14.3724 5.25967 14.3747C5.17754 14.377 5.09668 14.3955 5.0217 14.429C4.94672 14.4626 4.87908 14.5106 4.82266 14.5703C4.76623 14.63 4.72212 14.7003 4.69283 14.777C4.66355 14.8538 4.64967 14.9356 4.652 15.0177C4.65432 15.0998 4.67279 15.1807 4.70636 15.2557C4.73993 15.3306 4.78795 15.3983 4.84766 15.4547C5.73785 16.2948 6.82012 16.9042 8 17.2298C9.17989 17.5554 10.4215 17.5873 11.6166 17.3226C12.8116 17.058 13.9237 16.505 14.8559 15.7117C15.788 14.9184 16.5118 13.9091 16.9642 12.7718C17.4165 11.6344 17.5836 10.4037 17.4509 9.18689C17.3182 7.97011 16.8897 6.80431 16.2029 5.79122C15.516 4.77813 14.5916 3.94854 13.5104 3.37485C12.4292 2.80117 11.224 2.50082 10 2.50002Z" fill="currentColor"/>
+                {theme === 'light' ? (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="transition-transform duration-200 group-hover:scale-110">
+                    <path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5M17.6859 17.69L18.5 18.5M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="transition-transform duration-200 group-hover:scale-110">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+                )}
             </div>
           </button>
+            
+            {/* History/Clock button */}
+            <button className="group p-1 hover:bg-hover rounded-lg theme-transition ease-in-out transform hover:scale-105 active:scale-95">
+              <div className="w-5 h-5 flex items-center justify-center">
+                <svg 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 20 20" 
+                  fill="none" 
+                  className="transition-transform duration-200 group-hover:scale-110 text-foreground"
+                >
+                  <path d="M16.875 10C16.875 11.3597 16.4718 12.689 15.7164 13.8195C14.9609 14.9501 13.8872 15.8313 12.631 16.3517C11.3747 16.872 9.99238 17.0082 8.65876 16.7429C7.32514 16.4776 6.10013 15.8228 5.13864 14.8614C4.17716 13.8999 3.52238 12.6749 3.2571 11.3412C2.99183 10.0076 3.12798 8.62529 3.64833 7.36905C4.16868 6.11281 5.04987 5.03908 6.18046 4.28365C7.31105 3.52821 8.64026 3.125 10 3.125C11.8234 3.125 13.5721 3.84933 14.8614 5.13864C16.1507 6.42795 16.875 8.17664 16.875 10Z" fill="currentColor" fillOpacity="0.1"/>
+                  <path d="M10.625 6.25002V9.64612L13.4469 11.3391C13.589 11.4245 13.6914 11.5628 13.7316 11.7237C13.7717 11.8845 13.7463 12.0548 13.6609 12.1969C13.5756 12.339 13.4372 12.4414 13.2764 12.4816C13.1155 12.5217 12.9453 12.4963 12.8031 12.411L9.67812 10.536C9.58563 10.4804 9.50911 10.4018 9.45599 10.3079C9.40287 10.214 9.37497 10.1079 9.375 10V6.25002C9.375 6.08426 9.44085 5.92529 9.55806 5.80808C9.67527 5.69087 9.83424 5.62502 10 5.62502C10.1658 5.62502 10.3247 5.69087 10.4419 5.80808C10.5592 5.92529 10.625 6.08426 10.625 6.25002ZM10 2.50002C9.01406 2.49757 8.03742 2.69067 7.12661 3.06817C6.21579 3.44566 5.38889 4.00005 4.69375 4.69924C4.12578 5.27424 3.62109 5.82737 3.125 6.40627V5.00002C3.125 4.83426 3.05915 4.67529 2.94194 4.55808C2.82473 4.44087 2.66576 4.37502 2.5 4.37502C2.33424 4.37502 2.17527 4.44087 2.05806 4.55808C1.94085 4.67529 1.875 4.83426 1.875 5.00002V8.12502C1.875 8.29078 1.94085 8.44975 2.05806 8.56697C2.17527 8.68418 2.33424 8.75002 2.5 8.75002H5.625C5.79076 8.75002 5.94973 8.68418 6.06694 8.56697C6.18415 8.44975 6.25 8.29078 6.25 8.12502C6.25 7.95926 6.18415 7.80029 6.06694 7.68308C5.94973 7.56587 5.79076 7.50002 5.625 7.50002H3.82812C4.38672 6.84221 4.94297 6.22268 5.57734 5.58049C6.44598 4.71186 7.55133 4.11847 8.75529 3.87446C9.95924 3.63045 11.2084 3.74665 12.3467 4.20853C13.485 4.67041 14.4619 5.45749 15.1555 6.47144C15.849 7.48538 16.2283 8.68121 16.2461 9.90952C16.2639 11.1378 15.9193 12.3441 15.2554 13.3777C14.5915 14.4113 13.6377 15.2263 12.5132 15.7209C11.3888 16.2155 10.1435 16.3678 8.93299 16.1587C7.72249 15.9496 6.60043 15.3885 5.70703 14.5453C5.64732 14.4889 5.57708 14.4448 5.50032 14.4155C5.42356 14.3862 5.34179 14.3724 5.25967 14.3747C5.17754 14.377 5.09668 14.3955 5.0217 14.429C4.94672 14.4626 4.87908 14.5106 4.82266 14.5703C4.76623 14.63 4.72212 14.7003 4.69283 14.777C4.66355 14.8538 4.64967 14.9356 4.652 15.0177C4.65432 15.0998 4.67279 15.1807 4.70636 15.2557C4.73993 15.3306 4.78795 15.3983 4.84766 15.4547C5.73785 16.2948 6.82012 16.9042 8 17.2298C9.17989 17.5554 10.4215 17.5873 11.6166 17.3226C12.8116 17.058 13.9237 16.505 14.8559 15.7117C15.788 14.9184 16.5118 13.9091 16.9642 12.7718C17.4165 11.6344 17.5836 10.4037 17.4509 9.18689C17.3182 7.97011 16.8897 6.80431 16.2029 5.79122C15.516 4.77813 14.5916 3.94854 13.5104 3.37485C12.4292 2.80117 11.224 2.50082 10 2.50002Z" fill="currentColor"/>
+                </svg>
+              </div>
+            </button>
 
-          {/* Notifications (Bell) */}
-          <button className="group p-1 hover:bg-hover rounded-lg theme-transition ease-in-out transform hover:scale-105 active:scale-95 relative">
+            {/* Notifications (Bell) */}
+            <button className="group p-1 hover:bg-hover rounded-lg theme-transition ease-in-out transform hover:scale-105 active:scale-95 relative">
             <div className="w-5 h-5 flex items-center justify-center">
               <svg 
                 width="20" 
@@ -136,11 +176,91 @@ export default function Header() {
             {/* Notification indicator */}
             <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full opacity-80"></div>
           </button>
+          </div>
 
-          {/* Right panel toggle */}
+          {/* Mobile/Tablet Menu Button */}
+          <div className="lg:hidden relative" ref={menuRef}>
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="group p-1 hover:bg-hover rounded-lg theme-transition ease-in-out transform hover:scale-105 active:scale-95"
+              aria-label="Toggle menu"
+            >
+              <div className="w-5 h-5 flex items-center justify-center">
+                <svg 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 20 20" 
+                  fill="none" 
+                  className={`transition-all duration-200 group-hover:scale-110 text-foreground ${isMenuOpen ? 'rotate-90' : ''}`}
+                >
+                  <path d="M3.75 5H16.25M3.75 10H16.25M3.75 15H16.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </button>
+
+            {/* Collapsible Menu Dropdown */}
+            {isMenuOpen && (
+              <div className="absolute right-0 top-full mt-2 w-48 bg-background border border-border rounded-lg shadow-lg z-50 py-1">
+                {/* Theme Toggle */}
+                <button
+                  onClick={() => {
+                    toggleTheme();
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-hover theme-transition text-left"
+                >
+                  <div className="w-4 h-4 flex items-center justify-center">
+                    {theme === 'light' ? (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-foreground">
+                        <path d="M12 3V4M12 20V21M4 12H3M6.31412 6.31412L5.5 5.5M17.6859 6.31412L18.5 5.5M6.31412 17.69L5.5 18.5M17.6859 17.69L18.5 18.5M21 12H20M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    ) : (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-foreground">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                  </div>
+                  <span className="text-foreground">{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
+                </button>
+
+                {/* History */}
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-hover theme-transition text-left"
+                >
+                  <div className="w-4 h-4 flex items-center justify-center">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" className="text-foreground">
+                      <path d="M16.875 10C16.875 11.3597 16.4718 12.689 15.7164 13.8195C14.9609 14.9501 13.8872 15.8313 12.631 16.3517C11.3747 16.872 9.99238 17.0082 8.65876 16.7429C7.32514 16.4776 6.10013 15.8228 5.13864 14.8614C4.17716 13.8999 3.52238 12.6749 3.2571 11.3412C2.99183 10.0076 3.12798 8.62529 3.64833 7.36905C4.16868 6.11281 5.04987 5.03908 6.18046 4.28365C7.31105 3.52821 8.64026 3.125 10 3.125C11.8234 3.125 13.5721 3.84933 14.8614 5.13864C16.1507 6.42795 16.875 8.17664 16.875 10Z" fill="currentColor" fillOpacity="0.1"/>
+                      <path d="M10.625 6.25002V9.64612L13.4469 11.3391C13.589 11.4245 13.6914 11.5628 13.7316 11.7237C13.7717 11.8845 13.7463 12.0548 13.6609 12.1969C13.5756 12.339 13.4372 12.4414 13.2764 12.4816C13.1155 12.5217 12.9453 12.4963 12.8031 12.411L9.67812 10.536C9.58563 10.4804 9.50911 10.4018 9.45599 10.3079C9.40287 10.214 9.37497 10.1079 9.375 10V6.25002C9.375 6.08426 9.44085 5.92529 9.55806 5.80808C9.67527 5.69087 9.83424 5.62502 10 5.62502C10.1658 5.62502 10.3247 5.69087 10.4419 5.80808C10.5592 5.92529 10.625 6.08426 10.625 6.25002ZM10 2.50002C9.01406 2.49757 8.03742 2.69067 7.12661 3.06817C6.21579 3.44566 5.38889 4.00005 4.69375 4.69924C4.12578 5.27424 3.62109 5.82737 3.125 6.40627V5.00002C3.125 4.83426 3.05915 4.67529 2.94194 4.55808C2.82473 4.44087 2.66576 4.37502 2.5 4.37502C2.33424 4.37502 2.17527 4.44087 2.05806 4.55808C1.94085 4.67529 1.875 4.83426 1.875 5.00002V8.12502C1.875 8.29078 1.94085 8.44975 2.05806 8.56697C2.17527 8.68418 2.33424 8.75002 2.5 8.75002H5.625C5.79076 8.75002 5.94973 8.68418 6.06694 8.56697C6.18415 8.44975 6.25 8.29078 6.25 8.12502C6.25 7.95926 6.18415 7.80029 6.06694 7.68308C5.94973 7.56587 5.79076 7.50002 5.625 7.50002H3.82812C4.38672 6.84221 4.94297 6.22268 5.57734 5.58049C6.44598 4.71186 7.55133 4.11847 8.75529 3.87446C9.95924 3.63045 11.2084 3.74665 12.3467 4.20853C13.485 4.67041 14.4619 5.45749 15.1555 6.47144C15.849 7.48538 16.2283 8.68121 16.2461 9.90952C16.2639 11.1378 15.9193 12.3441 15.2554 13.3777C14.5915 14.4113 13.6377 15.2263 12.5132 15.7209C11.3888 16.2155 10.1435 16.3678 8.93299 16.1587C7.72249 15.9496 6.60043 15.3885 5.70703 14.5453C5.64732 14.4889 5.57708 14.4448 5.50032 14.4155C5.42356 14.3862 5.34179 14.3724 5.25967 14.3747C5.17754 14.377 5.09668 14.3955 5.0217 14.429C4.94672 14.4626 4.87908 14.5106 4.82266 14.5703C4.76623 14.63 4.72212 14.7003 4.69283 14.777C4.66355 14.8538 4.64967 14.9356 4.652 15.0177C4.65432 15.0998 4.67279 15.1807 4.70636 15.2557C4.73993 15.3306 4.78795 15.3983 4.84766 15.4547C5.73785 16.2948 6.82012 16.9042 8 17.2298C9.17989 17.5554 10.4215 17.5873 11.6166 17.3226C12.8116 17.058 13.9237 16.505 14.8559 15.7117C15.788 14.9184 16.5118 13.9091 16.9642 12.7718C17.4165 11.6344 17.5836 10.4037 17.4509 9.18689C17.3182 7.97011 16.8897 6.80431 16.2029 5.79122C15.516 4.77813 14.5916 3.94854 13.5104 3.37485C12.4292 2.80117 11.224 2.50082 10 2.50002Z" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <span className="text-foreground">History</span>
+                </button>
+
+                {/* Notifications */}
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-full flex items-center gap-3 px-3 py-2 text-sm hover:bg-hover theme-transition text-left relative"
+                >
+                  <div className="w-4 h-4 flex items-center justify-center relative">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" className="text-foreground">
+                      <path d="M16.2499 15H3.7499C3.64051 14.9993 3.53321 14.97 3.43872 14.9149C3.34423 14.8597 3.26587 14.7808 3.21146 14.6859C3.15705 14.591 3.1285 14.4835 3.12866 14.3741C3.12883 14.2647 3.1577 14.1572 3.2124 14.0625C3.72725 13.1719 4.3749 10.9227 4.3749 8.125C4.3749 6.63316 4.96753 5.20242 6.02243 4.14752C7.07732 3.09263 8.50806 2.5 9.9999 2.5C11.4917 2.5 12.9225 3.09263 13.9774 4.14752C15.0323 5.20242 15.6249 6.63316 15.6249 8.125C15.6249 10.9234 16.2733 13.1719 16.789 14.0625C16.8437 14.1574 16.8726 14.2649 16.8727 14.3745C16.8728 14.484 16.8441 14.5916 16.7895 14.6865C16.7349 14.7815 16.6563 14.8604 16.5616 14.9154C16.4669 14.9705 16.3594 14.9996 16.2499 15Z" fill="currentColor" fillOpacity="0.1"/>
+                      <path d="M17.3282 13.7453C16.8946 12.9984 16.2501 10.8852 16.2501 8.125C16.2501 6.4674 15.5916 4.87769 14.4195 3.70558C13.2474 2.53348 11.6577 1.875 10.0001 1.875C8.34247 1.875 6.75276 2.53348 5.58065 3.70558C4.40855 4.87769 3.75007 6.4674 3.75007 8.125C3.75007 10.8859 3.10476 12.9984 2.67116 13.7453C2.56044 13.9352 2.50174 14.1509 2.50098 14.3707C2.50023 14.5905 2.55745 14.8066 2.66687 14.9973C2.77629 15.1879 2.93404 15.3463 3.12422 15.4565C3.31439 15.5667 3.53027 15.6248 3.75007 15.625H6.93835C7.08255 16.3306 7.46603 16.9647 8.02392 17.4201C8.58182 17.8756 9.2799 18.1243 10.0001 18.1243C10.7202 18.1243 11.4183 17.8756 11.9762 17.4201C12.5341 16.9647 12.9176 16.3306 13.0618 15.625H16.2501C16.4698 15.6247 16.6856 15.5665 16.8757 15.4562C17.0657 15.346 17.2234 15.1875 17.3327 14.9969C17.442 14.8063 17.4992 14.5903 17.4984 14.3705C17.4976 14.1508 17.4389 13.9351 17.3282 13.7453ZM10.0001 16.875C9.61243 16.8749 9.23435 16.7546 8.91788 16.5308C8.60141 16.3069 8.3621 15.9905 8.23288 15.625H11.7673C11.638 15.9905 11.3987 16.3069 11.0823 16.5308C10.7658 16.7546 10.3877 16.8749 10.0001 16.875ZM3.75007 14.375C4.35163 13.3406 5.00007 10.9438 5.00007 8.125C5.00007 6.79892 5.52686 5.52715 6.46454 4.58947C7.40222 3.65178 8.67399 3.125 10.0001 3.125C11.3262 3.125 12.5979 3.65178 13.5356 4.58947C14.4733 5.52715 15.0001 6.79892 15.0001 8.125C15.0001 10.9414 15.6469 13.3383 16.2501 14.375H3.75007Z" fill="currentColor"/>
+                    </svg>
+                    <div className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-red-500 rounded-full"></div>
+                  </div>
+                  <span className="text-foreground">Notifications</span>
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Always visible panel toggles */}
+          <div className="flex items-center gap-1">
+            {/* Right panel toggle - Always visible */}
           <button 
             onClick={toggleRightPanel}
-            className="hidden lg:block group p-1 hover:bg-hover rounded-lg theme-transition ease-in-out transform hover:scale-105 active:scale-95"
+              className="group p-1 hover:bg-hover rounded-lg theme-transition ease-in-out transform hover:scale-105 active:scale-95"
             title="Toggle right panel"
           >
             <div className="w-5 h-5 flex items-center justify-center">
@@ -157,6 +277,7 @@ export default function Header() {
               </svg>
             </div>
           </button>
+          </div>
         </div>
       </div>
     </div>

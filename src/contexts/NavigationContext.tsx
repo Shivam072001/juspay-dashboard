@@ -1,19 +1,7 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
-
-export interface NavigationState {
-  currentPage: string;
-  breadcrumb: { label: string; id?: string }[];
-}
-
-interface NavigationContextType {
-  navigationState: NavigationState;
-  navigateTo: (pageId: string, breadcrumb: { label: string; id?: string }[]) => void;
-  getCurrentPage: () => string;
-  getBreadcrumb: () => { label: string; id?: string }[];
-}
-
-const NavigationContext = createContext<NavigationContextType | undefined>(undefined);
+import { NavigationContext } from './NavigationContext.types';
+import type { NavigationState } from './NavigationContext.types';
 
 interface NavigationProviderProps {
   children: ReactNode;
@@ -54,10 +42,3 @@ export function NavigationProvider({ children }: NavigationProviderProps) {
   );
 }
 
-export function useNavigation() {
-  const context = useContext(NavigationContext);
-  if (context === undefined) {
-    throw new Error('useNavigation must be used within a NavigationProvider');
-  }
-  return context;
-}

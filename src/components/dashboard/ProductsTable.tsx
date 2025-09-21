@@ -10,7 +10,7 @@ const ProductsTable = memo(() => {
     <DashboardCard title="Top Selling Products">
       <div className="overflow-x-auto">
         <div style={{ minWidth: '400px' }}>
-          <table className="w-full">
+          <table className="w-full border-separate" style={{ borderSpacing: '0 8px' }}>
             <thead>
               <tr className="border-b border-gray-200">
                 <th className={`text-left ${componentStyles.text.muted} pb-2 pr-3`}>Name</th>
@@ -19,7 +19,7 @@ const ProductsTable = memo(() => {
                 <th className={`text-left ${componentStyles.text.muted} pb-2 pl-3`}>Amount</th>
               </tr>
             </thead>
-            <tbody className="space-y-2">
+            <tbody>
               {productsData.map((product, index) => (
                 <tr 
                   key={index} 

@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { sidebarData } from '../data/sidebarData';
 import type { SidebarMenuItem, SidebarSection } from '../data/sidebarData';
-import { SidebarMenuContext } from './SidebarMenuContext';
+import { SidebarMenuContext } from './SidebarMenuContext.types';
 
 interface SidebarMenuProviderProps {
   children: ReactNode;

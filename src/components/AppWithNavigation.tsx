@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import AppLayout from './layout/AppLayout';
-import { useNavigation } from '../contexts/NavigationContext';
+import { useNavigation } from '../hooks/useNavigation';
 import { useSidebarMenu } from '../hooks/useSidebarMenu';
 
 export default function AppWithNavigation() {

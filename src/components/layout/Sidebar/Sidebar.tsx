@@ -78,20 +78,17 @@ function Sidebar({ isCollapsed = false, onCollapseToggle, className = '' }: Side
   }, []);
 
   const sidebarClasses = useMemo(() => [
-    'h-full bg-background border-r theme-transition',
-    isCollapsed ? 'w-16' : 'w-[212px]',
+    'h-full bg-background theme-transition',
     'flex flex-col',
     'font-[400]',
     className
-  ].filter(Boolean).join(' '), [isCollapsed, className]);
+  ].filter(Boolean).join(' '), [className]);
 
   return (
     <aside 
       className={sidebarClasses}
       style={{ 
-        padding: isCollapsed ? '20px 8px' : '20px 16px',
-        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
-        borderRightColor: 'var(--color-sidebar-border)'
+        fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif'
       }}
       aria-label="Main navigation"
       role="navigation"

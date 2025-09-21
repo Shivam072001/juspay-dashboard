@@ -5,10 +5,10 @@ import RightPanel from './RightPanel/RightPanel'
 import DashboardContainer from '../dashboard/DashboardContainer'
 import OrderListPage from '../pages/OrderListPage'
 import { usePanelContext } from '../../contexts/SidebarContext'
-import { useNavigation } from '../../contexts/NavigationContext'
+import { useNavigation } from '../../hooks/useNavigation'
 
 export default function AppLayout() {
-  const { isLeftPanelOpen, isRightPanelOpen, toggleLeftPanel } = usePanelContext();
+  const { isLeftPanelOpen, isRightPanelOpen, toggleLeftPanel, toggleRightPanel } = usePanelContext();
   const { getCurrentPage } = useNavigation();
 
   // Page router - render different components based on current page
@@ -35,12 +35,12 @@ export default function AppLayout() {
 
   const getRightPanelWidth = () => {
     if (typeof window !== 'undefined') {
-      // Always show right panel on desktop, but can be collapsed
-      if (window.innerWidth >= 1024) {
-        return isRightPanelOpen ? '280px' : '0px';
+      // Mobile: Full width overlay when open
+      if (window.innerWidth < 768) {
+        return isRightPanelOpen ? '100%' : '0px';
       }
-      // Hide completely on tablet and mobile
-      return '0px';
+      // Tablet and Desktop: Fixed width when open
+      return isRightPanelOpen ? '280px' : '0px';
     }
     return isRightPanelOpen ? '280px' : '0px';
   };
@@ -50,40 +50,52 @@ export default function AppLayout() {
   
   // Mobile overlay for sidebar
   const isMobileOverlay = typeof window !== 'undefined' && window.innerWidth < 768 && isLeftPanelOpen;
+  
+  // Mobile overlay for right panel
+  const isRightPanelMobileOverlay = typeof window !== 'undefined' && window.innerWidth < 768 && isRightPanelOpen;
 
-  // Close sidebar on mobile when screen size changes
+  // Handle responsive behavior on screen resize
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768 && isLeftPanelOpen) {
-        // Keep sidebar open on desktop/tablet
-      } else if (window.innerWidth < 768 && !isLeftPanelOpen) {
-        // Sidebar is closed on mobile
+      if (window.innerWidth >= 768) {
+        // Keep panels open on desktop/tablet
+      } else {
+        // On mobile, you might want to auto-close panels when switching to mobile view
+        // Uncomment the lines below if you want this behavior:
+        // if (isLeftPanelOpen) toggleLeftPanel();
+        // if (isRightPanelOpen) toggleRightPanel();
       }
     };
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [isLeftPanelOpen]);
+  }, [isLeftPanelOpen, isRightPanelOpen]);
 
   return (
     <>
       {/* Mobile sidebar overlay backdrop */}
       {isMobileOverlay && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className="sidebar-backdrop active"
           onClick={toggleLeftPanel}
+        />
+      )}
+      
+      {/* Mobile right panel overlay backdrop */}
+      {isRightPanelMobileOverlay && (
+        <div 
+          className="sidebar-backdrop active"
+          onClick={toggleRightPanel}
+          style={{ zIndex: 40 }}
         />
       )}
       
       <div className="flex h-screen w-full max-w-none xl:mx-auto transition-all duration-300 ease-in-out relative">
         {/* Left Sidebar */}
         <div 
-          className={`border-r border-border theme-transition overflow-hidden bg-background flex-shrink-0 ${
-            isLeftPanelOpen ? 'opacity-100' : 'opacity-0'
-          } ${isMobileOverlay ? 'fixed left-0 top-0 h-full z-50 shadow-xl' : ''}`}
+          className={`sidebar ${isMobileOverlay ? 'mobile-open' : ''} ${isLeftPanelOpen ? 'expanded' : 'collapsed'}`}
           style={{ 
-            width: leftPanelWidth,
-            maxWidth: isMobileOverlay ? '300px' : leftPanelWidth
+            width: isMobileOverlay ? '300px' : leftPanelWidth
           }}
         >
           {isLeftPanelOpen && <Sidebar />}
@@ -106,7 +118,7 @@ export default function AppLayout() {
         <div 
           className={`border-l border-border bg-background theme-transition overflow-hidden flex-shrink-0 ${
             isRightPanelOpen ? 'opacity-100' : 'opacity-0'
-          } ${typeof window !== 'undefined' && window.innerWidth < 1024 ? 'hidden' : ''}`}
+          } ${typeof window !== 'undefined' && window.innerWidth < 768 && isRightPanelOpen ? 'fixed top-0 right-0 h-full z-50' : ''}`}
           style={{ width: rightPanelWidth }}
         >
           {isRightPanelOpen && <RightPanel />}
